@@ -1,13 +1,20 @@
 <script lang="ts">
-	import { browser } from "$app/environment";
-
 	import Reach from "$lib/components/Reach.svelte";
+	import { onMount } from "svelte";
 
 	let height = $state(0);
+	let width = $state(0);
 
-	$effect(() => {
-		if (browser) {
-			height = window.innerHeight;
+	const checkSize = () => {
+		height = window.innerHeight;
+		width = window.innerWidth;
+	}
+
+	onMount(() => {
+		document.addEventListener('resize', checkSize);
+
+		return () => {
+			document.removeEventListener('resize', checkSize);
 		}
 	})
 </script>
@@ -27,21 +34,21 @@
 		</div>
 		<div style="background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), linear-gradient(77.04deg, rgba(0, 0, 0, 0.2) 34.66%, rgba(0, 0, 0, 0) 82.22%);" class="absolute inset-0"></div>
 
-		<div class="absolute bottom-44 z-10 inset-x-36">
-			<h1 class="mb-16 text-6xl font-medium">
+		<div class="absolute h-full md:h-auto bottom-0 md:bottom-44 z-10 inset-x-4 md:inset-x-36 flex md:block flex-col justify-end py-12 md:py-0">
+			<h1 class="mb-8 md:mb-16 text-3xl md:text-6xl font-medium">
 				Complete Building Solutions<br />From Structure To Interior
 			</h1>
 
-			<div class="flex flex-wrap gap-6">
+			<div class="grid md:flex flex-wrap gap-6">
 				<a
 					href="#portfolio"
-					class="inline-flex items-center gap-3 bg-[#e0b126] px-6 py-4 text-sm tracking-[0.01em] text-[#111] no-underline"
+					class="inline-flex items-center gap-3 bg-[#e0b126] w-full md:w-auto px-6 py-4 text-sm tracking-[0.01em] text-[#111] no-underline"
 				>
 					See Our Work <span>↗</span>
 				</a>
 				<a
 					href="#contact"
-					class="inline-flex items-center gap-3 bg-white/4 px-6 py-4 text-sm tracking-[0.01em] text-white no-underline ring-1 ring-inset ring-white/65"
+					class="inline-flex items-center gap-3 bg-white/4 md:w-auto px-6 py-4 text-sm tracking-[0.01em] text-white no-underline ring-1 ring-inset ring-white/65"
 				>
 					Get In Touch <span>↗</span>
 				</a>
@@ -50,14 +57,14 @@
 	</section>
 
 	<section
-		class="relative grid w-full grid-cols-2 overflow-hidden bg-[#f3f3f3]"
-		style="height: {height ? `${height * 0.93}px` : '93vh'}"
+		class="relative grid w-full grid-cols-1 md:grid-cols-2 overflow-hidden bg-[#f3f3f3]"
+		style="height: {height ? (width >= 768 ? `${height * 0.93}px` : 'auto') : (width >= 768 ? '93vh' : 'auto')}"
 	>
-		<div class="absolute inset-0">
+		<div class="hidden md:absolute inset-0">
 			<img src="/home-image-2.webp" alt="" class="w-full h-full object-cover object-center" />
 		</div>
-		<div class="absolute inset-0" style="background: linear-gradient(270deg, rgba(255, 255, 255, 85%) 41.16%, #FFFFFF 86.3%);"></div>
-		<div class="relative z-10 pl-36 pr-16 py-32 pb-20 w-full">
+		<div class="hidden md:absolute inset-0" style="background: linear-gradient(270deg, rgba(255, 255, 255, 85%) 41.16%, #FFFFFF 86.3%);"></div>
+		<div class="relative z-10 pl-4 md:pl-36 pr-4 md:pr-16 pt-8 md:pt-32 pb-8 md:pb-20 w-full">
 			<div class="mb-1 text-xs tracking-[0.17em] text-[#d4a321]">ABOUT US</div>
 			<h2 class="mb-5 text-[clamp(2rem,3vw,3.5rem)] leading-[1.08] font-medium tracking-[-0.03em]">
 				Building Excellence<br />Across Indonesia
@@ -75,7 +82,7 @@
 			<a href="/" class="mt-2 inline-flex text-[1.375rem] text-[#111] no-underline">↗</a>
 		</div>
 
-		<div class="relative z-10 w-full pl-20 py-20 h-full flex flex-col gap-4">
+		<div class="hidden relative z-10 w-full pl-20 py-20 h-full md:flex flex-col gap-4">
 			<div
 				class="grid grid-cols-2 gap-4 w-full"
 				style="height: calc(50% - 0.5rem)"
@@ -96,8 +103,8 @@
 		</div>
 	</section>
 
-	<section class="relative mx-auto w-full bg-[#ececec]" style="height: {height ? `${height * 0.93}px` : '93vh'}">
-		<div class="h-full py-20">
+	<section class="relative mx-auto w-full bg-[#ececec]" style="height: {height ? (width >= 768 ? `${height * 0.93}px` : 'auto') : (width >= 768 ? '93vh' : 'auto')}">
+		<div class="hidden md:block h-full py-20">
 			<div
 				class="h-full relative"
 				style="width: calc(50% + 5rem)"
@@ -106,10 +113,10 @@
 				<div class="overlay-1 absolute inset-0"></div>
 			</div>
 		</div>
-		<div class="absolute h-full right-0 top-0 w-1/2 py-20">
-			<div class="h-full w-full py-12">
+		<div class="block md:absolute h-full right-0 top-0 w-full md:w-1/2 py-0 md:py-20">
+			<div class="h-full w-full py-0 md:py-12">
 				<div
-					class="w-full h-full bg-[#060606] p-12 text-white"
+					class="w-full h-full bg-[#060606] px-4 md:px-12 py-8 md:py-12 text-white"
 				>
 					<div class="mb-4.5 text-xs tracking-[0.17em] text-[#d4a321]">EXPERTISE</div>
 					<h3 class="mb-5 text-[clamp(2rem,3vw,3.5rem)] leading-[1.08] font-medium tracking-[-0.03em]">
@@ -129,17 +136,17 @@
 	<section
 		id="portfolio"
 		class="relative mx-auto w-full bg-[#ececec]"
-		style="height: {height ? `${height * 1.02}px` : '102vh'}"
+		style="height: {height ? (width >= 768 ? `${height * 1.02}px` : 'auto') : (width >= 768 ? '102vh' : 'auto')}"
 	>
 		<div
-			class="w-full relative"
+			class="hidden md:block w-full relative"
 			style="height: 76%"
 		>
 			<img src="/home-image-7.webp" alt="" class="object-cover object-center h-full w-full" />
 			<div class="overlay-2 absolute inset-0"></div>
 		</div>
 		<div
-			class="flex items-center justify-end gap-4.5 text-sm text-[#777] mt-8 w-full px-36"
+			class="hidden md:flex items-center justify-end gap-4.5 text-sm text-[#777] mt-8 w-full px-36"
 		>
 			<button
 				aria-label="Previous"
@@ -157,7 +164,7 @@
 		</div>
 
 		<div
-			class="absolute left-36 bg-[#060606] p-16 text-white w-[45%] bottom-24"
+			class="block md:absolute px-4 md:px-16 py-8 md:py-16 left-36 bg-[#060606] text-white w-full md:w-[45%] bottom-24"
 		>
 			<div class="mb-1 text-xs text-[#d4a321]">PORTOFOLIO</div>
 			<h3 class="mb-4 text-4xl font-medium">
