@@ -51,39 +51,40 @@
 		</div>
 		<div style="background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), linear-gradient(77.04deg, rgba(0, 0, 0, 0.2) 34.66%, rgba(0, 0, 0, 0) 82.22%);" class="absolute inset-0"></div>
 
-		<div class="absolute bottom-24 z-10 inset-x-36">
-      <a href={route.projects} class="mb-16 flex items-center gap-2 text-xs font-medium uppercase">
+		<div class="absolute bottom-8 md:bottom-24 z-10 inset-x-4 md:inset-x-36">
+      <a href={route.projects} class="mb-6 md:mb-16 flex items-center gap-2 text-xs font-medium uppercase">
         <img src="/arrow.svg" alt="" />
         Back
       </a>
-      <div class="font-medium mb-6 text-6xl">
+      <div class="font-medium mb-6 text-3xl md:text-6xl">
         Pertamina Office<br />Interior Renovation
       </div>
-			<div class="font-light text-xl capitalize mb-40 w-4/5">
+			<div class="font-light text-base md:text-xl capitalize mb-10 md:mb-40 w-full md:w-4/5">
 				Interior redesign for a corporate office, focused on improving workspace efficiency, comfort, and brand integration. Delivered a modern, functional environment aligned with Pertamina’s identity.
 			</div>
-      <div class="flex gap-6 items-center">
-        <div class="w-60">
+      <div class="grid grid-cols-2 md:flex gap-6 items-center">
+        <div class="w-full h-full md:h-auto flex md:block flex-col justify-start md:w-60">
           <div class="font-light text-sm text-[#D9DAD9]">Client</div>
           <div class="text-white">{project.client}</div>
         </div>
-        <div class="w-60">
+        <div class="w-full h-full md:h-auto flex md:block flex-col justify-start md:w-60">
           <div class="font-light text-sm text-[#D9DAD9]">Location</div>
           <div class="text-white">{project.location}</div>
         </div>
-        <div class="w-60">
+        <div class="w-full h-full md:h-auto flex md:block flex-col justify-start md:w-60">
           <div class="font-light text-sm text-[#D9DAD9]">Scope Of Work</div>
           <div class="text-white">{project.work}</div>
         </div>
-        <div class="w-60">
+        <div class="w-full h-full md:h-auto flex md:block flex-col justify-start md:w-60">
           <div class="font-light text-sm text-[#D9DAD9]">Date Completed</div>
           <div class="text-white">{project.date_completed}</div>
         </div>
       </div>
 		</div>
 	</section>
-  <section class="w-full px-36 py-24">
-    <div class="w-full flex items-center gap-16 mb-16">
+
+  <section class="w-full px-4 md:px-36 py-18 md:py-24">
+    <div class="w-full flex flex-col md:flex-row items-center gap-4 md:gap-16 mb-8 md:mb-16">
       <div>
         Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
       </div>
@@ -91,16 +92,16 @@
         Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
       </div>
     </div>
-    <div class="w-full h-152 relative mb-4">
+    <div class="w-full h-80 md:h-152 relative mb-4">
       <img src="/projects-2.webp" alt="" class="object-cover object-center h-full w-full" />
       <div class="overlay-1 absolute inset-0"></div>
     </div>
-    <div class="grid grid-cols-2 gap-4 mb-10">
-      <div class="w-full h-110 relative">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8 md:mb-10">
+      <div class="w-full h-80 md:h-110 relative">
         <img src="/projects-3.webp" alt="" class="object-cover object-center h-full w-full" />
         <div class="overlay-1 absolute inset-0"></div>
       </div>
-      <div class="w-full h-110 relative">
+      <div class="w-full h-80 md:h-110 relative">
         <img src="/projects-4.webp" alt="" class="object-cover object-center h-full w-full" />
         <div class="overlay-1 absolute inset-0"></div>
       </div>
@@ -114,11 +115,11 @@
     </div>
   </section>
 
-  <section class="bg-[#FAF5F1] w-full px-36 py-12 mb-20">
-    <div class="font-medium text-4xl mb-12">
+  <section class="bg-[#FAF5F1] w-full px-4 md:px-36 py-8 md:py-12 mb-0 md:mb-20">
+    <div class="font-medium text-4xl mb-8 md:mb-12">
       Related Works
     </div>
-    <div class="grid w-full grid-cols-3 gap-x-10 gap-y-12 overflow-hidden">
+    <div class="grid w-full grid-cols-1 md:grid-cols-3 gap-y-8 gap-x-10 md:gap-y-12 overflow-hidden">
       {#each projects as p (p.image)}
         <a href={route.projects + '/12345678'} class="w-full">
           <div class="w-full h-72 relative mb-4">

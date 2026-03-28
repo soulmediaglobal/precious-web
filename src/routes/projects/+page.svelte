@@ -75,28 +75,28 @@
 		</div>
 		<div style="background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), linear-gradient(77.04deg, rgba(0, 0, 0, 0.2) 34.66%, rgba(0, 0, 0, 0) 82.22%);" class="absolute inset-0"></div>
 
-		<div class="absolute bottom-44 z-10 inset-x-36">
-      <div class="text-xs font-medium text-[#d4a321]">
+		<div class="absolute bottom-8 md:bottom-44 z-10 inset-x-4 md:inset-x-36">
+      <div class="mb-1 md:mb-0 text-xs font-medium text-[#d4a321]">
         PORTOFOLIO
       </div>
-			<h1 class="text-6xl font-medium capitalize">
+			<h1 class="text-3xl md:text-6xl font-medium capitalize">
 				A selection of projects<br />we’ve successfully delivered.
 			</h1>
 		</div>
 	</section>
 
 	<section
-		class="relative w-full px-36 pb-14"
+		class="relative w-full px-4 md:px-36 pb-8 md:pb-14"
 	>
-    <div class="flex items-center justify-between pt-12 pb-10">
-      <div class="text-4xl font-medium">
+    <div class="flex gap-4 md:gap-0 flex-col md:flex-row items-center justify-between pt-4 md:pt-12 pb-8 md:pb-10">
+      <div class="text-4xl font-medium text-left w-full">
         Selected Works
       </div>
-      <div class="text-base font-light text-right w-2/5">
+      <div class="text-base font-light text-left md:text-right w-full md:w-2/5">
         A curated selection of our built and conceptual projects, spanning architecture, interiors, and landscape.
       </div>
     </div>
-    <div class="grid w-full grid-cols-3 gap-x-10 gap-y-12 overflow-hidden mb-24">
+    <div class="grid w-full grid-cols-1 md:grid-cols-3 gap-y-8 gap-x-10 md:gap-y-12 overflow-hidden mb-8 md:mb-24">
       {#each projects as p (p.image)}
         <a href={route.projects + '/12345678'} class="w-full">
           <div class="w-full h-72 relative mb-4">
