@@ -1,0 +1,151 @@
+<script lang="ts">
+	import { browser } from "$app/environment";
+	import { route } from "$lib";
+
+	import Reach from "$lib/components/Reach.svelte";
+
+	let height = $state(0);
+  let project = {
+    client: 'Pertamina Indonesia',
+    location: 'Pejeng, Bali',
+    work: 'Architecture, Interior',
+    date_completed: '2025'
+  };
+  let projects = $state([
+    {
+      image: "/about-1.webp",
+      title: "Tepi Hutan Villas",
+      description: "Pejeng, Bali"
+    },
+    {
+      image: "/about-2.webp",
+      title: "Villa Baloo",
+      description: "Bali"
+    },
+    {
+      image: "/about-3.webp",
+      title: "The Long House",
+      description: "Bali"
+    }
+  ]);
+
+	$effect(() => {
+		if (browser) {
+			height = window.innerHeight;
+		}
+	})
+</script>
+
+<svelte:head>
+	<title>Precious Contractor</title>
+</svelte:head>
+
+<!-- eslint-disable svelte/no-navigation-without-resolve -->
+<div class="w-screen overflow-x-hidden">
+	<section
+		class="relative w-full overflow-hidden bg-[linear-gradient(180deg,rgba(5,12,28,0.45),rgba(5,12,28,0.6)),radial-gradient(circle_at_50%_20%,rgba(84,107,159,0.45),transparent_35%),linear-gradient(135deg,#0d172d_0%,#13284d_36%,#31435d_65%,#1c2738_100%)] text-white"
+		style="height: {height ? `${height}px` : '100vh'}"
+	>
+		<div class="absolute inset-0">
+			<img src="/projects-1.webp" alt="" class="w-full h-full object-cover object-center" />
+		</div>
+		<div style="background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), linear-gradient(77.04deg, rgba(0, 0, 0, 0.2) 34.66%, rgba(0, 0, 0, 0) 82.22%);" class="absolute inset-0"></div>
+
+		<div class="absolute bottom-24 z-10 inset-x-36">
+      <a href={route.projects} class="mb-16 flex items-center gap-2 text-xs font-medium uppercase">
+        <img src="/arrow.svg" alt="" />
+        Back
+      </a>
+      <div class="font-medium mb-6 text-6xl">
+        Pertamina Office<br />Interior Renovation
+      </div>
+			<div class="font-light text-xl capitalize mb-40 w-4/5">
+				Interior redesign for a corporate office, focused on improving workspace efficiency, comfort, and brand integration. Delivered a modern, functional environment aligned with Pertamina’s identity.
+			</div>
+      <div class="flex gap-6 items-center">
+        <div class="w-60">
+          <div class="font-light text-sm text-[#D9DAD9]">Client</div>
+          <div class="text-white">{project.client}</div>
+        </div>
+        <div class="w-60">
+          <div class="font-light text-sm text-[#D9DAD9]">Location</div>
+          <div class="text-white">{project.location}</div>
+        </div>
+        <div class="w-60">
+          <div class="font-light text-sm text-[#D9DAD9]">Scope Of Work</div>
+          <div class="text-white">{project.work}</div>
+        </div>
+        <div class="w-60">
+          <div class="font-light text-sm text-[#D9DAD9]">Date Completed</div>
+          <div class="text-white">{project.date_completed}</div>
+        </div>
+      </div>
+		</div>
+	</section>
+  <section class="w-full px-36 py-24">
+    <div class="w-full flex items-center gap-16 mb-16">
+      <div>
+        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+      </div>
+      <div>
+        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+      </div>
+    </div>
+    <div class="w-full h-152 relative mb-4">
+      <img src="/projects-2.webp" alt="" class="object-cover object-center h-full w-full" />
+      <div class="overlay-1 absolute inset-0"></div>
+    </div>
+    <div class="grid grid-cols-2 gap-4 mb-10">
+      <div class="w-full h-110 relative">
+        <img src="/projects-3.webp" alt="" class="object-cover object-center h-full w-full" />
+        <div class="overlay-1 absolute inset-0"></div>
+      </div>
+      <div class="w-full h-110 relative">
+        <img src="/projects-4.webp" alt="" class="object-cover object-center h-full w-full" />
+        <div class="overlay-1 absolute inset-0"></div>
+      </div>
+    </div>
+    <div class="flex items-center w-full justify-center">
+      <button
+        class="inline-flex items-center gap-3 justify-center border border-[#111] px-4 py-2 text-sm text-[#111] no-underline"
+      >
+        LOAD MORE
+      </button>
+    </div>
+  </section>
+
+  <section class="bg-[#FAF5F1] w-full px-36 py-12 mb-20">
+    <div class="font-medium text-4xl mb-12">
+      Related Works
+    </div>
+    <div class="grid w-full grid-cols-3 gap-x-10 gap-y-12 overflow-hidden">
+      {#each projects as p (p.image)}
+        <a href={route.projects + '/12345678'} class="w-full">
+          <div class="w-full h-72 relative mb-4">
+            <img src={p.image} alt="" class="object-cover object-center h-full w-full" />
+            <div class="overlay-1 absolute inset-0"></div>
+          </div>
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="text-lg font-medium">
+                {p.title}
+              </div>
+              <div class="text-sm text-[#828382]">
+                {p.description}
+              </div>
+            </div>
+            <span class="inline-flex text-lg text-[#111] no-underline">↗</span>
+          </div>
+        </a>
+      {/each}
+    </div>
+  </section>
+	
+  <Reach />
+</div>
+
+<style>
+	.overlay-1 {
+		background: linear-gradient(77.04deg, rgba(0, 0, 0, 0.2) 34.66%, rgba(0, 0, 0, 0) 82.22%);
+	}
+</style>
