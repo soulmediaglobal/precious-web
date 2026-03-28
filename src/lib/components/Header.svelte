@@ -49,7 +49,7 @@
 
 	<!-- Mobile Hamburger -->
 	<button
-		class="md:hidden flex flex-col justify-center items-center w-8 h-8 gap-1.5 relative z-50 cursor-pointer text-white mix-blend-difference"
+		class="md:hidden flex flex-col justify-center items-center w-6 h-6 gap-1.5 relative z-50 cursor-pointer text-white mix-blend-difference"
 		onclick={toggleMenu}
 		aria-label="Toggle mobile menu"
 	>
