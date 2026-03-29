@@ -7,47 +7,47 @@
 	let height = $state(0);
   let projects = $state([
     {
-      image: "/about-1.webp",
+      image: "/project-list-1.webp",
       title: "Tepi Hutan Villas",
       description: "Pejeng, Bali"
     },
     {
-      image: "/about-2.webp",
+      image: "/project-list-2.webp",
       title: "Villa Baloo",
       description: "Bali"
     },
     {
-      image: "/about-3.webp",
+      image: "/project-list-3.webp",
       title: "The Long House",
       description: "Bali"
     },
     {
-      image: "/about-4.webp",
+      image: "/project-list-4.webp",
       title: "Villa Melati",
       description: "Bali"
     },
     {
-      image: "/about-5.webp",
+      image: "/project-list-5.webp",
       title: "Villa Melati",
       description: "Bali"
     },
     {
-      image: "/about-6.webp",
+      image: "/project-list-6.webp",
       title: "Villa Melati",
       description: "Bali"
     },
     {
-      image: "/about-7.webp",
+      image: "/project-list-7.webp",
       title: "Villa Melati",
       description: "Bali"
     },
     {
-      image: "/about-8.webp",
+      image: "/project-list-8.webp",
       title: "Villa Melati",
       description: "Bali"
     },
     {
-      image: "/about-9.webp",
+      image: "/project-list-9.webp",
       title: "Villa Melati",
       description: "Bali"
     }
@@ -71,7 +71,7 @@
 		style="height: {height ? `${height}px` : '100vh'}"
 	>
 		<div class="absolute inset-0">
-			<img src="/about-10.webp" alt="" class="w-full h-full object-cover object-center" />
+			<img src="/project-list-10.webp" alt="" class="w-full h-full object-cover object-center" />
 		</div>
 		<div style="background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), linear-gradient(77.04deg, rgba(0, 0, 0, 0.2) 34.66%, rgba(0, 0, 0, 0) 82.22%);" class="absolute inset-0"></div>
 
@@ -98,7 +98,7 @@
     </div>
     <div class="grid w-full grid-cols-1 md:grid-cols-3 gap-y-8 gap-x-10 md:gap-y-12 overflow-hidden mb-8 md:mb-24">
       {#each projects as p (p.image)}
-        <a href={route.portfolio + '/12345678'} class="w-full">
+        <a href={route.portofolio + '/12345678'} class="w-full">
           <div class="w-full h-72 relative mb-4">
             <img src={p.image} alt="" class="object-cover object-center h-full w-full" />
             <div class="overlay-1 absolute inset-0"></div>

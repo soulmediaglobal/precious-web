@@ -13,17 +13,17 @@
   };
   let projects = $state([
     {
-      image: "/about-1.webp",
+      image: "/project-list-1.webp",
       title: "Tepi Hutan Villas",
       description: "Pejeng, Bali"
     },
     {
-      image: "/about-2.webp",
+      image: "/project-list-2.webp",
       title: "Villa Baloo",
       description: "Bali"
     },
     {
-      image: "/about-3.webp",
+      image: "/project-list-3.webp",
       title: "The Long House",
       description: "Bali"
     }
