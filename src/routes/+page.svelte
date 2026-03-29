@@ -34,7 +34,7 @@
 		</div>
 		<div style="background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), linear-gradient(77.04deg, rgba(0, 0, 0, 0.2) 34.66%, rgba(0, 0, 0, 0) 82.22%);" class="absolute inset-0"></div>
 
-		<div class="absolute h-full md:h-auto bottom-0 md:bottom-44 z-10 inset-x-4 md:inset-x-36 flex md:block flex-col justify-end py-12 md:py-0">
+		<div class="absolute h-full md:h-auto bottom-0 md:bottom-44 z-10 inset-x-4 md:inset-x-36 flex md:block flex-col justify-end py-20 md:py-0">
 			<h1 class="mb-8 md:mb-16 text-3xl md:text-6xl font-medium">
 				Complete Building Solutions<br />From Structure To Interior
 			</h1>
