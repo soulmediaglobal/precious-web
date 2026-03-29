@@ -5,9 +5,9 @@
 
 	const navItems: Record<string, string>[] = [
 		{ name: 'Home', href: route.root },
-		{ name: 'About', href: route.about },
-		{ name: 'Projects', href: route.projects },
-		{ name: 'Services', href: route.services }
+		{ name: 'About Us', href: route.about },
+		{ name: 'Expertise', href: route.expertise },
+		{ name: 'Portofolio', href: route.portofolio }
 	];
 
 	let y = $state(0);

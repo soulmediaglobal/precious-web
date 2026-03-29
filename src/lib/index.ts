@@ -2,6 +2,6 @@
 export const route: Record<string, string> = {
   root: '/',
   about: '/about',
-  projects: '/projects',
-  services: '/services'
+  portofolio: '/portofolio',
+  expertise: '/expertise'
 };

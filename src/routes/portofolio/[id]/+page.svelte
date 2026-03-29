@@ -52,7 +52,7 @@
 		<div style="background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), linear-gradient(77.04deg, rgba(0, 0, 0, 0.2) 34.66%, rgba(0, 0, 0, 0) 82.22%);" class="absolute inset-0"></div>
 
 		<div class="absolute bottom-8 md:bottom-24 z-10 inset-x-4 md:inset-x-36">
-      <a href={route.projects} class="mb-6 md:mb-16 flex items-center gap-2 text-xs font-medium uppercase">
+      <a href={route.portofolio} class="mb-6 md:mb-16 flex items-center gap-2 text-xs font-medium uppercase">
         <img src="/arrow.svg" alt="" />
         Back
       </a>
@@ -121,7 +121,7 @@
     </div>
     <div class="grid w-full grid-cols-1 md:grid-cols-3 gap-y-8 gap-x-10 md:gap-y-12 overflow-hidden">
       {#each projects as p (p.image)}
-        <a href={route.projects + '/12345678'} class="w-full">
+        <a href={route.portfolio + '/12345678'} class="w-full">
           <div class="w-full h-72 relative mb-4">
             <img src={p.image} alt="" class="object-cover object-center h-full w-full" />
             <div class="overlay-1 absolute inset-0"></div>

@@ -98,7 +98,7 @@
     </div>
     <div class="grid w-full grid-cols-1 md:grid-cols-3 gap-y-8 gap-x-10 md:gap-y-12 overflow-hidden mb-8 md:mb-24">
       {#each projects as p (p.image)}
-        <a href={route.projects + '/12345678'} class="w-full">
+        <a href={route.portfolio + '/12345678'} class="w-full">
           <div class="w-full h-72 relative mb-4">
             <img src={p.image} alt="" class="object-cover object-center h-full w-full" />
             <div class="overlay-1 absolute inset-0"></div>

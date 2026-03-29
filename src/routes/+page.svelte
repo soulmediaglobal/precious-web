@@ -87,16 +87,16 @@
 				class="grid grid-cols-2 gap-4 w-full"
 				style="height: calc(50% - 0.5rem)"
 			>
-				<div class="w-full h-full relative">
+				<div class="w-full h-56 relative">
 					<img src="/home-image-3.webp" alt="" class="object-cover object-center h-full w-full" />
 					<div class="overlay-1 absolute inset-0"></div>
 				</div>
-				<div class="w-full h-full relative">
+				<div class="w-full h-56 relative">
 					<img src="/home-image-4.webp" alt="" class="object-cover object-center h-full w-full" />
 					<div class="overlay-1 absolute inset-0"></div>
 				</div>
 			</div>
-			<div class="absolute right-0 w-full left-20 bottom-20" style="height: calc(50% - 5.5rem)">
+			<div class="absolute right-0 w-full left-20 bottom-18 h-56">
 				<img src="/home-image-5.webp" alt="" class="object-cover object-[75%_25%] h-full w-full" />
 				<div class="overlay-1 absolute inset-0"></div>
 			</div>
