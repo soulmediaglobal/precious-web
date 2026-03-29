@@ -63,8 +63,8 @@
 		class="relative w-full overflow-hidden bg-[linear-gradient(180deg,rgba(5,12,28,0.45),rgba(5,12,28,0.6)),radial-gradient(circle_at_50%_20%,rgba(84,107,159,0.45),transparent_35%),linear-gradient(135deg,#0d172d_0%,#13284d_36%,#31435d_65%,#1c2738_100%)] text-white"
 		style="height: {height ? `${height}px` : '100vh'}"
 	>
-		<div class="absolute inset-0">
-			<img src="/about-1.webp" alt="" class="w-full h-full object-cover object-center" />
+		<div class="absolute inset-0 overflow-hidden">
+			<img src="/about-1.webp" alt="" class="object-cover object-center" style="width: {width ? `${width}px` : '100vw'}; height: {height ? `${height}px` : '100vh'};" />
 		</div>
 		<div style="background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), linear-gradient(77.04deg, rgba(0, 0, 0, 0.2) 34.66%, rgba(0, 0, 0, 0) 82.22%);" class="absolute inset-0"></div>
 
