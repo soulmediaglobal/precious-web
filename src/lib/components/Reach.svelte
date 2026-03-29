@@ -46,27 +46,27 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div class="flex flex-col">
             <label for="firstName" class="text-[10px] mb-1 text-gray-400">First Name</label>
-            <input type="text" id="firstName" placeholder="Makenna" class="bg-transparent border-b border-gray-700 pb-1.5 focus:outline-none focus:border-white transition-colors text-white placeholder-gray-600 text-sm w-full" />
+            <input type="text" id="firstName" placeholder="Makenna" class="bg-transparent border-0 border-b border-gray-700 pb-1.5 focus:outline-none focus:ring-0 focus:border-white transition-colors text-white placeholder-gray-600 text-sm w-full" />
           </div>
           <div class="flex flex-col">
             <label for="lastName" class="text-[10px] mb-1 text-gray-400">Last name</label>
-            <input type="text" id="lastName" placeholder="Baptista" class="bg-transparent border-b border-gray-700 pb-1.5 focus:outline-none focus:border-white transition-colors text-white placeholder-gray-600 text-sm w-full" />
+            <input type="text" id="lastName" placeholder="Baptista" class="bg-transparent border-0 border-b border-gray-700 pb-1.5 focus:outline-none focus:ring-0 focus:border-white transition-colors text-white placeholder-gray-600 text-sm w-full" />
           </div>
         </div>
 
         <div class="flex flex-col">
           <label for="email" class="text-[10px] mb-1 text-gray-400">Email</label>
-          <input type="email" id="email" placeholder="makenna.baptista@mail.com" class="bg-transparent border-b border-gray-700 pb-1.5 focus:outline-none focus:border-white transition-colors text-white placeholder-gray-600 text-sm w-full" />
+          <input type="email" id="email" placeholder="makenna.baptista@mail.com" class="bg-transparent border-0 border-b border-gray-700 pb-1.5 focus:outline-none focus:ring-0 focus:border-white transition-colors text-white placeholder-gray-600 text-sm w-full" />
         </div>
 
         <div class="flex flex-col">
           <label for="phone" class="text-[10px] mb-1 text-gray-400">Phone</label>
-          <input type="tel" id="phone" placeholder="Makenna Baptista" class="bg-transparent border-b border-gray-700 pb-1.5 focus:outline-none focus:border-white transition-colors text-white placeholder-gray-600 text-sm w-full" />
+          <input type="tel" id="phone" placeholder="Makenna Baptista" class="bg-transparent border-0 border-b border-gray-700 pb-1.5 focus:outline-none focus:ring-0 focus:border-white transition-colors text-white placeholder-gray-600 text-sm w-full" />
         </div>
 
         <div class="flex flex-col">
           <label for="message" class="text-[10px] mb-1 text-gray-400">Message</label>
-          <textarea id="message" placeholder="Makenna Baptista" rows="1" class="bg-transparent border-b border-gray-700 pb-1.5 focus:outline-none focus:border-white transition-colors text-white placeholder-gray-600 resize-none text-sm w-full"></textarea>
+          <textarea id="message" placeholder="Makenna Baptista" rows="1" class="bg-transparent border-0 border-b border-gray-700 pb-1.5 focus:outline-none focus:ring-0 focus:border-white transition-colors text-white placeholder-gray-600 resize-none text-sm w-full"></textarea>
         </div>
 
         <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mt-8">

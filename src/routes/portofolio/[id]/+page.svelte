@@ -37,7 +37,9 @@
 	}
 
 	onMount(() => {
-		document.addEventListener('resize', checkSize);
+    checkSize();
+
+    document.addEventListener('resize', checkSize);
 
 		return () => {
 			document.removeEventListener('resize', checkSize);
