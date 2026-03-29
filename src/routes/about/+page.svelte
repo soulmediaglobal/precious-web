@@ -82,7 +82,6 @@
 
   <section
 		class="relative grid w-full grid-cols-1 md:grid-cols-2 overflow-hidden bg-[#f3f3f3]"
-		style="height: {height ? (width >= 768 ? `${height * 0.93}px` : 'auto') : (width >= 768 ? '93vh' : 'auto')}"
 	>
 		<div class="hidden md:absolute inset-0">
 			<img src="/home-image-2.webp" alt="" class="w-full h-full object-cover object-center" />

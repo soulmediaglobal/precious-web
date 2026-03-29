@@ -103,7 +103,7 @@
       <div class="text-4xl font-medium text-left w-full">
         Selected Works
       </div>
-      <div class="text-base font-light text-left md:text-right w-full md:w-2/5">
+      <div class="text-base font-light text-left md:text-right w-full md:w-3/5">
         A curated selection of our built and conceptual projects, spanning architecture, interiors, and landscape.
       </div>
     </div>

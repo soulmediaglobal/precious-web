@@ -37,8 +37,8 @@
 		<div style="background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), linear-gradient(77.04deg, rgba(0, 0, 0, 0.2) 34.66%, rgba(0, 0, 0, 0) 82.22%);" class="absolute inset-0"></div>
 
 		<div class="absolute bottom-8 md:bottom-44 z-10 inset-x-4 md:inset-x-36">
-			<h1 class="mb-8 md:mb-16 text-3xl md:text-6xl font-medium">
-				Complete Building Solutions<br />From Structure To Interior
+			<h1 class="mb-8 md:mb-16 text-3xl md:text-6xl font-medium uppercase">
+				Precision Planned.<br />Meticulously Delivered.
 			</h1>
 
 			<div class="grid md:flex flex-wrap gap-6">
@@ -60,13 +60,12 @@
 
 	<section
 		class="relative grid w-full grid-cols-1 md:grid-cols-2 overflow-hidden bg-[#f3f3f3]"
-		style="height: {height ? (width >= 768 ? `${height * 0.93}px` : 'auto') : (width >= 768 ? '93vh' : 'auto')}"
 	>
 		<div class="hidden md:absolute inset-0">
 			<img src="/home-image-2.webp" alt="" class="w-full h-full object-cover object-center" />
 		</div>
 		<div class="hidden md:absolute inset-0" style="background: linear-gradient(270deg, rgba(255, 255, 255, 85%) 41.16%, #FFFFFF 86.3%);"></div>
-		<div class="relative z-10 pl-4 md:pl-36 pr-4 md:pr-16 pt-8 md:pt-32 pb-8 md:pb-20 w-full">
+		<div class="sticky top-0 z-10 pl-4 md:pl-36 pr-4 md:pr-16 pt-8 md:pt-32 pb-8 md:pb-20 w-full">
 			<div class="mb-1 text-xs tracking-[0.17em] text-[#d4a321]">ABOUT US</div>
 			<h2 class="mb-5 text-[clamp(2rem,3vw,3.5rem)] leading-[1.08] font-medium tracking-[-0.03em]">
 				Building Excellence<br />Across Indonesia
@@ -89,18 +88,26 @@
 				class="grid grid-cols-2 gap-4 w-full"
 				style="height: calc(50% - 0.5rem)"
 			>
-				<div class="w-full h-56 relative">
+				<div class="w-full h-64 relative">
 					<img src="/home-image-3.webp" alt="" class="object-cover object-center h-full w-full" />
 					<div class="overlay-1 absolute inset-0"></div>
 				</div>
-				<div class="w-full h-56 relative">
+				<div class="w-full h-64 relative">
 					<img src="/home-image-4.webp" alt="" class="object-cover object-center h-full w-full" />
 					<div class="overlay-1 absolute inset-0"></div>
 				</div>
-			</div>
-			<div class="absolute right-0 w-full left-20 bottom-18 h-56">
-				<img src="/home-image-5.webp" alt="" class="object-cover object-[75%_25%] h-full w-full" />
-				<div class="overlay-1 absolute inset-0"></div>
+				<div class="w-full h-94 relative col-span-2">
+					<img src="/home-image-5.webp" alt="" class="object-cover object-[75%_25%] h-full w-full" />
+					<div class="overlay-1 absolute inset-0"></div>
+				</div>
+				<div class="w-full h-64 relative">
+					<img src="/home-image-3.webp" alt="" class="object-cover object-center h-full w-full" />
+					<div class="overlay-1 absolute inset-0"></div>
+				</div>
+				<div class="w-full h-64 relative">
+					<img src="/home-image-4.webp" alt="" class="object-cover object-center h-full w-full" />
+					<div class="overlay-1 absolute inset-0"></div>
+				</div>
 			</div>
 		</div>
 	</section>
