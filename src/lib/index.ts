@@ -3,5 +3,6 @@ export const route: Record<string, string> = {
   root: '/',
   about: '/about',
   portofolio: '/portofolio',
-  expertise: '/expertise'
+  expertise: '/expertise',
+  contact: '/contact'
 };
