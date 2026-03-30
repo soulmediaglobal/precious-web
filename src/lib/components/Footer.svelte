@@ -1,6 +1,6 @@
 <!-- eslint-disable svelte/no-navigation-without-resolve -->
 <footer
-  class="mx-auto grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.2fr_0.8fr_0.9fr_1.2fr] gap-10 md:gap-10 lg:gap-10 bg-[#060606] px-6 md:px-10 lg:px-14 pt-12 md:pt-12 lg:pt-13 pb-6 md:pb-6 text-white/80"
+  class="mx-auto grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.2fr_0.8fr_0.9fr_1.2fr] gap-10 md:gap-10 lg:gap-10 bg-[#060606] px-4 md:px-36 py-8 md:py-12 text-white/80"
 >
   <div class="flex justify-start items-start">
     <img src="/logo-white.svg" alt="" class="h-16 lg:h-auto max-w-max" />

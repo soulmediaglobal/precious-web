@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { route } from "$lib";
+
   let { expand = false } = $props();
 
 	let componentHeight = $state(0);
@@ -7,13 +9,16 @@
 <!-- eslint-disable svelte/no-navigation-without-resolve -->
 <section
   id="contact"
-  class="relative mx-auto w-full md:mb-20 mb-10 h-40 md:h-160"
+  class="relative mx-auto w-full h-40 md:h-160"
 >
   <div
     class="hidden md:block h-full w-[72%] relative"
   >
     <img src="/home-image-8.webp" alt="" class="object-cover object-center h-full w-full" />
     <div class="overlay-2 absolute inset-0"></div>
+    <div class="absolute inset-y-0 left-56 overflow-hidden">
+      <img src="/mask-5.webp" alt="" class="h-full w-auto" />
+    </div>
   </div>
 
   {#if !expand}
@@ -26,7 +31,7 @@
       <h3 class="mb-4 text-4xl font-medium">
         Need to Reach Us?
       </h3>
-      <a href="/" class="inline-flex text-[1.375rem] text-white no-underline">↗</a>
+      <a href={route.contact} class="inline-flex text-[1.375rem] text-white no-underline">↗</a>
     </div>
   {:else}
     <div
