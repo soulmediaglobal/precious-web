@@ -40,7 +40,7 @@
 			<img src="/mask-1.webp" alt="" class="w-3/4 h-full object-cover object-center" />
 		</div>
 
-		<div class="absolute bottom-8 md:bottom-44 z-10 inset-x-4 md:inset-x-36">
+		<div class="absolute inset-y-0 z-10 flex flex-col pb-8 md:pb-0 justify-end md:justify-center inset-x-4 md:inset-x-36">
 			<h1 class="mb-8 md:mb-16 text-3xl md:text-6xl font-medium uppercase w-full text-left md:text-center">
 				Precision Planned.<br />Meticulously Delivered.
 			</h1>
