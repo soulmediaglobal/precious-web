@@ -38,6 +38,7 @@
   ]);
 	let height = $state(0);
 	let width = $state(0);
+	let scrollY = $state(0);
 
 	const checkSize = () => {
 		height = window.innerHeight;
@@ -55,6 +56,8 @@
 	})
 </script>
 
+<svelte:window bind:scrollY />
+
 <svelte:head>
 	<title>Precious Contractor - About Us</title>
 </svelte:head>
@@ -66,7 +69,12 @@
 		style="height: {height ? `${height}px` : '100vh'}"
 	>
 		<div class="absolute inset-0 overflow-hidden">
-			<img src="/about-1.webp" alt="" class="object-cover object-center" style="width: {width ? `${width}px` : '100vw'}; height: {height ? `${height}px` : '100vh'};" />
+			<img 
+				src="/about-1.webp" 
+				alt="" 
+				class="absolute -top-[15%] left-0 w-full h-[130%] object-cover object-center" 
+				style="transform: translate3d(0, {scrollY * 0.3}px, 0);"
+			/>
 		</div>
 		<div style="background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), linear-gradient(77.04deg, rgba(0, 0, 0, 0.2) 34.66%, rgba(0, 0, 0, 0) 82.22%);" class="absolute inset-0"></div>
 
@@ -105,7 +113,7 @@
 				Whether in urban environments or remote locations, we maintain the same level of quality and service—delivering results that meet expectations and stand the test of time.
 			</p>
 			<a
-				href="#contact"
+				href={route.contact}
 				class="hidden md:inline-flex items-center gap-3 justify-center border px-4 py-2 text-sm no-underline transition-colors"
 			>
         Get In Touch
@@ -155,7 +163,7 @@
 					<p class="mb-5 max-w-125 text-[0.9375rem] leading-[1.75] text-white/70">
 						To provide dependable construction solutions with a focus on quality, efficiency, and precision—ensuring every project is delivered on time, on plan, and to the highest standards.
 					</p>
-					<a href="/" class="mt-2 inline-flex text-[1.375rem] text-white no-underline">↗</a>
+					<a href={route.expertise} class="mt-2 inline-flex text-[1.375rem] text-white no-underline">↗</a>
 				</div>
 			</div>
 		</div>

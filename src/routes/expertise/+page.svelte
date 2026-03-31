@@ -55,11 +55,10 @@
     }
   ]);
 	let height = $state(0);
-	let width = $state(0);
+	let scrollY = $state(0);
 
 	const checkSize = () => {
 		height = window.innerHeight;
-		width = window.innerWidth;
 	}
 
 	onMount(() => {
@@ -73,6 +72,8 @@
 	})
 </script>
 
+<svelte:window bind:scrollY />
+
 <svelte:head>
 	<title>Precious Contractor - Expertise</title>
 </svelte:head>
@@ -84,7 +85,12 @@
 		style="height: {height ? `${height}px` : '100vh'}"
 	>
 		<div class="absolute inset-0 overflow-hidden">
-			<img src="/about-1.webp" alt="" class="object-cover object-center" style="width: {width ? `${width}px` : '100vw'}; height: {height ? `${height}px` : '100vh'};" />
+			<img 
+				src="/about-1.webp" 
+				alt="" 
+				class="absolute -top-[15%] left-0 w-full h-[130%] object-cover object-center" 
+				style="transform: translate3d(0, {scrollY * 0.3}px, 0);"
+			/>
 		</div>
 		<div style="background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), linear-gradient(77.04deg, rgba(0, 0, 0, 0.2) 34.66%, rgba(0, 0, 0, 0) 82.22%);" class="absolute inset-0"></div>
 
@@ -133,7 +139,7 @@
     </div>
     <div class="grid w-full grid-cols-1 md:grid-cols-3 gap-y-8 gap-x-10 md:gap-y-12 overflow-hidden">
       {#each projects as p (p.image)}
-        <a href={route.portfolio + '/12345678'} class="w-full">
+        <a href={route.portofolio + '/12345678'} class="w-full">
           <div class="w-full h-72 relative mb-4">
             <img src={p.image} alt="" class="object-cover object-center h-full w-full" />
             <div class="overlay-1 absolute inset-0"></div>

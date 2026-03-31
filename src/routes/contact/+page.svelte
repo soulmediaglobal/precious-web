@@ -4,11 +4,10 @@
 	import Reach from "$lib/components/Reach.svelte";
 
 	let height = $state(0);
-	let width = $state(0);
+	let scrollY = $state(0);
 
 	const checkSize = () => {
 		height = window.innerHeight;
-		width = window.innerWidth;
 	}
 
 	onMount(() => {
@@ -22,6 +21,8 @@
 	})
 </script>
 
+<svelte:window bind:scrollY />
+
 <svelte:head>
 	<title>Precious Contractor - Expertise</title>
 </svelte:head>
@@ -33,7 +34,12 @@
 		style="height: {height ? `${height}px` : '100vh'}"
 	>
 		<div class="absolute inset-0 overflow-hidden">
-			<img src="/contact.webp" alt="" class="object-cover object-center" style="width: {width ? `${width}px` : '100vw'}; height: {height ? `${height}px` : '100vh'};" />
+			<img 
+				src="/contact.webp" 
+				alt="" 
+				class="absolute -top-[15%] left-0 w-full h-[130%] object-cover object-center" 
+				style="transform: translate3d(0, {scrollY * 0.3}px, 0);"
+			/>
 		</div>
 		<div style="background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), linear-gradient(77.04deg, rgba(0, 0, 0, 0.2) 34.66%, rgba(0, 0, 0, 0) 82.22%);" class="absolute inset-0"></div>
 
