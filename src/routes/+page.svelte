@@ -8,8 +8,14 @@
 	let scrollY = $state(0);
 
 	const checkSize = () => {
-		height = window.innerHeight;
-		width = window.innerWidth;
+		const newWidth = window.innerWidth;
+		const newHeight = window.innerHeight;
+
+		// Only update if it's the first check or significant resize (e.g. rotation)
+		if (width === 0 || width !== newWidth || Math.abs(height - newHeight) > 100) {
+			height = newHeight;
+			width = newWidth;
+		}
 	}
 
 	onMount(() => {
