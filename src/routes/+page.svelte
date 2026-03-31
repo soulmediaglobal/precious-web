@@ -36,16 +36,16 @@
 			<img src="/home-image-1.webp" alt="" class="w-full h-full object-cover object-center" />
 		</div>
 		<div style="background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), linear-gradient(77.04deg, rgba(0, 0, 0, 0.2) 34.66%, rgba(0, 0, 0, 0) 82.22%);" class="absolute inset-0"></div>
-		<div class="hidden absolute inset-0 z-0 pointer-events-none md:flex items-center justify-center">
-			<img src="/mask-1.webp" alt="" class="w-3/4 h-full object-cover object-center" />
+		<div class="hidden absolute right-0 bottom-0 z-0 pointer-events-none md:flex items-center justify-end">
+			<img src="/mask-6.webp" alt="" class="w-2/5 h-full object-cover object-center" />
 		</div>
 
-		<div class="absolute inset-y-0 z-10 flex flex-col pb-8 md:pb-0 justify-end md:justify-center inset-x-4 md:inset-x-36">
-			<h1 class="mb-8 md:mb-16 text-3xl md:text-6xl font-medium uppercase w-full text-left md:text-center">
+		<div class="absolute inset-y-0 z-10 flex flex-col items-start pb-8 justify-end md:justify-center inset-x-4 md:inset-x-36">
+			<h1 class="mb-8 md:mb-18 text-3xl md:text-6xl font-medium uppercase w-full text-left">
 				Precision Planned.<br />Meticulously Delivered.
 			</h1>
 
-			<div class="grid grid-cols-1 md:flex flex-wrap justify-start md:justify-center gap-6 w-full">
+			<div class="grid grid-cols-1 md:flex flex-wrap justify-start gap-6 w-full">
 				<a
 					href={route.portofolio}
 					class="inline-flex items-center gap-3 bg-[#e0b126] w-full md:w-auto px-6 py-4 text-sm tracking-[0.01em] text-[#111] no-underline"
