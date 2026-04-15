@@ -1,41 +1,9 @@
 <script lang="ts">
 	import { onMount } from "svelte";
-	import { route } from "$lib";
+	import { route, teams } from "$lib";
 
 	import Reach from "$lib/components/Reach.svelte";
 
-  let projects = $state([
-    {
-      image: "/about-5.webp",
-      title: "Nolan Curtis",
-      description: "Founder, Commercial Strategist"
-    },
-    {
-      image: "/about-6.webp",
-      title: "Kierra Passaquindici Arcand",
-      description: "Wellness Curator"
-    },
-    {
-      image: "/about-7.webp",
-      title: "Gretchen Rhiel Madsen",
-      description: "Human Capital & Quality Excellence dvisor"
-    },
-    {
-      image: "/about-8.webp",
-      title: "Lincoln Culhane",
-      description: "Strategic Sales Distribution Channel"
-    },
-    {
-      image: "/about-9.webp",
-      title: "Tiana Vaccaro",
-      description: "Architect, Interdisciplinary Creative, Spatial & Cultural Strategist"
-    },
-    {
-      image: "/about-10.webp",
-      title: "Phillip Workman",
-      description: "Fun Manager"
-    }
-  ]);
 	let height = $state(0);
 	let width = $state(0);
 	let scrollY = $state(0);
@@ -181,8 +149,8 @@
       </div>
     </div>
     <div class="grid w-full grid-cols-1 md:grid-cols-3 gap-y-8 gap-x-10 md:gap-y-12 overflow-hidden mb-8 md:mb-24">
-      {#each projects as p (p.image)}
-        <a href={route.portfolio + '/12345678'} class="w-full">
+      {#each teams as p (p.image)}
+        <div class="w-full">
           <div class="w-full h-72 relative mb-4">
             <img src={p.image} alt="" class="object-cover object-center h-full w-full" />
             <div class="overlay-1 absolute inset-0"></div>
@@ -190,15 +158,15 @@
           <div class="flex items-center justify-between">
             <div>
               <div class="text-lg font-medium">
-                {p.title}
+                {p.name}
               </div>
               <div class="text-sm text-[#828382]">
-                {p.description}
+                {p.title}
               </div>
             </div>
             <span class="inline-flex text-lg text-[#111] no-underline">↗</span>
           </div>
-        </a>
+        </div>
       {/each}
     </div>
     <div class="flex items-center w-full justify-center">

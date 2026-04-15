@@ -1,4 +1,4 @@
-import type { Portofolio } from "./types";
+import type { Portofolio, Team } from "./types";
 
 export const route: Record<string, string> = {
   root: '/',
@@ -130,3 +130,61 @@ export const portofolio: Portofolio[] = [
     images: []
   }
 ];
+
+export const teams: Team[] = [
+  {
+    name: "Nugroho Kristiano (Kris)",
+    title: "Director",
+    image: "/teams/nugroho-kristiano-kris.webp"
+  },
+  {
+    name: "R. Bagus Himawan Pradipta (Diptasinyo)",
+    title: "Manager Operational",
+    image: "/teams/r-bagus-himawan-pradipta-diptasinyo.webp"
+  },
+  {
+    name: "Pontianus Pratondo",
+    title: "Legal Manager",
+    image: "/teams/pontianus-pratondo.webp"
+  },
+  {
+    name: "Neo",
+    title: "Architect",
+    image: "/teams/neo.webp"
+  },
+  {
+    name: "Yustam Efendi",
+    title: "SPV Engineering",
+    image: "/teams/yustam-efendi.webp"
+  },
+  {
+    name: "Warsito (Sadam)",
+    title: "SPV Engineering",
+    image: "/teams/warsito-sadam.webp"
+  },
+  {
+    name: "Mukhlis (Muklay)",
+    title: "SPV Engineering",
+    image: "/teams/mukhlis-muklay.webp"
+  },
+  {
+    name: "Teun Wagt",
+    title: "Digital Marketing Specialist",
+    image: "/teams/teun-wagt.webp"
+  },
+  {
+    name: "Sheila Diva Cornelia",
+    title: "Drafter",
+    image: "/teams/sheila-diva-cornelia.webp"
+  },
+  {
+    name: "Khopipah Pratiwi (Ovi)",
+    title: "Administrative Admin",
+    image: "/teams/khopipah-pratiwi-ovi.webp"
+  },
+  {
+    name: "Dwi Ariana",
+    title: "Sales Marketing",
+    image: "/teams/dwi-ariana.webp"
+  }
+]

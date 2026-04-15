@@ -68,7 +68,7 @@
 			<div class="font-light text-base md:text-xl capitalize mb-10 md:mb-40 w-full md:w-4/5">
 				{portofolio.short_description}
 			</div>
-      <div class="grid grid-cols-2 md:flex gap-6 items-center">
+      <div class="grid grid-cols-2 md:flex gap-6 items-start">
         <div class="w-full h-full md:h-auto flex md:block flex-col justify-start md:w-60">
           <div class="font-light text-sm text-[#D9DAD9]">Client</div>
           <div class="text-white">{portofolio.client}</div>

@@ -10,3 +10,9 @@ export interface Portofolio {
   status: string;
   images: string[];
 }
+
+export interface Team {
+  name: string;
+  title: string;
+  image: string;
+}
