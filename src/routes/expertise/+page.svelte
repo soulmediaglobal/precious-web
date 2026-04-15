@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from "svelte";
-	import { route } from "$lib";
+	import { route, portofolio } from "$lib";
 
 	import Reach from "$lib/components/Reach.svelte";
 
@@ -37,23 +37,6 @@
     }
   ])
 
-  let projects = $state([
-    {
-      image: "/project-list-1.webp",
-      title: "Tepi Hutan Villas",
-      description: "Pejeng, Bali"
-    },
-    {
-      image: "/project-list-2.webp",
-      title: "Villa Baloo",
-      description: "Bali"
-    },
-    {
-      image: "/project-list-3.webp",
-      title: "The Long House",
-      description: "Bali"
-    }
-  ]);
 	let height = $state(0);
 	let scrollY = $state(0);
 
@@ -138,19 +121,19 @@
       </div>
     </div>
     <div class="grid w-full grid-cols-1 md:grid-cols-3 gap-y-8 gap-x-10 md:gap-y-12 overflow-hidden">
-      {#each projects as p (p.image)}
-        <a href={route.portofolio + '/12345678'} class="w-full">
+      {#each portofolio.filter((_, i) => i < 3) as p (p.slug)}
+        <a href={route.portofolio + '/' + p.slug} class="w-full">
           <div class="w-full h-72 relative mb-4">
-            <img src={p.image} alt="" class="object-cover object-center h-full w-full" />
+            <img src={p.images[0]} alt="" class="object-cover object-center h-full w-full" />
             <div class="overlay-1 absolute inset-0"></div>
           </div>
           <div class="flex items-center justify-between">
             <div>
               <div class="text-lg font-medium">
-                {p.title}
+                {p.project_name}
               </div>
               <div class="text-sm text-[#828382]">
-                {p.description}
+                {p.location}
               </div>
             </div>
             <span class="inline-flex text-lg text-[#111] no-underline">↗</span>

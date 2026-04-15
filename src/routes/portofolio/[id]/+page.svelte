@@ -1,32 +1,21 @@
 <script lang="ts">
 	import { onMount } from "svelte";
-	import { route } from "$lib";
+	import { route, portofolio as p_list } from "$lib";
 
 	import Reach from "$lib/components/Reach.svelte";
 
-  let project = {
-    client: 'Pertamina Indonesia',
-    location: 'Pejeng, Bali',
-    work: 'Architecture, Interior',
-    date_completed: '2025'
-  };
-  let projects = $state([
-    {
-      image: "/project-list-1.webp",
-      title: "Tepi Hutan Villas",
-      description: "Pejeng, Bali"
-    },
-    {
-      image: "/project-list-2.webp",
-      title: "Villa Baloo",
-      description: "Bali"
-    },
-    {
-      image: "/project-list-3.webp",
-      title: "The Long House",
-      description: "Bali"
+  let { data } = $props();
+
+  let portofolio = $derived(data.portofolio);
+
+  let projects = $derived.by(() => {
+    let filtered = p_list.filter(item => item.category === portofolio.category && item.slug !== portofolio.slug);
+    if (filtered.length === 0) {
+      const others = p_list.filter(item => item.slug !== portofolio.slug);
+      return others.sort(() => 0.5 - Math.random()).slice(0, 3);
     }
-  ]);
+    return filtered.slice(0, 3);
+  });
 
 	let height = $state(0);
 	let scrollY = $state(0);
@@ -49,7 +38,7 @@
 <svelte:window bind:scrollY />
 
 <svelte:head>
-	<title>Precious Contractor</title>
+	<title>{portofolio.project_name} - Precious Contractor</title>
 </svelte:head>
 
 <!-- eslint-disable svelte/no-navigation-without-resolve -->
@@ -60,7 +49,7 @@
 	>
 		<div class="absolute inset-0 overflow-hidden">
 			<img 
-				src="/projects-1.webp" 
+				src={portofolio.images[0]}
 				alt="" 
 				class="absolute -top-[15%] left-0 w-full h-[130%] object-cover object-center" 
 				style="transform: translate3d(0, {scrollY * 0.3}px, 0);"
@@ -73,28 +62,28 @@
         <img src="/arrow.svg" alt="" />
         Back
       </a>
-      <div class="font-medium mb-6 text-3xl md:text-6xl">
-        Pertamina Office<br />Interior Renovation
+      <div class="font-medium mb-6 text-3xl md:text-6xl w-1/2">
+        {portofolio.project_name}
       </div>
 			<div class="font-light text-base md:text-xl capitalize mb-10 md:mb-40 w-full md:w-4/5">
-				Interior redesign for a corporate office, focused on improving workspace efficiency, comfort, and brand integration. Delivered a modern, functional environment aligned with Pertamina’s identity.
+				{portofolio.short_description}
 			</div>
       <div class="grid grid-cols-2 md:flex gap-6 items-center">
         <div class="w-full h-full md:h-auto flex md:block flex-col justify-start md:w-60">
           <div class="font-light text-sm text-[#D9DAD9]">Client</div>
-          <div class="text-white">{project.client}</div>
+          <div class="text-white">{portofolio.client}</div>
         </div>
         <div class="w-full h-full md:h-auto flex md:block flex-col justify-start md:w-60">
           <div class="font-light text-sm text-[#D9DAD9]">Location</div>
-          <div class="text-white">{project.location}</div>
+          <div class="text-white">{portofolio.location}</div>
         </div>
         <div class="w-full h-full md:h-auto flex md:block flex-col justify-start md:w-60">
           <div class="font-light text-sm text-[#D9DAD9]">Scope Of Work</div>
-          <div class="text-white">{project.work}</div>
+          <div class="text-white">{portofolio.category}</div>
         </div>
         <div class="w-full h-full md:h-auto flex md:block flex-col justify-start md:w-60">
-          <div class="font-light text-sm text-[#D9DAD9]">Date Completed</div>
-          <div class="text-white">{project.date_completed}</div>
+          <div class="font-light text-sm text-[#D9DAD9]">Status</div>
+          <div class="text-white">{portofolio.status}</div>
         </div>
       </div>
 		</div>
@@ -103,23 +92,23 @@
   <section class="w-full px-4 md:px-36 py-18 md:py-24">
     <div class="w-full flex flex-col md:flex-row items-center gap-4 md:gap-16 mb-8 md:mb-16">
       <div>
-        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+        {portofolio.long_description_p1}
       </div>
       <div>
-        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+        {portofolio.long_description_p2}
       </div>
     </div>
     <div class="w-full h-80 md:h-152 relative mb-4">
-      <img src="/projects-2.webp" alt="" class="object-cover object-center h-full w-full" />
+      <img src={portofolio.images[1]} alt="" class="object-cover object-center h-full w-full" />
       <div class="overlay-1 absolute inset-0"></div>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8 md:mb-10">
       <div class="w-full h-80 md:h-110 relative">
-        <img src="/projects-3.webp" alt="" class="object-cover object-center h-full w-full" />
+        <img src={portofolio.images[2]} alt="" class="object-cover object-center h-full w-full" />
         <div class="overlay-1 absolute inset-0"></div>
       </div>
       <div class="w-full h-80 md:h-110 relative">
-        <img src="/projects-4.webp" alt="" class="object-cover object-center h-full w-full" />
+        <img src={portofolio.images[3]} alt="" class="object-cover object-center h-full w-full" />
         <div class="overlay-1 absolute inset-0"></div>
       </div>
     </div>
@@ -137,19 +126,19 @@
       Related Works
     </div>
     <div class="grid w-full grid-cols-1 md:grid-cols-3 gap-y-8 gap-x-10 md:gap-y-12 overflow-hidden">
-      {#each projects as p (p.image)}
-        <a href={route.portofolio + '/12345678'} class="w-full">
+      {#each projects as p (p.slug)}
+        <a href="{route.portofolio}/{p.slug}" class="w-full">
           <div class="w-full h-72 relative mb-4">
-            <img src={p.image} alt="" class="object-cover object-center h-full w-full" />
+            <img src={p.images[0]} alt="" class="object-cover object-center h-full w-full" />
             <div class="overlay-1 absolute inset-0"></div>
           </div>
           <div class="flex items-center justify-between">
             <div>
               <div class="text-lg font-medium">
-                {p.title}
+                {p.project_name}
               </div>
               <div class="text-sm text-[#828382]">
-                {p.description}
+                {p.location}
               </div>
             </div>
             <span class="inline-flex text-lg text-[#111] no-underline">↗</span>
