@@ -36,7 +36,7 @@
 </svelte:head>
 
 <!-- eslint-disable svelte/no-navigation-without-resolve -->
-<div class="w-full overflow-x-clip bg-[#232423] text-[#161616]">
+<div class="w-full overflow-x-clip bg-secondary text-[#161616]">
 	<section
 		class="relative w-full overflow-hidden bg-[linear-gradient(180deg,rgba(5,12,28,0.45),rgba(5,12,28,0.6)),radial-gradient(circle_at_50%_20%,rgba(84,107,159,0.45),transparent_35%),linear-gradient(135deg,#0d172d_0%,#13284d_36%,#31435d_65%,#1c2738_100%)] text-white"
 		style="height: {height ? `${height}px` : '100dvh'}"
@@ -90,10 +90,10 @@
 			<h2 class="text-white mb-5 text-[clamp(2rem,3vw,3.5rem)] leading-[1.08] font-medium tracking-[-0.03em]">
 				Building Excellence<br />Across Indonesia
 			</h2>
-			<p class="mb-5 text-white">
+			<p class="mb-5 text-[#CFCFCF]">
 				PT Precious Contractor Indonesia is a general contractor providing end-to-end services, from design to construction. We specialize in delivering high-quality projects across buildings, warehouses, factories, hospitals, and hotels.
 			</p>
-			<p class="mb-5 text-white">
+			<p class="mb-5 text-[#CFCFCF]">
 				Supported by experienced engineers and trusted partners, we bring deep expertise in the Indonesian construction industry. We are committed to timely delivery, strong execution, and continuous growth—expanding our capabilities to serve both government and private sectors, from structural works to large-scale construction and infrastructure projects.
 			</p>
 			<a href={route.about} class="mt-2 inline-flex text-[1.375rem] text-white no-underline">↗</a>

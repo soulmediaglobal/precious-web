@@ -9,7 +9,7 @@
 <!-- eslint-disable svelte/no-navigation-without-resolve -->
 <section
   id="contact"
-  class="relative mx-auto w-full h-auto md:h-160"
+  class="relative mx-auto w-full h-auto md:h-160 bg-third"
 >
   <div
     class="hidden md:block h-full w-[72%] relative"

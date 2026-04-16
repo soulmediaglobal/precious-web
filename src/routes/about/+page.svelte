@@ -31,7 +31,7 @@
 </svelte:head>
 
 <!-- eslint-disable svelte/no-navigation-without-resolve -->
-<div class="w-full overflow-x-clip text-[#161616]">
+<div class="w-full overflow-x-clip text-[#161616] bg-secondary">
 	<section
 		class="relative w-full overflow-hidden bg-[linear-gradient(180deg,rgba(5,12,28,0.45),rgba(5,12,28,0.6)),radial-gradient(circle_at_50%_20%,rgba(84,107,159,0.45),transparent_35%),linear-gradient(135deg,#0d172d_0%,#13284d_36%,#31435d_65%,#1c2738_100%)] text-white"
 		style="height: {height ? `${height}px` : '100dvh'}"
@@ -45,6 +45,9 @@
 			/>
 		</div>
 		<div style="background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), linear-gradient(77.04deg, rgba(0, 0, 0, 0.2) 34.66%, rgba(0, 0, 0, 0) 82.22%);" class="absolute inset-0"></div>
+		<div class="hidden absolute left-0 bottom-0 z-0 pointer-events-none md:flex items-center justify-start">
+			<img src="/mask-6.webp" alt="" class="w-2/5 h-full object-cover object-center -scale-x-100" />
+		</div>
 
 		<div class="absolute bottom-8 md:bottom-44 z-10 inset-x-4 md:inset-x-36">
       <div class="mb-1 md:mb-0 text-xs font-medium text-[#d4a321]">
@@ -59,30 +62,30 @@
   <section
 		class="relative grid w-full grid-cols-1 md:grid-cols-2 overflow-hidden bg-[#f3f3f3]"
 	>
-		<div class="hidden md:absolute inset-0">
-			<img src="/home-image-2.webp" alt="" class="w-full h-full object-cover object-center" />
+		<div class="absolute inset-0">
+			<img src="/mask-2.webp" alt="" class="w-full h-full object-cover object-center" />
 		</div>
 		<div class="hidden md:absolute inset-0" style="background: linear-gradient(270deg, rgba(255, 255, 255, 85%) 41.16%, #FFFFFF 86.3%);"></div>
-		<div class="relative z-10 pl-4 md:pl-36 pr-4 md:pr-16 pt-8 md:pt-32 pb-8 md:pb-20 w-full">
+		<div class="text-white relative z-10 pl-4 md:pl-36 pr-4 md:pr-16 pt-8 md:pt-32 pb-8 md:pb-20 w-full">
 			<div class="mb-1 text-xs tracking-[0.17em] text-[#d4a321]">ABOUT US</div>
 			<h2 class="mb-5 text-[clamp(2rem,3vw,3.5rem)] leading-[1.08] font-medium tracking-[-0.03em]">
 				Building Excellence<br />Across Indonesia
 			</h2>
-			<p class="mb-5 text-[#555]">
+			<p class="mb-5 text-[#CFCFCF]">
 				We are driven by a strong commitment to building with quality, precision, and attention to detail. Every project reflects our dedication to craftsmanship and our consistent pursuit of high construction standards.
 			</p>
-			<p class="mb-5 text-[#555]">
+			<p class="mb-5 text-[#CFCFCF]">
 				With experienced teams and trusted partners, we deliver projects that are not only functional but also thoughtfully executed. We believe that successful construction goes beyond the final result—it is built on clear communication, reliability, and long-term relationships with our clients.
 			</p>
-      <p class="mb-5 text-[#555]">
+      <p class="mb-5 text-[#CFCFCF]">
 				We handle projects across residential, commercial, and hospitality sectors, including hotels, villas, and resorts. From concept to completion, we ensure every stage is managed with care, balancing design intent, technical requirements, and project efficiency.
 			</p>
-      <p class="mb-5 text-[#555]">
+      <p class="mb-5 text-[#CFCFCF]">
 				Whether in urban environments or remote locations, we maintain the same level of quality and service—delivering results that meet expectations and stand the test of time.
 			</p>
 			<a
 				href={route.contact}
-				class="hidden md:inline-flex items-center gap-3 justify-center border px-4 py-2 text-sm no-underline transition-colors"
+				class="hidden md:inline-flex items-center gap-3 justify-center px-4 py-2 text-sm no-underline transition-colors"
 			>
         Get In Touch
 			</a>
@@ -109,7 +112,7 @@
 		</div>
 	</section>
 
-  <section class="relative mx-auto w-full bg-[#ececec]" style="height: {height ? (width >= 768 ? `${height * 0.93}px` : 'auto') : (width >= 768 ? '93vh' : 'auto')}">
+  <section class="relative mx-auto w-full" style="height: {height ? (width >= 768 ? `${height * 0.93}px` : 'auto') : (width >= 768 ? '93vh' : 'auto')}">
 		<div class="hidden md:block h-full py-20">
 			<div
 				class="h-full relative"
@@ -117,6 +120,9 @@
 			>
 				<img src="/home-image-6.webp" alt="" class="object-cover object-center h-full w-full" />
 				<div class="overlay-1 absolute inset-0"></div>
+				<div class="absolute inset-y-0 left-34 overflow-hidden">
+					<img src="/mask-4.webp" alt="" class="h-full w-auto" />
+				</div>
 			</div>
 		</div>
 		<div class="block md:absolute h-full right-0 top-0 w-full md:w-1/2 py-0 md:py-20">
@@ -138,7 +144,7 @@
 	</section>
 
 	<section
-		class="relative w-full px-4 md:px-36 pb-8 md:pb-14 bg-[#131313] text-white mb-0 md:mb-17"
+		class="relative w-full px-4 md:px-36 pt-10 md:pt-20 bg-[#131313] text-white mb-0 md:mb-17"
 	>
     <div class="flex gap-4 md:gap-0 flex-col md:flex-row items-center justify-between pt-4 md:pt-12 pb-8 md:pb-10">
       <div class="text-4xl font-medium text-left w-full">

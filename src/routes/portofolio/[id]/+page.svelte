@@ -42,7 +42,7 @@
 </svelte:head>
 
 <!-- eslint-disable svelte/no-navigation-without-resolve -->
-<div class="w-full overflow-x-clip text-[#161616]">
+<div class="w-full overflow-x-clip text-[#161616] bg-secondary">
 	<section
 		class="relative w-full overflow-hidden bg-[linear-gradient(180deg,rgba(5,12,28,0.45),rgba(5,12,28,0.6)),radial-gradient(circle_at_50%_20%,rgba(84,107,159,0.45),transparent_35%),linear-gradient(135deg,#0d172d_0%,#13284d_36%,#31435d_65%,#1c2738_100%)] text-white"
 		style="height: {height ? `${height}px` : '100dvh'}"
@@ -89,8 +89,8 @@
 		</div>
 	</section>
 
-  <section class="w-full px-4 md:px-36 py-18 md:py-24">
-    <div class="w-full flex flex-col md:flex-row items-center gap-4 md:gap-16 mb-8 md:mb-16">
+  <section class="w-full px-4 md:px-36 py-8 md:py-16">
+    <div class="w-full flex flex-col md:flex-row items-center gap-4 md:gap-16 mb-8 md:mb-16 text-[#CFCFCF]">
       <div>
         {portofolio.long_description_p1}
       </div>
@@ -121,7 +121,7 @@
     </div>
   </section>
 
-  <section class="bg-[#FAF5F1] w-full px-4 md:px-36 py-8 md:py-12 mb-0 md:mb-20">
+  <section class="w-full px-4 md:px-36 py-6 md:py-12 mb-0 md:mb-12 text-white">
     <div class="font-medium text-4xl mb-8 md:mb-12">
       Related Works
     </div>
@@ -141,7 +141,6 @@
                 {p.location}
               </div>
             </div>
-            <span class="inline-flex text-lg text-[#111] no-underline">↗</span>
           </div>
         </a>
       {/each}
