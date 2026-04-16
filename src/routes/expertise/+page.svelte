@@ -135,7 +135,7 @@
           </div>
           <div class="flex items-center justify-between">
             <div>
-              <div class="text-lg font-medium">
+              <div class="text-lg font-medium text-white">
                 {p.project_name}
               </div>
               <div class="text-sm text-[#828382]">

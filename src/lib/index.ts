@@ -19,7 +19,12 @@ export const portofolio: Portofolio[] = [
     location: "Jakarta, Bundaran HI",
     category: "MEP & Structural Works",
     status: "Ongoing",
-    images: []
+    images: [
+      "/portofolio/mandarin/1.webp",
+      "/portofolio/mandarin/2.webp",
+      "/portofolio/mandarin/3.webp",
+      "/portofolio/mandarin/4.webp"
+    ]
   },
   {
     project_name: "Eka hospital PIK",
@@ -31,7 +36,12 @@ export const portofolio: Portofolio[] = [
     location: "Jakarta, PIK",
     category: "Interior Renovation",
     status: "Ongoing",
-    images: []
+    images: [
+      "/portofolio/eka-pik/1.webp",
+      "/portofolio/eka-pik/2.webp",
+      "/portofolio/eka-pik/3.webp",
+      "/portofolio/eka-pik/4.webp"
+    ]
   },
   {
     project_name: "Villa Kemang",
@@ -43,7 +53,12 @@ export const portofolio: Portofolio[] = [
     location: "Jakarta, Kemang",
     category: "Villa Construction",
     status: "Ongoing",
-    images: []
+    images: [
+      "/portofolio/villa-kemang/1.webp",
+      "/portofolio/villa-kemang/2.webp",
+      "/portofolio/villa-kemang/3.webp",
+      "/portofolio/villa-kemang/4.webp"
+    ]
   },
   {
     project_name: "Kitchen Nike Factory",
@@ -55,7 +70,12 @@ export const portofolio: Portofolio[] = [
     location: "Sukabumi",
     category: "Kitchen Renovation",
     status: "Completed in December 2025",
-    images: []
+    images: [
+      "/portofolio/nike/1.webp",
+      "/portofolio/nike/2.webp",
+      "/portofolio/nike/3.webp",
+      "/portofolio/nike/4.webp"
+    ]
   },
   {
     project_name: "TMG Hotel",
@@ -67,7 +87,12 @@ export const portofolio: Portofolio[] = [
     location: "Jakarta, Tebet",
     category: "Glass & Structural Installation",
     status: "Completed in June 2025",
-    images: []
+    images: [
+      "/portofolio/tmg/1.webp",
+      "/portofolio/tmg/2.webp",
+      "/portofolio/tmg/3.webp",
+      "/portofolio/tmg/4.webp"
+    ]
   },
   {
     project_name: "Chopstix",
@@ -79,7 +104,12 @@ export const portofolio: Portofolio[] = [
     location: "Jakarta, Pondok Indah Mall",
     category: "Interior & Kitchen Renovation",
     status: "Completed in March 2025",
-    images: []
+    images: [
+      "/portofolio/chopstix/1.webp",
+      "/portofolio/chopstix/2.webp",
+      "/portofolio/chopstix/3.webp",
+      "/portofolio/chopstix/4.webp"
+    ]
   },
   {
     project_name: "Trihamas Building",
@@ -91,7 +121,12 @@ export const portofolio: Portofolio[] = [
     location: "Jakarta",
     category: "Structural Strengthening (Injection, FRP, Grouting)",
     status: "Completed in September 2023",
-    images: []
+    images: [
+      "/portofolio/trihamas/1.webp",
+      "/portofolio/trihamas/2.webp",
+      "/portofolio/trihamas/3.webp",
+      "/portofolio/trihamas/4.webp"
+    ]
   },
   {
     project_name: "Resort Bintang Laut",
@@ -103,7 +138,12 @@ export const portofolio: Portofolio[] = [
     location: "Banten",
     category: "Design & Build",
     status: "Completed in December 2022",
-    images: []
+    images: [
+      "/portofolio/bintang-laut/1.webp",
+      "/portofolio/bintang-laut/2.webp",
+      "/portofolio/bintang-laut/3.webp",
+      "/portofolio/bintang-laut/4.webp"
+    ]
   },
   {
     project_name: "Rusun Tambora LPSE",
@@ -115,7 +155,12 @@ export const portofolio: Portofolio[] = [
     location: "Jakarta, Tambora",
     category: "Fence Revitalization / Panel Fence Works",
     status: "Completed in 2024",
-    images: []
+    images: [
+      "/portofolio/rusun-tambora/1.webp",
+      "/portofolio/rusun-tambora/2.webp",
+      "/portofolio/rusun-tambora/3.webp",
+      "/portofolio/rusun-tambora/4.webp"
+    ]
   },
   {
     project_name: "Project Gerai Bakso Malang",
@@ -127,7 +172,12 @@ export const portofolio: Portofolio[] = [
     location: "Bandung",
     category: "Food Court Construction / Interior Fit-Out",
     status: "Completed in June 2025",
-    images: []
+    images: [
+      "/portofolio/bakso-malang/1.webp",
+      "/portofolio/bakso-malang/2.webp",
+      "/portofolio/bakso-malang/3.webp",
+      "/portofolio/bakso-malang/4.webp"
+    ]
   }
 ];
 
