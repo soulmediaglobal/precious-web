@@ -90,10 +90,10 @@
 			<h2 class="text-white mb-5 text-[clamp(2rem,3vw,3.5rem)] leading-[1.08] font-medium tracking-[-0.03em]">
 				Building Excellence<br />Across Indonesia
 			</h2>
-			<p class="mb-5 text-[#CFCFCF]">
+			<p class="mb-5 paragraph">
 				PT Precious Contractor Indonesia is a general contractor providing end-to-end services, from design to construction. We specialize in delivering high-quality projects across buildings, warehouses, factories, hospitals, and hotels.
 			</p>
-			<p class="mb-5 text-[#CFCFCF]">
+			<p class="mb-5 paragraph">
 				Supported by experienced engineers and trusted partners, we bring deep expertise in the Indonesian construction industry. We are committed to timely delivery, strong execution, and continuous growth—expanding our capabilities to serve both government and private sectors, from structural works to large-scale construction and infrastructure projects.
 			</p>
 			<a href={route.about} class="mt-2 inline-flex text-[1.375rem] text-white no-underline">↗</a>
@@ -150,10 +150,8 @@
 					<h3 class="mb-5 text-[clamp(2rem,3vw,3.5rem)] leading-[1.08] font-medium tracking-[-0.03em]">
 						Building Excellence<br />Across Indonesia
 					</h3>
-					<p class="mb-5 max-w-125 text-[0.9375rem] leading-[1.75] text-white/70">
-						PT Precious Contractor Indonesia is a general contractor providing end-to-end services, from
-						design to construction. We specialize in delivering high-quality projects across buildings,
-						warehouses, factories, hospitals, and hotels.
+					<p class="mb-5 max-w-125 paragraph">
+						PT Precious Contractor Indonesia is a general contractor providing end-to-end services, from design to construction. We specialize in delivering high-quality projects across buildings, warehouses, factories, hospitals, and hotels.
 					</p>
 					<a href={route.expertise} class="mt-2 inline-flex text-[1.375rem] text-white no-underline">↗</a>
 				</div>

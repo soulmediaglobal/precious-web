@@ -96,9 +96,9 @@
 		</div>
     <div class="relative z-10 mb-12 md:mb-32 flex items-center w-full justify-center gap-4 flex-col">
       <div class="font-medium text-4xl text-[#D9DAD9]">
-        Our Expertise
+        Our Division
       </div>
-      <div class="text-base font-light w-full text-center text-[#CFCFCF]">
+      <div class="w-full text-center paragraph-smaller">
         We are a collective of designers, strategists, and hospitality professionals dedicated to shaping meaningful spaces and over two decades of experiences. Blending expertise in architecture, operations, commercial strategy, and wellness curation, we deliver high-impact projects grounded in authenticity and built for lasting value.
       </div>
     </div>
@@ -122,7 +122,7 @@
       <div class="font-medium text-4xl text-white">
         Selected Works
       </div>
-      <div class="text-base font-light text-left md:text-right w-full md:w-2/5 text-[#CFCFCF]">
+      <div class="text-left md:text-right w-full md:w-2/5 paragraph-light">
         A curated selection of our built and conceptual projects, spanning architecture, interiors, and landscape.
       </div>
     </div>
@@ -142,7 +142,6 @@
                 {p.location}
               </div>
             </div>
-            <span class="inline-flex text-lg text-[#111] no-underline">↗</span>
           </div>
         </a>
       {/each}

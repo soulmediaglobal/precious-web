@@ -65,7 +65,7 @@
       <div class="font-medium mb-6 text-3xl md:text-6xl w-1/2">
         {portofolio.project_name}
       </div>
-			<div class="font-light text-base md:text-xl capitalize mb-10 md:mb-40 w-full md:w-4/5">
+			<div class="capitalize mb-10 md:mb-40 w-full md:w-4/5 heading-light">
 				{portofolio.short_description}
 			</div>
       <div class="grid grid-cols-2 md:flex gap-6 items-start">
@@ -90,11 +90,11 @@
 	</section>
 
   <section class="w-full px-4 md:px-36 py-8 md:py-16">
-    <div class="w-full flex flex-col md:flex-row items-center gap-4 md:gap-16 mb-8 md:mb-16 text-[#CFCFCF]">
-      <div>
+    <div class="w-full grid grid-cols-1 md:grid-cols-2 items-start gap-4 md:gap-16 mb-8 md:mb-16">
+      <div class="paragraph-light">
         {portofolio.long_description_p1}
       </div>
-      <div>
+      <div class="paragraph-light">
         {portofolio.long_description_p2}
       </div>
     </div>

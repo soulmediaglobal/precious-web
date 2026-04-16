@@ -21,3 +21,31 @@
 		color: #2b2c2b;
 	}
 }
+
+.paragraph {
+	line-height: 1.75rem;
+	letter-spacing: 0.2%;
+	color: #cfcfcf;
+}
+
+.paragraph-light {
+	line-height: 1.75rem;
+	letter-spacing: 0%;
+	color: #cfcfcf;
+	font-weight: 300;
+}
+
+.paragraph-smaller {
+	line-height: 1.5rem;
+	letter-spacing: 0%;
+	color: #cfcfcf;
+	font-size: 0.875rem;
+}
+
+.heading-light {
+	font-size: 1.25rem;
+	line-height: 2.125rem;
+	letter-spacing: 0%;
+	color: #ffffff;
+	font-weight: 300;
+}

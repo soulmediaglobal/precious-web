@@ -55,9 +55,9 @@
   </form>
 
   <div
-    class="col-span-1 md:col-span-2 lg:col-span-full flex flex-col md:flex-row items-center md:items-start justify-between gap-6 md:gap-6 lg:gap-6 border-t border-white/10 pt-6 mt-2 lg:mt-0 text-sm text-white/60"
+    class="col-span-1 md:col-span-2 lg:col-span-full flex flex-col md:flex-row items-center md:items-start justify-between gap-6 md:gap-6 lg:gap-6 border-t border-[#575757] pt-6 mt-2 lg:mt-0 text-sm"
   >
-    <div class="text-white/60 order-2 md:order-1 text-center md:text-left">© 2025 Precious</div>
+    <div class="order-2 md:order-1 text-center md:text-left">© 2025 Precious</div>
     <div class="flex flex-wrap justify-center md:justify-end gap-x-6 gap-y-3 order-1 md:order-2">
       <a href="/" class="text-inherit no-underline transition-colors hover:text-white">Cookies Policy</a>
       <a href="/" class="text-inherit no-underline transition-colors hover:text-white">Legal Terms</a>

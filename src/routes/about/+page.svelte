@@ -71,21 +71,21 @@
 			<h2 class="mb-5 text-[clamp(2rem,3vw,3.5rem)] leading-[1.08] font-medium tracking-[-0.03em]">
 				Building Excellence<br />Across Indonesia
 			</h2>
-			<p class="mb-5 text-[#CFCFCF]">
+			<p class="mb-5 paragraph">
 				We are driven by a strong commitment to building with quality, precision, and attention to detail. Every project reflects our dedication to craftsmanship and our consistent pursuit of high construction standards.
 			</p>
-			<p class="mb-5 text-[#CFCFCF]">
+			<p class="mb-5 paragraph">
 				With experienced teams and trusted partners, we deliver projects that are not only functional but also thoughtfully executed. We believe that successful construction goes beyond the final result—it is built on clear communication, reliability, and long-term relationships with our clients.
 			</p>
-      <p class="mb-5 text-[#CFCFCF]">
+      <p class="mb-5 paragraph">
 				We handle projects across residential, commercial, and hospitality sectors, including hotels, villas, and resorts. From concept to completion, we ensure every stage is managed with care, balancing design intent, technical requirements, and project efficiency.
 			</p>
-      <p class="mb-5 text-[#CFCFCF]">
+      <p class="mb-16 paragraph">
 				Whether in urban environments or remote locations, we maintain the same level of quality and service—delivering results that meet expectations and stand the test of time.
 			</p>
 			<a
 				href={route.contact}
-				class="hidden md:inline-flex items-center gap-3 justify-center px-4 py-2 text-sm no-underline transition-colors"
+				class="hidden md:inline-flex items-center gap-3 justify-center px-6 py-3 text-sm no-underline transition-colors border border-[#2B2C2B]"
 			>
         Get In Touch
 			</a>
@@ -134,7 +134,7 @@
 					<h3 class="mb-5 text-[clamp(2rem,3vw,3.5rem)] leading-[1.08] font-medium tracking-[-0.03em]">
 						Our Commitment<br />to Excellence
 					</h3>
-					<p class="mb-5 max-w-125 text-[0.9375rem] leading-[1.75] text-white/70">
+					<p class="mb-5 max-w-125 paragraph">
 						To provide dependable construction solutions with a focus on quality, efficiency, and precision—ensuring every project is delivered on time, on plan, and to the highest standards.
 					</p>
 					<a href={route.expertise} class="mt-2 inline-flex text-[1.375rem] text-white no-underline">↗</a>
@@ -150,7 +150,7 @@
       <div class="text-4xl font-medium text-left w-full">
         Meet our team
       </div>
-      <div class="text-base font-light text-left md:text-right w-full md:w-full">
+      <div class="text-base font-light text-left md:text-right w-full md:w-full paragraph">
         Strong execution, and continuous growth—expanding our capabilities to serve both government and private sectors, from structural.
       </div>
     </div>

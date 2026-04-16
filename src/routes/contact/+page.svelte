@@ -75,7 +75,7 @@
 		{#each address as a (a.title)}
 			<div class="text-[#CFCFCF]">
 				<div class="font-semibold mb-4">{a.title}</div>
-				<div class="font-light">{a.address}</div>
+				<div class="paragraph-light">{a.address}</div>
 			</div>
 		{/each}
 	</div>
