@@ -1,36 +1,53 @@
+<script>
+  import { page } from '$app/state';
+	import { route } from '$lib';
+
+  let routes = [
+    { name: 'Home', href: route.root },
+    { name: 'About Us', href: route.about },
+    { name: 'Expertise', href: route.expertise },
+    { name: 'Contact', href: route.contact }
+  ];
+</script>
 <!-- eslint-disable svelte/no-navigation-without-resolve -->
 <footer
-  class="mx-auto grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.2fr_0.8fr_0.9fr_1.2fr] gap-10 md:gap-10 lg:gap-10 bg-[#060606] px-4 md:px-36 py-8 md:py-12 text-white/80"
+  class="mx-auto grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.2fr_0.8fr_0.9fr_1.2fr] gap-10 md:gap-10 lg:gap-10 bg-[#060606] px-4 md:px-36 py-8 md:py-12 text-[#AEAEAE]"
 >
   <div class="flex justify-start items-start">
     <img src="/logo-white.svg" alt="" class="h-16 lg:h-auto max-w-max" />
   </div>
 
   <div class="flex flex-col gap-3 text-sm">
-    <a href="/" class="text-inherit no-underline transition-colors hover:text-white">Home</a>
-    <a href="/" class="text-inherit no-underline transition-colors hover:text-white">About Us</a>
-    <a href="/" class="text-inherit no-underline transition-colors hover:text-white">Expertise</a>
-    <a href="/" class="text-inherit no-underline transition-colors hover:text-white">Contact</a>
+    {#each routes as r (r.name)}
+      <a
+        href={r.href}
+        class="text-inherit no-underline transition-colors hover:text-white"
+        class:text-white={page.url.pathname === r.href}
+      >
+        {r.name}
+      </a>
+    {/each}
   </div>
 
   <div class="flex flex-col gap-3 text-sm">
     <a href="mailto:hello@precious.com" class="text-inherit no-underline transition-colors hover:text-white">hello@precious.com</a>
-    <a href="tel:+620000000000" class="text-inherit no-underline transition-colors hover:text-white">+62 70 7687 891</a>
+    <a href="tel:+628123567890" class="text-inherit no-underline transition-colors hover:text-white">+62 812 3567 890</a>
+    <div class="opacity-0">A</div>
     <a href="/" class="text-inherit no-underline transition-colors hover:text-white">Instagram</a>
     <a href="/" class="text-inherit no-underline transition-colors hover:text-white">LinkedIn</a>
   </div>
 
   <form class="flex flex-col justify-start gap-4">
-    <label for="email" class="text-sm text-white/70">Enter your e-mail</label>
-    <div class="flex items-center border-b border-white/35 pb-2.5">
+    <div class="flex items-center relative">
       <input
         id="email"
         type="email"
-        class="flex-1 w-full border-0 bg-transparent text-[0.875rem] text-white outline-none"
+        placeholder="Enter your e-mail"
+        class="bg-transparent border-0 border-b border-gray-700 focus:outline-none focus:ring-0 focus:border-white transition-colors text-white placeholder-gray-600 text-sm w-full px-0 pb-4"
       />
       <button
         type="submit"
-        class="cursor-pointer border-0 bg-transparent text-[1.25rem] text-white transition-transform hover:scale-110"
+        class="absolute right-0 cursor-pointer border-0 bg-transparent text-[1.25rem] text-white transition-transform hover:scale-110 bottom-3"
       >
         ↗
       </button>

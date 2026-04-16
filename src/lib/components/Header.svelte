@@ -31,8 +31,7 @@
 	<nav class="hidden md:flex flex-1 items-center justify-center gap-6">
 		{#each navItems as item (item)}
 			<a
-				href={item.href} class="text-sm text-white/85 no-underline px-3 transition-colors hover:text-white"
-				class:font-bold={page.url.pathname === item.href}
+				href={item.href} class="text-sm {page.url.pathname === item.href ? 'text-white' : 'text-white/60'} no-underline px-3 py-2 rounded-md hover:bg-black/10 transition-all"
 			>
 				{item.name}
 			</a>
