@@ -117,11 +117,11 @@
 					<div class="overlay-1 absolute inset-0"></div>
 				</div>
 				<div class="w-full h-64 relative col-span-2">
-					<img src="/home-image-3.webp" alt="" class="object-cover object-center h-full w-full" />
+					<img src="/home-image-9.webp" alt="" class="object-cover object-center h-full w-full" />
 					<div class="overlay-1 absolute inset-0"></div>
 				</div>
 				<div class="w-full h-64 relative">
-					<img src="/home-image-4.webp" alt="" class="object-cover object-center h-full w-full" />
+					<img src="/home-image-10.webp" alt="" class="object-cover object-center h-full w-full" />
 					<div class="overlay-1 absolute inset-0"></div>
 				</div>
 			</div>

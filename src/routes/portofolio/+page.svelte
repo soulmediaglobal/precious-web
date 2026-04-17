@@ -36,7 +36,7 @@
 	>
 		<div class="absolute inset-0 overflow-hidden">
 			<img 
-				src="/project-list-10.webp" 
+				src="/portofolio-1.webp" 
 				alt="" 
 				class="absolute -top-[15%] left-0 w-full h-[130%] object-cover object-center" 
 				style="transform: translate3d(0, {scrollY * 0.3}px, 0);"

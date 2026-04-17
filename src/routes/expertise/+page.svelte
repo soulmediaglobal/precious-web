@@ -11,12 +11,12 @@
       description: "1"
     },
     {
-      image: "/expertise-2.webp",
+      image: "/expertise-5.webp",
       title: "Interior",
       description: "2"
     },
     {
-      image: "/expertise-3.webp",
+      image: "/expertise-6.webp",
       title: "MEP & Structural Works",
       description: "3"
     },
@@ -26,12 +26,12 @@
       description: "4"
     },
     {
-      image: "/expertise-3.webp",
+      image: "/expertise-7.webp",
       title: "Structure Strengthening",
       description: "5"
     },
     {
-      image: "/expertise-4.webp",
+      image: "/expertise-8.webp",
       title: "Jacketing",
       description: "6"
     }

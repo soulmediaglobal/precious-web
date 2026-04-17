@@ -49,7 +49,7 @@
 	>
 		<div class="absolute inset-0 overflow-hidden">
 			<img 
-				src="/contact.webp" 
+				src="/contact-us-1.webp" 
 				alt="" 
 				class="absolute -top-[15%] left-0 w-full h-[130%] object-cover object-center" 
 				style="transform: translate3d(0, {scrollY * 0.3}px, 0);"
