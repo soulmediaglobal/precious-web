@@ -1,4 +1,4 @@
-import type { Portofolio, Team } from "./types";
+import type { Portofolio, Team, Expertise } from "./types";
 
 export const route: Record<string, string> = {
   root: '/',
@@ -244,3 +244,60 @@ export const teams: Team[] = [
 
 export const preciousemail: string = 'kris@preciouscontractor.co.id';
 export const preciousPhone: string = '+62811100047';
+
+export const expertises: Expertise[] = [
+  {
+    image: "/expertise-1.webp",
+    title: "Construction",
+    slug: "construction",
+    description: "Professional construction services for residential and commercial projects, delivered with strong technical expertise, precise coordination, and efficient execution. From planning to completion, every project is handled with a focus on quality, safety, reliability, and long-lasting results.",
+    how: "We begin with detailed project planning and preparation, working closely with clients, consultants, and engineers to define requirements, timelines, and technical specifications. During execution, we manage new construction, renovation, and structural works while maintaining safety, using high-quality materials, applying skilled workmanship, and ensuring strong coordination, monitoring, and on-site supervision.",
+    why: "Precious Contractor is a trusted construction company known for reliable service and high-quality outcomes. Our ability to manage residential and commercial projects with efficiency and precision ensures that every project is completed on time, meets technical requirements, and delivers long-term value.",
+    portofolio: ["villa-kemang", "resort-bintang-laut", "project-gerai-bakso-malang"]
+  },
+  {
+    image: "/expertise-5.webp",
+    title: "Interior",
+    slug: "interior",
+    description: "Professional interior design and fit-out services for residential and commercial projects, creating spaces that are modern, functional, and visually refined. Each interior is designed to improve comfort, efficiency, user experience, and property value.",
+    how: "Our process starts with concept development and space planning, where we define the client’s needs, preferences, and the purpose of the space. We then create functional interior designs and execute full fit-out works, including interior construction, custom-built elements, furniture, flooring, walls, ceilings, and detailed finishing, supported by efficient coordination and on-site supervision.",
+    why: "Precious Contractor is a trusted partner for interior design and fit-out, known for delivering high-quality interiors with strong attention to detail, functionality, and execution. Our full-service approach allows clients to rely on one company from design to completion, ensuring timely delivery, high standards, and long-term value.",
+    portofolio: ["eka-hospital-pik", "kitchen-nike-factory", "chopstix"]
+  },
+  {
+    image: "/expertise-6.webp",
+    title: "MEP & Structural Works",
+    slug: "mep-structural-works",
+    description: "Professional MEP and structural engineering services for residential and commercial projects, ensuring that buildings operate safely, efficiently, and reliably. By combining expertise in building systems and structural integrity, we deliver durable, high-performance solutions with long-term value.",
+    how: "We handle each project with a combination of engineering expertise and practical execution, covering electrical installations, plumbing systems, HVAC, climate control, structural construction, reinforcement, and foundation works. We also provide specialized services such as FRP strengthening, concrete repair, grouting, and structural rehabilitation, all supported by strict quality control, project management, and on-site supervision.",
+    why: "Precious Contractor is a trusted partner for MEP and structural works, offering integrated technical solutions within one company to improve efficiency and reduce risk. With experience in complex and high-end projects, including specialized structural repair solutions, we deliver safe, reliable, and long-lasting results.",
+    portofolio: ["mandarin-oriental-hotel", "trihamas-building", "tmg-hotel"]
+  },
+  {
+    image: "/expertise-4.webp",
+    title: "Bore Piling",
+    slug: "bore-piling",
+    description: "Professional foundation and piling services, including bored piling solutions for residential and commercial construction projects. Our foundation systems are designed to provide strong structural support, durability, and long-term performance, even in challenging soil conditions.",
+    how: "We begin with site assessment and soil analysis to determine the most suitable piling and foundation system for each project. Our services include bored piling, driven piling, mini piling, pile caps, ground beams, and reinforced concrete foundations, all executed with precise alignment, strict safety standards, and strong coordination and on-site supervision.",
+    why: "Precious Contractor is a trusted partner for foundation and piling works, known for reliable and high-quality structural solutions. Our expertise across different piling systems and site conditions ensures every project is built on a solid, dependable foundation with reduced risk and strong long-term performance.",
+    portofolio: ["villa-kemang", "resort-bintang-laut", "trihamas-building"]
+  },
+  {
+    image: "/expertise-7.webp",
+    title: "Home Design",
+    slug: "home-design",
+    description: "Professional home design services that create modern, functional, and personalized living spaces tailored to each client’s lifestyle and vision. Our designs combine architecture, space planning, and interior integration to deliver homes that are refined, comfortable, and practical for everyday living.",
+    how: "Our process starts with concept development, where we understand the client’s needs, preferences, and lifestyle. We then translate these into detailed architectural designs with clean lines, efficient layouts, natural light, ventilation, and strong indoor-outdoor connection, supported by interior planning, 2D drawings, layout plans, and 3D visualizations before construction begins.",
+    why: "Precious Contractor is a trusted partner for residential and villa design, known for combining functionality with modern aesthetics. Our personalized and integrated approach ensures that each project is tailored to the client while delivering a cohesive design and long-term living comfort.",
+    portofolio: ["villa-kemang", "resort-bintang-laut", "eka-hospital-pik"]
+  },
+  {
+    image: "/expertise-8.webp",
+    title: "Development",
+    slug: "development",
+    description: "Professional real estate development services focused on residential and investment projects that combine market insight, strategic planning, and reliable execution. Our integrated approach creates properties that meet user needs while delivering strong market positioning and long-term value.",
+    how: "We start with site and market analysis to evaluate location potential, target groups, and market demand. From there, we move into concept development and planning, balancing design, functionality, and return on investment, while integrating architecture, construction, and technical services through full project coordination, timeline management, and quality control.",
+    why: "Precious Contractor is a reliable partner for real estate development, known for delivering well-structured and high-quality residential and investment projects. Our integrated process gives clients better efficiency, consistency, and reduced risk, while ensuring each development is both attractive and financially viable.",
+    portofolio: ["resort-bintang-laut", "villa-kemang", "tmg-hotel"]
+  }
+];

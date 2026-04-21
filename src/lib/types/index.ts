@@ -16,3 +16,13 @@ export interface Team {
   title: string;
   image: string;
 }
+
+export interface Expertise {
+  title: string;
+  slug: string;
+  image: string;
+  description: string;
+  how: string;
+  why: string;
+  portofolio: string[];
+}
