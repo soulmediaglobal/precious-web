@@ -1,6 +1,6 @@
 <script>
   import { page } from '$app/state';
-	import { route } from '$lib';
+	import { route, preciousemail, preciousPhone } from '$lib';
 
   let routes = [
     { name: 'Home', href: route.root },
@@ -8,7 +8,6 @@
     { name: 'Expertise', href: route.expertise },
     { name: 'Contact', href: route.contact }
   ];
-  let preciousemail = 'kris@preciouscontractor.co.id';
   let socmed = [
     { name: 'LinkedIn', icon: '/icons/linkedin.svg', href: 'https://www.linkedin.com/company/precious-contractor' },
     { name: 'Facebook', icon: '/icons/facebook.svg', href: 'https://www.facebook.com/p/Precious-Contractor-Indonesia-61558311793708/' },
@@ -37,7 +36,7 @@
 
   <div class="flex flex-col gap-3 text-sm">
     <a href="mailto:{preciousemail}" class="text-inherit no-underline transition-colors hover:text-white">{preciousemail}</a>
-    <a href="tel:+62811100047" class="text-inherit no-underline transition-colors hover:text-white">+62 8111 000 47</a>
+    <a href="tel:{preciousPhone}" class="text-inherit no-underline transition-colors hover:text-white">+62 8111 000 47</a>
     <div class="opacity-0">A</div>
     <div class="flex items-center gap-3">
       {#each socmed as s (s.name)}

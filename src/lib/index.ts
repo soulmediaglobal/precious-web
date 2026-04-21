@@ -241,3 +241,6 @@ export const teams: Team[] = [
     image: "/teams/dwi-ariana.webp"
   }
 ]
+
+export const preciousemail: string = 'kris@preciouscontractor.co.id';
+export const preciousPhone: string = '+62811100047';
