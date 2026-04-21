@@ -56,6 +56,9 @@
 			/>
 		</div>
 		<div style="background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), linear-gradient(77.04deg, rgba(0, 0, 0, 0.2) 34.66%, rgba(0, 0, 0, 0) 82.22%);" class="absolute inset-0"></div>
+    <div class="hidden absolute right-0 bottom-0 z-0 pointer-events-none md:flex items-center justify-end">
+			<img src="/mask-6.webp" alt="" class="w-2/5 h-full object-cover object-center" />
+		</div>
 
 		<div class="absolute bottom-8 md:bottom-24 z-10 inset-x-4 md:inset-x-36">
       <a href={route.portofolio} class="mb-6 md:mb-16 flex items-center gap-2 text-xs font-medium uppercase">
