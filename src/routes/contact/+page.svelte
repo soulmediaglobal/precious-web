@@ -8,15 +8,18 @@
 	let address = $state([
 		{
 			title: "Jakarta",
-			address: "Jl. Mega Kuningan Barat III No.Lot 10 Tower B, 22nd floor, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12950"
+			address: "Jl. Mega Kuningan Barat III No.Lot 10 Tower B, 22nd floor, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12950",
+			image: "/project-list-4.webp"
 		},
 		{
 			title: "Yogyakarta",
-			address: "Jl. Seturan Raya No.19, Kledokan, Caturtunggal, Kec. Depok, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55281"
+			address: "Jl. Seturan Raya No.19, Kledokan, Caturtunggal, Kec. Depok, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55281",
+			image: "/project-list-4.webp"
 		},
 		{
 			title: "Bali",
-			address: "Park23 Creative Hub, Jl. Kediri 3rd Floor, Tuban, Kuta, Badung Regency, Bali 80361"
+			address: "Park23 Creative Hub, Jl. Kediri 3rd Floor, Tuban, Kuta, Badung Regency, Bali 80361",
+			image: "/project-list-4.webp"
 		}
 	]);
 
@@ -74,6 +77,7 @@
 	<div class="mt-4 md:mt-12 bg-[#191A19] px-4 md:px-36 py-8 md:py-14 text-white grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-16">
 		{#each address as a (a.title)}
 			<div class="text-[#CFCFCF]">
+				<img src={a.image} alt="" class="w-full h-44 object-cover object-center mb-4" />
 				<div class="font-semibold mb-4">{a.title}</div>
 				<div class="paragraph-light">{a.address}</div>
 			</div>
