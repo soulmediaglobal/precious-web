@@ -9,17 +9,17 @@
 		{
 			title: "Jakarta",
 			address: "Jl. Mega Kuningan Barat III No.Lot 10 Tower B, 22nd floor, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12950",
-			image: "/project-list-4.webp"
+			image: "/images/office-sopodel.webp"
 		},
 		{
 			title: "Yogyakarta",
 			address: "Jl. Seturan Raya No.19, Kledokan, Caturtunggal, Kec. Depok, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55281",
-			image: "/project-list-4.webp"
+			image: "/images/office-jogja.webp"
 		},
 		{
 			title: "Bali",
 			address: "Park23 Creative Hub, Jl. Kediri 3rd Floor, Tuban, Kuta, Badung Regency, Bali 80361",
-			image: "/project-list-4.webp"
+			image: "/images/office-bali.webp"
 		}
 	]);
 
