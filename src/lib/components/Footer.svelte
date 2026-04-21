@@ -8,6 +8,12 @@
     { name: 'Expertise', href: route.expertise },
     { name: 'Contact', href: route.contact }
   ];
+  let preciousemail = 'kris@preciouscontractor.co.id';
+  let socmed = [
+    { name: 'LinkedIn', icon: '/icons/linkedin.svg', href: 'https://www.linkedin.com/company/precious-contractor' },
+    { name: 'Facebook', icon: '/icons/facebook.svg', href: 'https://www.facebook.com/p/Precious-Contractor-Indonesia-61558311793708/' },
+    { name: 'Instagram', icon: '/icons/instagram.svg', href: 'https://www.instagram.com/preciouscontractor.official?igsh=MTRyM3Vrbm1nN21tZQ==' },
+  ];
 </script>
 <!-- eslint-disable svelte/no-navigation-without-resolve -->
 <footer
@@ -30,11 +36,14 @@
   </div>
 
   <div class="flex flex-col gap-3 text-sm">
-    <a href="mailto:hello@precious.com" class="text-inherit no-underline transition-colors hover:text-white">hello@precious.com</a>
-    <a href="tel:+628123567890" class="text-inherit no-underline transition-colors hover:text-white">+62 812 3567 890</a>
+    <a href="mailto:{preciousemail}" class="text-inherit no-underline transition-colors hover:text-white">{preciousemail}</a>
+    <a href="tel:+62811100047" class="text-inherit no-underline transition-colors hover:text-white">+62 8111 000 47</a>
     <div class="opacity-0">A</div>
-    <a href="/" class="text-inherit no-underline transition-colors hover:text-white">Instagram</a>
-    <a href="/" class="text-inherit no-underline transition-colors hover:text-white">LinkedIn</a>
+    <div class="flex items-center gap-3">
+      {#each socmed as s (s.name)}
+        <a href={s.href} target="_blank"><img src={s.icon} alt={s.name} class="h-6" /></a>
+      {/each}
+    </div>
   </div>
 
   <form class="flex flex-col justify-start gap-4">
@@ -55,13 +64,13 @@
   </form>
 
   <div
-    class="col-span-1 md:col-span-2 lg:col-span-full flex flex-col md:flex-row items-center md:items-start justify-between gap-6 md:gap-6 lg:gap-6 border-t border-[#575757] pt-6 mt-2 lg:mt-0 text-sm"
+    class="col-span-1 md:col-span-2 lg:col-span-full flex flex-col md:flex-row items-center md:items-start justify-between gap-6 md:gap-6 lg:gap-6 border-t border-[#575757] pt-6 mt-2 lg:mt-0 text-sm font-light"
   >
     <div class="order-2 md:order-1 text-center md:text-left">© 2025 Precious</div>
     <div class="flex flex-wrap justify-center md:justify-end gap-x-6 gap-y-3 order-1 md:order-2">
-      <a href="/" class="text-inherit no-underline transition-colors hover:text-white">Cookies Policy</a>
-      <a href="/" class="text-inherit no-underline transition-colors hover:text-white">Legal Terms</a>
-      <a href="/" class="text-inherit no-underline transition-colors hover:text-white">Privacy Policy</a>
+      <a href={route.cookies_policy} class="text-inherit no-underline transition-colors hover:text-white">Cookies Policy</a>
+      <a href={route.legal_terms} class="text-inherit no-underline transition-colors hover:text-white">Legal Terms</a>
+      <a href={route.privacy_policy} class="text-inherit no-underline transition-colors hover:text-white">Privacy Policy</a>
     </div>
   </div>
 </footer>

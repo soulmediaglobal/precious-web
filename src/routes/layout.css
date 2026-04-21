@@ -10,6 +10,7 @@
 		'Segoe UI Symbol', 'Noto Color Emoji';
 	--color-secondary: #232423;
 	--color-third: #2f3130;
+	--color-primary: #cfcfcf;
 }
 
 @layer base {

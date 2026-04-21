@@ -5,7 +5,10 @@ export const route: Record<string, string> = {
   about: '/about',
   portofolio: '/portofolio',
   expertise: '/expertise',
-  contact: '/contact'
+  contact: '/contact',
+  cookies_policy: '/cookies-policy',
+  legal_terms: '/legal-terms',
+  privacy_policy: '/privacy-policy',
 };
 
 export const portofolio: Portofolio[] = [
