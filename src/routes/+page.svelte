@@ -7,6 +7,20 @@
 	let width = $state(0);
 	let scrollY = $state(0);
 
+	const portfolioImages = [
+		"/home-image-7.webp",
+		"/home-image-8.webp",
+		"/expertise-cover.webp",
+	];
+	let currentSlide = $state(0);
+
+	const prev = () => {
+		currentSlide = (currentSlide - 1 + portfolioImages.length) % portfolioImages.length;
+	};
+	const next = () => {
+		currentSlide = (currentSlide + 1) % portfolioImages.length;
+	};
+
 	const checkSize = () => {
 		const newWidth = window.innerWidth;
 		const newHeight = window.innerHeight;
@@ -165,10 +179,17 @@
 		style="height: {height ? (width >= 768 ? `${height * 1.02}px` : 'auto') : (width >= 768 ? '102vh' : 'auto')}"
 	>
 		<div
-			class="hidden md:block w-full relative"
+			class="hidden md:block w-full relative overflow-hidden"
 			style="height: 76%"
 		>
-			<img src="/home-image-7.webp" alt="" class="object-cover object-center h-full w-full" />
+			{#each portfolioImages as img, i (img)}
+				<img
+					src={img}
+					alt=""
+					class="absolute inset-0 object-cover object-center h-full w-full transition-transform duration-700 ease-in-out"
+					style="transform: translateX({(i - currentSlide) * 100}%)"
+				/>
+			{/each}
 			<div class="overlay-2 absolute inset-0"></div>
 		</div>
 		<div
@@ -177,13 +198,15 @@
 			<button
 				aria-label="Previous"
 				class="cursor-pointer border-0 bg-transparent text-[1.125rem] text-white"
+				onclick={prev}
 			>
 				←
 			</button>
-			<span>1 of 3</span>
+			<span>{currentSlide + 1} of {portfolioImages.length}</span>
 			<button
 				aria-label="Next"
 				class="cursor-pointer border-0 bg-transparent text-[1.125rem] text-white"
+				onclick={next}
 			>
 				→
 			</button>
