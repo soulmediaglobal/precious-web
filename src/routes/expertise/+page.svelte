@@ -73,13 +73,21 @@
     </div>
     <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-16">
       {#each expertises as e (e.description)}
-        <a href={route.expertise + '/' + e.slug} class="w-full h-60 md:h-100 relative">
-          <div class="w-full h-full">
-            <img src={e.image} alt="" class="object-cover object-center h-full w-full" />
-            <div class="overlay-1 absolute inset-0"></div>
+        <a href={route.expertise + '/' + e.slug} class="w-full h-60 md:h-100 relative group block">
+          <div class="w-full h-full overflow-hidden">
+            <img src={e.images[0]} alt="" class="object-cover object-center h-full w-full transition-transform duration-500 group-hover:scale-105" />
+            <div class="overlay-1 absolute inset-0 pointer-events-none"></div>
           </div>
-          <div class="absolute bottom-8 left-8 text-lg font-medium text-white">
-            {e.title}
+          <div class="absolute bottom-8 left-8 flex flex-col items-start">
+            <div class="text-2xl md:text-4xl font-semibold text-white leading-15.5">
+              {e.title}
+            </div>
+            <div class="h-0 opacity-0 overflow-hidden group-hover:h-5 group-hover:mt-2 group-hover:opacity-100 transition-all duration-500">
+               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white">
+                 <path d="M4 20L20 4"/>
+                 <path d="M4 4h16v16"/>
+               </svg>
+            </div>
           </div>
         </a>
       {/each}
@@ -130,6 +138,6 @@
 
 <style>
 	.overlay-1 {
-		background: linear-gradient(77.04deg, rgba(0, 0, 0, 0.2) 34.66%, rgba(0, 0, 0, 0) 82.22%);
+		background: #1D1D1D66;
 	}
 </style>

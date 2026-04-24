@@ -36,6 +36,13 @@
 	font-weight: 300;
 }
 
+.paragraph-light-normal-case {
+	line-height: 1.875rem;
+	letter-spacing: 0%;
+	color: #cfcfcf;
+	font-weight: 300;
+}
+
 .paragraph-smaller {
 	line-height: 1.5rem;
 	letter-spacing: 0%;

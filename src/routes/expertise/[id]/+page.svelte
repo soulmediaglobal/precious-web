@@ -40,7 +40,7 @@
 	>
 		<div class="absolute inset-0 overflow-hidden">
 			<img 
-				src={expertise.image} 
+				src={expertise.images[0]} 
 				alt="" 
 				class="absolute -top-[15%] left-0 w-full h-[130%] object-cover object-center" 
 				style="transform: translate3d(0, {scrollY * 0.3}px, 0);"
@@ -71,22 +71,22 @@
 		</div>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-14 mb-20 z-10 relative">
       <div>
-        <div class="text-white font-medium text-4xl mb-4">
+        <div class="text-white font-medium text-[2rem] mb-4">
           Why Precious Contractor
         </div>
-        <div class="heading-light text-right">
+        <div class="paragraph-light-normal-case">
           {expertise.why}
         </div>
       </div>
-      <img src={expertise.image} alt="" class="w-full object-cover object-center h-104" />
+      <img src={expertise.images[1]} alt="" class="w-full object-cover object-center h-104" />
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-14 z-10 relative">
-      <img src={expertise.image} alt="" class="w-full object-cover object-center h-104" />
+      <img src={expertise.images[2]} alt="" class="w-full object-cover object-center h-104" />
       <div>
-        <div class="text-white font-medium text-4xl mb-4">
+        <div class="text-white font-medium text-[2rem] mb-4">
           How We Do This
         </div>
-        <div class="heading-light">
+        <div class="paragraph-light-normal-case">
           {expertise.how}
         </div>
       </div>

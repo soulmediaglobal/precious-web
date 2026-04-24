@@ -20,7 +20,7 @@ export interface Team {
 export interface Expertise {
   title: string;
   slug: string;
-  image: string;
+  images: string[];
   description: string;
   how: string;
   why: string;

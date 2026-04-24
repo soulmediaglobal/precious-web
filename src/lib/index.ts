@@ -247,7 +247,7 @@ export const preciousPhone: string = '+62811100047';
 
 export const expertises: Expertise[] = [
   {
-    image: "/expertise-1.webp",
+    images: ["/expertise/construction-1.webp", "/expertise/construction-2.webp", "/expertise/construction-3.webp"],
     title: "Construction",
     slug: "construction",
     description: "Professional construction services for residential and commercial projects, delivered with strong technical expertise, precise coordination, and efficient execution. From planning to completion, every project is handled with a focus on quality, safety, reliability, and long-lasting results.",
@@ -256,7 +256,7 @@ export const expertises: Expertise[] = [
     portofolio: ["villa-kemang", "resort-bintang-laut", "project-gerai-bakso-malang"]
   },
   {
-    image: "/expertise-5.webp",
+    images: ["/expertise/interior-1.webp", "/expertise/interior-2.webp", "/expertise/interior-3.webp"],
     title: "Interior",
     slug: "interior",
     description: "Professional interior design and fit-out services for residential and commercial projects, creating spaces that are modern, functional, and visually refined. Each interior is designed to improve comfort, efficiency, user experience, and property value.",
@@ -265,7 +265,7 @@ export const expertises: Expertise[] = [
     portofolio: ["eka-hospital-pik", "kitchen-nike-factory", "chopstix"]
   },
   {
-    image: "/expertise-6.webp",
+    images: ["/expertise/mep-1.webp", "/expertise/mep-2.webp", "/expertise/mep-3.webp"],
     title: "MEP & Structural Works",
     slug: "mep-structural-works",
     description: "Professional MEP and structural engineering services for residential and commercial projects, ensuring that buildings operate safely, efficiently, and reliably. By combining expertise in building systems and structural integrity, we deliver durable, high-performance solutions with long-term value.",
@@ -274,7 +274,7 @@ export const expertises: Expertise[] = [
     portofolio: ["mandarin-oriental-hotel", "trihamas-building", "tmg-hotel"]
   },
   {
-    image: "/expertise-4.webp",
+    images: ["/expertise/bore-1.webp", "/expertise/bore-2.webp", "/expertise/bore-3.webp"],
     title: "Bore Piling",
     slug: "bore-piling",
     description: "Professional foundation and piling services, including bored piling solutions for residential and commercial construction projects. Our foundation systems are designed to provide strong structural support, durability, and long-term performance, even in challenging soil conditions.",
@@ -283,7 +283,7 @@ export const expertises: Expertise[] = [
     portofolio: ["villa-kemang", "resort-bintang-laut", "trihamas-building"]
   },
   {
-    image: "/expertise-7.webp",
+    images: ["/expertise/home-1.webp", "/expertise/home-2.webp", "/expertise/home-3.webp"],
     title: "Home Design",
     slug: "home-design",
     description: "Professional home design services that create modern, functional, and personalized living spaces tailored to each client’s lifestyle and vision. Our designs combine architecture, space planning, and interior integration to deliver homes that are refined, comfortable, and practical for everyday living.",
@@ -292,7 +292,7 @@ export const expertises: Expertise[] = [
     portofolio: ["villa-kemang", "resort-bintang-laut", "eka-hospital-pik"]
   },
   {
-    image: "/expertise-8.webp",
+    images: ["/expertise/development-1.webp", "/expertise/development-2.webp", "/expertise/development-3.webp"],
     title: "Development",
     slug: "development",
     description: "Professional real estate development services focused on residential and investment projects that combine market insight, strategic planning, and reliable execution. Our integrated approach creates properties that meet user needs while delivering strong market positioning and long-term value.",
