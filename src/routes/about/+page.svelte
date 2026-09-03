@@ -1,8 +1,11 @@
 <script lang="ts">
 	import { onMount } from "svelte";
-	import { route, teams } from "$lib";
+	import { route } from "$lib";
 
 	import Reach from "$lib/components/Reach.svelte";
+
+	let { data } = $props();
+	let teams = $derived(data.teams);
 
 	let height = $state(0);
 	let width = $state(0);
@@ -83,12 +86,7 @@
       <p class="mb-16 paragraph">
 				Whether in urban environments or remote locations, we maintain the same level of quality and service—delivering results that meet expectations and stand the test of time.
 			</p>
-			<a
-				href={route.contact}
-				class="hidden md:inline-flex items-center gap-3 justify-center px-6 py-3 text-sm no-underline transition-colors border border-[#2B2C2B]"
-			>
-        Get In Touch
-			</a>
+			<a href={route.contact} class="hidden md:inline-flex items-center gap-3 justify-center px-6 py-3 text-sm no-underline transition-colors border border-[#2B2C2B]">Get In Touch</a>
 		</div>
 
 		<div class="hidden relative z-10 w-full pl-20 py-20 h-full md:flex flex-col gap-4">

@@ -1,6 +1,8 @@
 <script>
   import { page } from '$app/state';
-	import { route, preciousemail, preciousPhone } from '$lib';
+	import { route } from '$lib';
+
+  let { email, phone } = $props();
 
   let routes = [
     { name: 'Home', href: route.root },
@@ -35,8 +37,8 @@
   </div>
 
   <div class="flex flex-col gap-3 text-sm">
-    <a href="mailto:{preciousemail}" class="text-inherit no-underline transition-colors hover:text-white">{preciousemail}</a>
-    <a href="tel:{preciousPhone}" class="text-inherit no-underline transition-colors hover:text-white">+62 8111 000 47</a>
+    <a href="mailto:{email}" class="text-inherit no-underline transition-colors hover:text-white">{email}</a>
+    <a href="tel:{phone}" class="text-inherit no-underline transition-colors hover:text-white">{phone}</a>
     <div class="opacity-0">A</div>
     <div class="flex items-center gap-3">
       {#each socmed as s (s.name)}
