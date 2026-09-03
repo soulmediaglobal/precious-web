@@ -44,6 +44,8 @@
 		"wrangler": "^4.63.0"
 	},
 	"dependencies": {
+		"@supabase/ssr": "^0.12.5",
+		"@supabase/supabase-js": "^2.114.0",
 		"drizzle-orm": "^0.45.2",
 		"express": "^5.2.1",
 		"postgres": "^3.4.9"
