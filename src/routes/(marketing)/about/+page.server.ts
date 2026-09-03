@@ -7,7 +7,11 @@ export const load: PageServerLoad = async () => {
     teams: teamMembers.map((t) => ({
       name: t.name,
       title: t.title,
-      image: t.image
+      image: t.image,
+      group: t.group,
+      description: t.description,
+      email: t.email,
+      linkedin: t.linkedin
     }))
   };
 };

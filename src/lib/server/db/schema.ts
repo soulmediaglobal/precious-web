@@ -1,4 +1,4 @@
-import { pgTable, serial, text, integer, timestamp, primaryKey } from 'drizzle-orm/pg-core';
+import { pgTable, serial, text, integer, timestamp, primaryKey, boolean } from 'drizzle-orm/pg-core';
 import { relations } from 'drizzle-orm';
 
 export const portfolio = pgTable('portfolio', {
@@ -53,7 +53,14 @@ export const team = pgTable('team', {
   name: text('name').notNull(),
   title: text('title').notNull(),
   image: text('image').notNull(),
-  sortOrder: integer('sort_order').notNull().default(0)
+  group: text('group').notNull().default('staff'),
+  description: text('description'),
+  email: text('email'),
+  linkedin: text('linkedin'),
+  sortOrder: integer('sort_order').notNull().default(0),
+  isActive: boolean('is_active').notNull().default(true),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull()
 });
 
 export const settings = pgTable('settings', {

@@ -47,8 +47,17 @@ export async function getExpertiseBySlug(slug: string) {
 
 export async function getAllTeam() {
   return db.query.team.findMany({
+    where: eq(team.isActive, true),
     orderBy: asc(team.sortOrder)
   });
+}
+
+export async function getAllTeamAdmin() {
+  return db.query.team.findMany({ orderBy: asc(team.sortOrder) });
+}
+
+export async function getTeamById(id: number) {
+  return db.query.team.findFirst({ where: eq(team.id, id) });
 }
 
 export async function getSettings() {
