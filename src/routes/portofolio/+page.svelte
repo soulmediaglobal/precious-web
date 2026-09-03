@@ -1,8 +1,11 @@
 <script lang="ts">
 	import { onMount } from "svelte";
-	import { portofolio, route } from "$lib";
+	import { route } from "$lib";
 
 	import Reach from "$lib/components/Reach.svelte";
+
+	let { data } = $props();
+	let portofolio = $derived(data.portofolio);
 
 	let height = $state(0);
 	let scrollY = $state(0);

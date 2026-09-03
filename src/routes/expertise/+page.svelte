@@ -1,10 +1,12 @@
 <script lang="ts">
 	import { onMount } from "svelte";
-	import { route, portofolio, expertises as ex } from "$lib";
+	import { route } from "$lib";
 
 	import Reach from "$lib/components/Reach.svelte";
 
-  let expertises = $state(ex);
+	let { data } = $props();
+	let expertises = $derived(data.expertises);
+	let portofolio = $derived(data.portofolio);
 
 	let height = $state(0);
 	let scrollY = $state(0);
@@ -72,7 +74,7 @@
       </div>
     </div>
     <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-16">
-      {#each expertises as e (e.description)}
+      {#each expertises as e (e.slug)}
         <a href={route.expertise + '/' + e.slug} class="w-full h-60 md:h-100 relative group block">
           <div class="w-full h-full overflow-hidden">
             <img src={e.images[0]} alt="" class="object-cover object-center h-full w-full transition-transform duration-500 group-hover:scale-105" />

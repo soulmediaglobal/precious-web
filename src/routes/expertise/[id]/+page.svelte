@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from "svelte";
-	import { route, portofolio } from "$lib";
+	import { route } from "$lib";
 
 	import Reach from "$lib/components/Reach.svelte";
 
@@ -103,7 +103,7 @@
       </div>
     </div>
     <div class="grid w-full grid-cols-1 md:grid-cols-3 gap-y-8 gap-x-10 md:gap-y-12 overflow-hidden mb-17">
-      {#each portofolio.filter(p => expertise.portofolio.includes(p.slug)) as p (p.slug)}
+      {#each expertise.relatedPortfolio as p (p.slug)}
         <a href={route.portofolio + '/' + p.slug} class="w-full">
           <div class="w-full h-72 relative mb-4">
             <img src={p.images[0]} alt="" class="object-cover object-center h-full w-full" />

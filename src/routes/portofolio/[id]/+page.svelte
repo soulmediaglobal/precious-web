@@ -1,21 +1,13 @@
 <script lang="ts">
 	import { onMount } from "svelte";
-	import { route, portofolio as p_list } from "$lib";
+	import { route } from "$lib";
 
 	import Reach from "$lib/components/Reach.svelte";
 
   let { data } = $props();
 
   let portofolio = $derived(data.portofolio);
-
-  let projects = $derived.by(() => {
-    let filtered = p_list.filter(item => item.category === portofolio.category && item.slug !== portofolio.slug);
-    if (filtered.length === 0) {
-      const others = p_list.filter(item => item.slug !== portofolio.slug);
-      return others.sort(() => 0.5 - Math.random()).slice(0, 3);
-    }
-    return filtered.slice(0, 3);
-  });
+  let projects = $derived(data.related);
 
 	let height = $state(0);
 	let scrollY = $state(0);
