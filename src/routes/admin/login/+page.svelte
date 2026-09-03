@@ -12,9 +12,9 @@
 <div class="min-h-screen flex items-center justify-center bg-[#0b0b0b]">
   <div class="bg-[#151515] border border-[#2a2a2a] p-8 rounded-lg shadow-xl w-full max-w-sm">
     <div class="flex justify-center mb-6">
-      <img src="/logo-white.svg" alt="Precious Contractor" class="h-10" />
+      <img src="/logo.svg" alt="Precious Contractor" class="h-30" />
     </div>
-    <h1 class="text-xl font-medium mb-6 text-center text-white">Admin Login</h1>
+    <h1 class="text-base font-medium mb-6 text-center text-white">Welcome to Precious Admin Access</h1>
 
     <form
       method="POST"
