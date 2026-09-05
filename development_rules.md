@@ -1,6 +1,6 @@
 # Precious CMS — Development Rules
 
-Terakhir diperbarui: 2026-09-06T00:45:11+07:00 (Asia/Jakarta).
+Terakhir diperbarui: 2026-09-06T06:39:38+07:00 (Asia/Jakarta).
 
 ## Governance wajib
 
@@ -44,6 +44,15 @@ Nurey **bukan gate untuk detail implementasi minor/lokal**: spacing, typo, respo
 - **Keputusan Ray (canonical): `Create Revision` wajib menghasilkan full snapshot dari source revision.** Snapshot mencakup sections, groups, subgroups, items beserta relationship-nya, stages, payment terms beserta relationship-nya, totals/tax, offer date, greeting, bank account/signatory data, dan seluruh data lain yang menentukan dokumen.
 - Revision baru harus identik dengan source sebelum diedit dalam seluruh data penentu dokumen; identitas entity hasil clone merupakan identitas baru.
 - Semua relation hasil clone harus menunjuk entity baru dalam revision baru, bukan entity source. Struktur dan relationship source harus dipertahankan dengan pemetaan ke entity hasil clone di revision baru.
+
+### Historical data model dan retention — Task 2
+
+- **Keputusan Ray (canonical): begitu RAB keluar dari status `draft`, seluruh data yang menentukan isi dokumen historis wajib frozen.** Perubahan master data sesudahnya tidak boleh mengubah preview maupun output historical RAB.
+- Snapshot historis minimal mempertahankan identitas Client yang tampil; alamat/PIC/contact Client yang tampil; identitas dan detail Project yang tampil; rekening perusahaan yang digunakan; signatory name/title; offer date; greeting; nomor dokumen; struktur pekerjaan; tahapan; termin; totals/tax; serta seluruh field lain yang mempengaruhi rendered document.
+- **Canonical example:** RAB yang saat dibekukan memakai rekening A harus tetap menampilkan rekening A walaupun master rekening kemudian berubah menjadi rekening B. Shared master reference saja tidak memenuhi rule bila perubahan master masih dapat mengubah isi dokumen historis.
+- **Retention policy:** Project tanpa RAB boleh hard delete. Project yang sudah memiliki RAB/history tidak boleh hard delete melalui normal flow dan harus dipertahankan secara non-destructive/archive. Client yang memiliki Project/history juga tidak boleh hard delete melalui normal flow.
+- **Acceptance principle:** historical RAB harus dapat dibuka kembali di masa depan dengan isi dokumen yang sama seperti saat dibekukan, meskipun master Client, Project, rekening, signatory, atau data terkait sudah berubah.
+- Rule ini melengkapi mekanisme Task 1 `Create Revision` full snapshot di atas tanpa mengubahnya. Status verifikasi Task 1 tidak membuktikan compliance Task 2; penetapan rule canonical ini bukan bukti bahwa implementation historical immutability maupun retention policy sudah compliant.
 
 ## Workflow dan verifikasi
 

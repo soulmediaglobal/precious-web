@@ -1,8 +1,8 @@
 # Precious CMS — Changelog
 
-Terakhir diperbarui: 2026-09-06T05:16:52+07:00 (Asia/Jakarta).
+Terakhir diperbarui: 2026-09-06T06:39:38+07:00 (Asia/Jakarta).
 
-Versi dokumentasi: **1.1.1** (SemVer dokumentasi, terpisah dari versi rilis CMS).
+Versi dokumentasi: **1.2.0** (SemVer dokumentasi, terpisah dari versi rilis CMS).
 
 ## Governance wajib
 
@@ -15,6 +15,16 @@ Nurey **bukan gate untuk detail implementasi minor/lokal**: spacing, typo, respo
 ## Riwayat
 
 Entry terbaru di atas, gunakan timestamp dengan zona waktu dan bukti verifikasi. Jangan mengarang versi atau histori rilis. Gunakan SemVer terpisah untuk dokumentasi dan rilis CMS; revisi dokumentasi bukan rilis aplikasi. Versi dokumentasi 1.0.0 memulai penomoran eksplisit; baseline sebelumnya tetap tanpa versi, dan versi rilis CMS tidak diubah atau diasumsikan.
+
+### Dokumentasi 1.2.0 — 2026-09-06T06:39:38+07:00 (Asia/Jakarta) — Task 2 Historical RAB Immutability + Retention Policy
+
+- Sesuai keputusan dan instruksi Ray, menetapkan canonical historical data model: begitu RAB keluar dari `draft`, seluruh data penentu dokumen historis wajib frozen; perubahan master sesudahnya tidak boleh mengubah preview/output historical RAB.
+- Snapshot minimal meliputi identitas Client, alamat/PIC/contact Client yang tampil, identitas/detail Project yang tampil, rekening perusahaan yang digunakan, signatory name/title, offer date, greeting, nomor dokumen, struktur pekerjaan, tahapan, termin, totals/tax, dan seluruh field lain yang mempengaruhi rendered document. Contoh canonical: rekening A pada RAB yang dibekukan tetap rekening A meskipun master rekening berubah menjadi B.
+- Menetapkan retention policy: Project tanpa RAB boleh hard delete; Project dengan RAB/history wajib dipertahankan secara non-destructive/archive dan tidak boleh hard delete melalui normal flow; Client dengan Project/history juga tidak boleh hard delete melalui normal flow.
+- Acceptance principle: historical RAB dapat dibuka kembali dengan isi dokumen yang sama seperti saat dibekukan meskipun master Client, Project, rekening, signatory, atau data terkait berubah.
+- Rule ditambahkan di bagian RAB/historical data model/retention pada `development_rules.md`. Versi minor dokumentasi naik menjadi **1.2.0** karena mekanisme canonical baru; versi rilis CMS tidak diubah. Canonical Task 1 full snapshot dan catatan verifikasinya tetap unchanged; cross-reference menegaskan bahwa verifikasi Task 1 tidak membuktikan compliance Task 2.
+- Scope hanya `doc_changelog.md` dan `development_rules.md`; perubahan lokal aplikasi/migrasi dipertahankan di luar commit. Inspeksi Git: branch `main`, remote `origin` repo Precious, staging awal kosong, `.env` tidak ter-track (hanya `.env.example`). Verifikasi pekerjaan ini terbatas pada review diff dokumentasi, `git diff --check`, dan staged diff check sebelum commit.
+- Historical immutability + retention policy sudah canonical; **implementation belum dinyatakan compliant**. Penetapan dokumentasi ini tidak menutup blocker historical immutability yang dicatat di v1.1.1. Tidak dilakukan perubahan implementation, build, migration, deployment, atau audit fungsional.
 
 ### Dokumentasi 1.1.1 — 2026-09-06T05:16:52+07:00 (Asia/Jakarta) — Status implementation Task 1 RAB Full Revision Snapshot
 
