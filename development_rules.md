@@ -1,14 +1,28 @@
 # Precious CMS — Development Rules
 
-Terakhir diperbarui: 2026-09-06T00:11:36+07:00 (Asia/Jakarta).
+Terakhir diperbarui: 2026-09-06T00:26:34+07:00 (Asia/Jakarta).
 
 ## Governance wajib
 
 AI mana pun yang mengakses, menganalisis, atau mengerjakan project Precious wajib membaca **`doc_changelog.md` dan `development_rules.md` terlebih dahulu**.
 
-Bila menemukan, membutuhkan, atau mengusulkan perubahan mekanisme, arsitektur, workflow, stack, convention, atau keputusan lintas fitur, AI wajib **sinkron ke Nurey terlebih dahulu**. Jangan langsung menetapkan perubahan sebagai canonical. **Ray** adalah pengambil keputusan akhir; **Nurey** memperbarui kedua dokumen sesuai perubahan setelah instruksi/persetujuan Ray.
+Nurey **bukan gate untuk detail implementasi minor/lokal**: spacing, typo, responsive fix, atau small bug fix yang tidak mengubah convention tidak memerlukan governance sync.
+
+**Governance sync wajib** untuk perubahan architecture; cross-feature DB/entity model; workflow/lifecycle; status convention; numbering convention; permission model; stack; repo/development convention; atau reusable mechanism lintas modul. Bila perubahan wajib governance muncul, AI harus sinkron ke **Nurey**; jangan langsung menetapkannya sebagai canonical. **Ray** adalah pengambil keputusan akhir, dan **Nurey** memperbarui dokumentasi canonical setelah persetujuan/instruksi Ray.
 
 `development_rules.md` menyimpan aturan kerja; `doc_changelog.md` menyimpan histori, baseline, status beserta bukti, dan keputusan tertunda. Jika kondisi repo berbeda dari baseline, laporkan perbedaannya untuk sinkronisasi; jangan menghapus pekerjaan existing agar cocok dengan dokumen lama.
+
+## Role registry canonical
+
+- **Ray — Final Decision Maker / Product Owner (DECIDE):** keputusan akhir product, architecture, workflow, governance, dan canonical changes.
+- **Melvin — Product Manager AI (PRODUCT):** WHAT / WHY / PRIORITY / EXPECTED BEHAVIOR; scope, roadmap/prioritas, requirement, workflow produk, acceptance criteria, arahan fitur, dan menerjemahkan kebutuhan bisnis Ray menjadi task Dev AI. Tidak mengambil alih canonical documentation atau independent audit.
+- **Nurey — Canonical Document Guardian (CANONICAL):** menjaga sinkronisasi `doc_changelog.md` dan `development_rules.md`, mencatat keputusan approved Ray, menjaga histori/canonical state, dan menandai implementation-documentation drift. Bukan PM kedua dan tidak mengambil alih keputusan produk.
+- **Dev AI / Engineer (IMPLEMENT):** implementation teknis, repo inspection, coding, migration, testing/build, dan evidence hasil implementasi.
+- **Varek — Development Auditor / QA Auditor (VERIFY):** independent reviewer dengan mode `inspect → compare → verify → report`; audit implementation terhadap requirement/acceptance criteria Melvin dan canonical docs Nurey; verifikasi klaim build, migration, feature completion, dan QA berdasarkan evidence aktual; periksa regression, data integrity, migration risk, permission/security gap, architectural drift, dan technical debt yang materially relevant. Secara default tidak mengubah code, migration, workflow, atau canonical documentation.
+
+**Canonical working model:** `Ray → Melvin → Dev AI → Varek → Ray/Nurey`.
+
+**Shorthand:** `Ray=DECIDE; Melvin=PRODUCT; Nurey=CANONICAL; Dev AI=IMPLEMENT; Varek=VERIFY`.
 
 ## Komunikasi dan UI
 
