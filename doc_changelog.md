@@ -1,8 +1,8 @@
 # Precious CMS — Changelog
 
-Terakhir diperbarui: 2026-09-06T00:45:11+07:00 (Asia/Jakarta).
+Terakhir diperbarui: 2026-09-06T05:16:52+07:00 (Asia/Jakarta).
 
-Versi dokumentasi: **1.1.0** (SemVer dokumentasi, terpisah dari versi rilis CMS).
+Versi dokumentasi: **1.1.1** (SemVer dokumentasi, terpisah dari versi rilis CMS).
 
 ## Governance wajib
 
@@ -15,6 +15,14 @@ Nurey **bukan gate untuk detail implementasi minor/lokal**: spacing, typo, respo
 ## Riwayat
 
 Entry terbaru di atas, gunakan timestamp dengan zona waktu dan bukti verifikasi. Jangan mengarang versi atau histori rilis. Gunakan SemVer terpisah untuk dokumentasi dan rilis CMS; revisi dokumentasi bukan rilis aplikasi. Versi dokumentasi 1.0.0 memulai penomoran eksplisit; baseline sebelumnya tetap tanpa versi, dan versi rilis CMS tidak diubah atau diasumsikan.
+
+### Dokumentasi 1.1.1 — 2026-09-06T05:16:52+07:00 (Asia/Jakarta) — Status implementation Task 1 RAB Full Revision Snapshot
+
+- Sesuai instruksi Ray, status implementation Task 1 dicatat sebagai independently verified **DONE — PASS WITH NOTES**, berdasarkan hasil re-audit independen Varek yang disampaikan Ray melalui Nurey Sync. **Risk: LOW untuk scope Task 1; Verdict: PASS WITH NOTES.** Entry ini mencatat hasil re-audit tersebut, bukan audit ulang dalam pekerjaan dokumentasi ini.
+- Evidence re-audit Varek: full clone struktur dan field dokumen terbukti; cloned entities menggunakan ID baru; item→subgroup dan term→stage menunjuk entity clone baru; source revision tetap tidak berubah saat revision baru diedit; lifecycle source/new revision sesuai behavior existing.
+- Notes non-blocking untuk Task 1: negative-case lifecycle/rollback belum seluruhnya diuji dinamis; `bankAccountId` masih shared master reference dan masuk blocker historical immutability terpisah; live Supabase/browser/deployment tidak termasuk scope re-audit. Status ini tidak menutup blocker historical immutability tersebut.
+- Canonical mechanism **v1.1.0 tetap unchanged**: `Create Revision` wajib full snapshot. `development_rules.md` tidak berubah. Versi patch dokumentasi menjadi **1.1.1** untuk pencatatan status/evidence; versi rilis CMS tidak diubah.
+- Scope perubahan hanya `doc_changelog.md`; perubahan lokal aplikasi/migrasi dipertahankan di luar commit dokumentasi. Tidak dilakukan audit fungsional, build, migration, atau deployment dalam pekerjaan ini.
 
 ### Dokumentasi 1.1.0 — 2026-09-06T00:45:11+07:00 (Asia/Jakarta) — Full snapshot Create Revision RAB
 
