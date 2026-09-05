@@ -1,6 +1,6 @@
 # Precious CMS — Development Rules
 
-Terakhir diperbarui: 2026-09-06T00:26:34+07:00 (Asia/Jakarta).
+Terakhir diperbarui: 2026-09-06T00:45:11+07:00 (Asia/Jakarta).
 
 ## Governance wajib
 
@@ -38,6 +38,12 @@ Nurey **bukan gate untuk detail implementasi minor/lokal**: spacing, typo, respo
 - Pertahankan proteksi `/admin/*` kecuali `/admin/login` melalui `event.locals.getUser()` di `hooks.server.ts`; Supabase client per request di `event.locals.supabase`.
 - Server load memetakan camelCase Drizzle (misalnya `projectName`) ke snake_case template lama (`project_name`) untuk menjaga kompatibilitas.
 - Putuskan strategi penyimpanan gambar bersama Ray sebelum mengembangkan form upload. Jangan menganggap keputusan baseline yang tertunda sudah selesai.
+
+## Mekanisme dan workflow RAB
+
+- **Keputusan Ray (canonical): `Create Revision` wajib menghasilkan full snapshot dari source revision.** Snapshot mencakup sections, groups, subgroups, items beserta relationship-nya, stages, payment terms beserta relationship-nya, totals/tax, offer date, greeting, bank account/signatory data, dan seluruh data lain yang menentukan dokumen.
+- Revision baru harus identik dengan source sebelum diedit dalam seluruh data penentu dokumen; identitas entity hasil clone merupakan identitas baru.
+- Semua relation hasil clone harus menunjuk entity baru dalam revision baru, bukan entity source. Struktur dan relationship source harus dipertahankan dengan pemetaan ke entity hasil clone di revision baru.
 
 ## Workflow dan verifikasi
 

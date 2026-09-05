@@ -1,8 +1,8 @@
 # Precious CMS — Changelog
 
-Terakhir diperbarui: 2026-09-06T00:26:34+07:00 (Asia/Jakarta).
+Terakhir diperbarui: 2026-09-06T00:45:11+07:00 (Asia/Jakarta).
 
-Versi dokumentasi: **1.0.0** (SemVer dokumentasi, terpisah dari versi rilis CMS).
+Versi dokumentasi: **1.1.0** (SemVer dokumentasi, terpisah dari versi rilis CMS).
 
 ## Governance wajib
 
@@ -15,6 +15,13 @@ Nurey **bukan gate untuk detail implementasi minor/lokal**: spacing, typo, respo
 ## Riwayat
 
 Entry terbaru di atas, gunakan timestamp dengan zona waktu dan bukti verifikasi. Jangan mengarang versi atau histori rilis. Gunakan SemVer terpisah untuk dokumentasi dan rilis CMS; revisi dokumentasi bukan rilis aplikasi. Versi dokumentasi 1.0.0 memulai penomoran eksplisit; baseline sebelumnya tetap tanpa versi, dan versi rilis CMS tidak diubah atau diasumsikan.
+
+### Dokumentasi 1.1.0 — 2026-09-06T00:45:11+07:00 (Asia/Jakarta) — Full snapshot Create Revision RAB
+
+- Sesuai persetujuan dan instruksi Ray, menetapkan keputusan canonical bahwa `Create Revision` RAB wajib menghasilkan full snapshot dari source revision: sections, groups, subgroups, items beserta relationship-nya, stages, payment terms beserta relationship-nya, totals/tax, offer date, greeting, bank account/signatory data, dan seluruh data lain yang menentukan dokumen.
+- Revision baru harus identik dengan source sebelum diedit dalam seluruh data penentu dokumen. Semua relation hasil clone harus menunjuk entity baru dalam revision baru, bukan entity source; struktur relationship dipertahankan melalui pemetaan entity hasil clone.
+- Rule ditambahkan pada bagian mekanisme dan workflow RAB di `development_rules.md`. Versi minor dokumentasi naik menjadi 1.1.0 karena penambahan rule canonical; versi rilis CMS tidak berubah.
+- Scope hanya dua dokumen canonical. Keputusan ini sudah canonical, bukan bukti bahwa implementation telah sesuai; implementation, stack, backlog lain, dan audit state tidak diubah. Inspeksi Git dilakukan pada branch `main` dengan remote `origin` repo Precious; perubahan lokal tak terkait dipertahankan di luar commit dokumentasi. Tidak dilakukan build, migration, deployment, atau audit fungsional.
 
 ### Dokumentasi 1.0.0 — 2026-09-06T00:26:34+07:00 (Asia/Jakarta) — Role registry dan batas governance
 
