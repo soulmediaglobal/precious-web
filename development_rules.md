@@ -1,6 +1,8 @@
 # Precious CMS — Development Rules
 
-Terakhir diperbarui: 2026-09-06T06:39:38+07:00 (Asia/Jakarta).
+Terakhir diperbarui: 2026-09-07T03:16:10+07:00 (Asia/Jakarta).
+
+Versi dokumentasi: **2.0.0** (SemVer dokumentasi, terpisah dari versi rilis CMS/app; tidak otomatis mengubah versi aplikasi dan bukan production release).
 
 ## Governance wajib
 
@@ -27,13 +29,23 @@ Nurey **bukan gate untuk detail implementasi minor/lokal**: spacing, typo, respo
 ## Komunikasi dan UI
 
 - Pakai bahasa Indonesia casual (gw/lo), ringkas, presisi, dan langkah kecil siap dijalankan. Nama assistant/penjaga dokumentasi: Nurey.
-- Pertahankan identitas, aset, dan komponen Precious existing. Jangan menetapkan logo, warna, atau font baru tanpa dasar/persetujuan Ray. Admin memakai Flowbite Svelte.
+- Pertahankan identitas, aset, dan komponen Precious existing. Jangan menetapkan logo, warna, atau font baru tanpa dasar/persetujuan Ray. Admin UI v1 tetap preserved/legacy baseline; target Admin UI v2 memakai TailAdmin official default foundation. Convention Flowbite superseded/deprecated untuk v2.
+
+## Admin UI v2 — Parallel Rebuild Baseline (Documentation 2.0.0)
+
+- Keputusan Ray ini adalah perubahan canonical major pada **admin UI generation**, bukan framework/backend rewrite dan bukan production release. Documentation 2.0.0 tidak menetapkan atau otomatis menaikkan versi rilis CMS/app.
+- **UI v1 = preserved/legacy baseline; UI v2 = active development track; RAB Builder = parked; backend/data/history = preserved.** Status implementation lain tidak berubah; active development track bukan bukti UI v2 sudah dibangun, selesai, atau live.
+- Bangun Admin UI v2 secara paralel dengan routing baru yang terpisah dari routing admin existing. **Exact route path/naming belum diputuskan** sampai ada explicit decision Ray; jangan invent. Jangan hapus atau overwrite UI v1 maupun routing existing sebagai bagian keputusan ini.
+- **TailAdmin official default foundation** adalah canonical admin UI foundation untuk v2 dan menggantikan Flowbite sebagai target UI baru. Convention Flowbite Svelte + `flowbite-svelte-admin-dashboard` **superseded/deprecated untuk v2**, tetapi tetap bagian baseline v1. Jangan menghapus dependency/file atau mengklaim migration selesai sebelum technical inspection dan evidence implementasi; keputusan dokumentasi ini bukan instruksi cleanup implementation.
+- Pertahankan existing repo, DB, migrations, auth, data/history, dan business logic yang masih valid. Core stack di bawah tetap berlaku; perubahan foundation UI tidak mengotorisasi rewrite framework/backend atau reset data/history.
+- Non-RAB admin features akan direbuild di UI v2. **Requirements RAB Builder tetap retained; implementation tetap parked sampai Ray memberi GO eksplisit.**
+- Task 1 full revision snapshot mechanism serta Task 2 frozen historical data/content dan retention policy di bawah tetap wajib dipertahankan. Keputusan UI ini tidak mengubah status verifikasi Task 1 maupun status compliance/blocker Task 2 dan tidak mengizinkan kehilangan history.
 
 ## Stack dan arsitektur
 
-- Pertahankan SvelteKit 2, Svelte 5 runes (`$state`, `$derived`, `$props`), Tailwind CSS 4, Flowbite Svelte + `flowbite-svelte-admin-dashboard`, Supabase PostgreSQL, Drizzle + `postgres-js`, Supabase Auth + `@supabase/ssr`, serta `@sveltejs/adapter-node`. Perubahan stack harus dibahas terlebih dahulu.
+- Pertahankan SvelteKit 2, Svelte 5 runes (`$state`, `$derived`, `$props`), Tailwind CSS 4, Supabase PostgreSQL, Drizzle + `postgres-js`, Supabase Auth + `@supabase/ssr`, serta `@sveltejs/adapter-node`. Perubahan stack harus dibahas terlebih dahulu.
 - Query baru melalui `src/lib/server/db/queries.ts`, bukan Drizzle langsung di `+page.server.ts`.
-- Pertahankan route groups: `src/routes/(marketing)/` untuk publik (Header, Footer, `layout.css`); `admin/login/` tanpa sidebar; `admin/logout/` sebagai POST sign-out; `admin/(app)/` untuk shell admin (Sidebar/Navbar).
+- Pertahankan route groups existing (baseline v1; routing baru v2 terpisah dan path/naming masih pending): `src/routes/(marketing)/` untuk publik (Header, Footer, `layout.css`); `admin/login/` tanpa sidebar; `admin/logout/` sebagai POST sign-out; `admin/(app)/` untuk shell admin (Sidebar/Navbar).
 - Root `src/routes/+layout.svelte` sengaja kosong dari layout publik; jangan menaruh Header/Footer/CSS publik yang bocor ke admin.
 - Pertahankan proteksi `/admin/*` kecuali `/admin/login` melalui `event.locals.getUser()` di `hooks.server.ts`; Supabase client per request di `event.locals.supabase`.
 - Server load memetakan camelCase Drizzle (misalnya `projectName`) ke snake_case template lama (`project_name`) untuk menjaga kompatibilitas.

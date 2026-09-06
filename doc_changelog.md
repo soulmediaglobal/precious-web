@@ -1,8 +1,8 @@
 # Precious CMS — Changelog
 
-Terakhir diperbarui: 2026-09-06T06:39:38+07:00 (Asia/Jakarta).
+Terakhir diperbarui: 2026-09-07T03:16:10+07:00 (Asia/Jakarta).
 
-Versi dokumentasi: **1.2.0** (SemVer dokumentasi, terpisah dari versi rilis CMS).
+Versi dokumentasi: **2.0.0** (SemVer dokumentasi, terpisah dari versi rilis CMS).
 
 ## Governance wajib
 
@@ -15,6 +15,18 @@ Nurey **bukan gate untuk detail implementasi minor/lokal**: spacing, typo, respo
 ## Riwayat
 
 Entry terbaru di atas, gunakan timestamp dengan zona waktu dan bukti verifikasi. Jangan mengarang versi atau histori rilis. Gunakan SemVer terpisah untuk dokumentasi dan rilis CMS; revisi dokumentasi bukan rilis aplikasi. Versi dokumentasi 1.0.0 memulai penomoran eksplisit; baseline sebelumnya tetap tanpa versi, dan versi rilis CMS tidak diubah atau diasumsikan.
+
+### Documentation 2.0.0 — Admin UI v2 Parallel Rebuild Baseline
+
+Timestamp: 2026-09-07T03:16:10+07:00 (Asia/Jakarta).
+
+- Sesuai keputusan eksplisit Ray, documentation version naik ke **2.0.0** untuk perubahan canonical major pada admin UI generation. Ini BUKAN framework/backend rewrite dan BUKAN production release; versi rilis CMS/app tidak otomatis berubah dan tidak ditetapkan oleh versi dokumentasi ini.
+- **UI v1 = preserved/legacy baseline; UI v2 = active development track; RAB Builder = parked; backend/data/history = preserved.** Status implementation lain tetap unchanged. Active development track adalah arah canonical, bukan klaim UI v2 sudah dibangun, selesai, atau live.
+- Admin UI v2 dibangun paralel dengan routing baru yang terpisah dari routing admin existing. Exact route path/naming belum diputuskan; jangan mengarang path atau mengganti routing v1 sebagai bagian keputusan ini. Existing admin UI v1 tidak boleh dihapus atau di-overwrite.
+- **TailAdmin official default foundation** menjadi canonical admin UI foundation untuk v2, menggantikan Flowbite sebagai target UI baru. Convention Flowbite superseded/deprecated untuk v2; baseline v1 tetap dipertahankan. Tidak ada penghapusan dependency/file atau klaim migration selesai sebelum technical inspection dan evidence implementasi.
+- Core stack tetap SvelteKit 2 + Svelte 5 runes + Tailwind CSS 4 + Supabase/PostgreSQL + Drizzle/`postgres-js` + Supabase Auth/`@supabase/ssr` + `@sveltejs/adapter-node`. Existing repo, DB, migrations, auth, data/history, dan business logic yang masih valid wajib dipertahankan.
+- Non-RAB admin features akan direbuild di UI v2. RAB Builder requirements tetap retained, tetapi implementation tetap parked sampai Ray memberi **GO eksplisit**. Task 1 full snapshot mechanism serta Task 2 frozen historical data/content dan retention policy tetap wajib dipertahankan; status verifikasi/compliance sebelumnya tidak berubah.
+- Scope hanya `doc_changelog.md` dan `development_rules.md`. Inspeksi Git: branch `main`, remote `origin` repo Precious, staging awal kosong, `.env` tidak ter-track (hanya `.env.example`); perubahan lokal lain dipertahankan di luar commit. Verifikasi dokumentasi: review diff, `git diff --check`, dan staged diff check sebelum commit. Tidak dilakukan build, migration, deployment, atau audit fungsional.
 
 ### Dokumentasi 1.2.0 — 2026-09-06T06:39:38+07:00 (Asia/Jakarta) — Task 2 Historical RAB Immutability + Retention Policy
 
@@ -62,7 +74,7 @@ Entry terbaru di atas, gunakan timestamp dengan zona waktu dan bukti verifikasi.
 - Website: https://preciouscontractor.co.id — kontraktor struktural dan sipil B2B di Indonesia.
 - Repo: https://github.com/soulmediaglobal/precious-web.git; lokal: `/Users/mymac/Documents/Precious/pc`.
 - Framework: SvelteKit 2 + Svelte 5 runes; Tailwind CSS 4.
-- Admin UI: Flowbite Svelte + `flowbite-svelte-admin-dashboard`.
+- Admin UI v1: Flowbite Svelte + `flowbite-svelte-admin-dashboard`, preserved/legacy baseline. Target UI v2: **TailAdmin official default foundation**, parallel rebuild dengan routing terpisah; exact path/naming pending keputusan Ray. Convention Flowbite superseded/deprecated untuk v2.
 - Data: Supabase PostgreSQL (project `wikqtjvlmgdmixgrntij`), Drizzle ORM + `postgres-js`.
 - Auth: Supabase Auth email/password + `@supabase/ssr`; runtime Node.js melalui `@sveltejs/adapter-node`.
 - Tujuh tabel baseline: `portfolio`, `portfolio_images`, `expertise`, `expertise_images`, `expertise_portfolio` (many-to-many), `team`, `settings` (key-value). Ini bukan inventaris skema terkini.
