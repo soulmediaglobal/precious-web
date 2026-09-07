@@ -10,14 +10,8 @@
     /^\/admin-v2\/team(?:\/|$)/.test(page.url.pathname)
   );
   let isClients = $derived(/^\/admin-v2\/clients(?:\/|$)/.test(page.url.pathname));
-  let placeholder = $derived(
-    page.url.pathname === '/admin-v2'
-      ? page.url.hash === '#projects'
-          ? 'Projects'
-          : null
-      : null
-  );
-  let selected = $derived(isTeam ? 'Team' : isClients ? 'Clients' : placeholder ?? 'Dashboard');
+  let isProjects = $derived(/^\/admin-v2\/projects(?:\/|$)/.test(page.url.pathname));
+  let selected = $derived(isTeam ? 'Team' : isClients ? 'Clients' : isProjects ? 'Projects' : 'Dashboard');
   let mobile = $state(false);
   let open = $state(false);
   let collapsed = $state(false);
@@ -34,7 +28,7 @@
       title: 'Management',
       items: [
         { label: 'Clients', icon: 'clients', href: '/admin-v2/clients' },
-        { label: 'Projects', icon: 'projects', href: '/admin-v2#projects' }
+        { label: 'Projects', icon: 'projects', href: '/admin-v2/projects' }
       ]
     },
     {
@@ -192,20 +186,7 @@
       </header>
 
       <main id="v2-main" tabindex="-1">
-        {#if placeholder}
-          <div class="ta-page-heading">
-            <h1>{placeholder}</h1>
-            <span>Home / {placeholder}</span>
-          </div>
-          <section class="ta-panel">
-            <div>
-              <h2>Coming soon</h2>
-              <p>{placeholder} belum tersedia.</p>
-            </div>
-          </section>
-        {:else}
-          {@render children()}
-        {/if}
+        {@render children()}
       </main>
     </div>
   </div>
