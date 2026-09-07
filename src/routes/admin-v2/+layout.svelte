@@ -11,7 +11,8 @@
   );
   let isClients = $derived(/^\/admin-v2\/clients(?:\/|$)/.test(page.url.pathname));
   let isProjects = $derived(/^\/admin-v2\/projects(?:\/|$)/.test(page.url.pathname));
-  let selected = $derived(isTeam ? 'Team' : isClients ? 'Clients' : isProjects ? 'Projects' : 'Dashboard');
+  let isPortfolio = $derived(/^\/admin-v2\/portfolio(?:\/|$)/.test(page.url.pathname));
+  let selected = $derived(isPortfolio ? 'Portfolio' : isTeam ? 'Team' : isClients ? 'Clients' : isProjects ? 'Projects' : 'Dashboard');
   let mobile = $state(false);
   let open = $state(false);
   let collapsed = $state(false);
@@ -33,7 +34,7 @@
     },
     {
       title: 'Content',
-      items: [{ label: 'Team', icon: 'team', href: '/admin-v2/team' }]
+      items: [{ label: 'Portfolio', icon: 'projects', href: '/admin-v2/portfolio' }, { label: 'Team', icon: 'team', href: '/admin-v2/team' }]
     }
   ] as const;
 
