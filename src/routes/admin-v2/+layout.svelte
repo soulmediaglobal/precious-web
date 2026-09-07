@@ -1,5 +1,7 @@
 <script lang="ts">
   import { onMount, tick } from 'svelte';
+  import { page } from '$app/state';
+  let isLogin = $derived(page.url.pathname === '/admin-v2/login');
   import { icons } from './icons';
   import './shell.css';
   let { children } = $props();
@@ -46,7 +48,10 @@
 </script>
 
 <svelte:window onkeydown={keyboard} />
-<svelte:head><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap" /><meta name="robots" content="noindex, nofollow" /><title>{selected} | Precious Admin v2</title></svelte:head>
+<svelte:head><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap" /><meta name="robots" content="noindex, nofollow" /><title>{isLogin ? 'Login' : selected} | Precious Admin v2</title></svelte:head>
+{#if isLogin}
+  {@render children()}
+{:else}
 <div class="ta-shell" class:nav-open={open} class:nav-collapsed={collapsed}>
   <a class="ta-skip" href="#v2-main">Skip to content</a>
   {#if open && mobile}<button class="ta-overlay" tabindex="-1" aria-label="Close navigation" onclick={close}></button>{/if}
@@ -81,7 +86,7 @@
         <a class="ta-mobile-brand" href="/admin-v2"><img src="/logo.svg" alt="Precious Contractor" width="91" height="63" /></a>
         <button class="ta-header-toggle ta-icon-button" aria-label="Toggle header menu" aria-expanded={headerOpen} aria-controls="v2-header-menu" onclick={() => headerOpen = !headerOpen}>···</button>
       </div>
-      <div id="v2-header-menu" class="ta-header-menu" class:ta-header-visible={headerOpen}><span>Admin v2</span><span class="ta-badge">Preview</span></div>
+      <div id="v2-header-menu" class="ta-header-menu" class:ta-header-visible={headerOpen}><span>Admin v2</span><span class="ta-badge">Preview</span><form method="POST" action="/admin-v2/logout"><button class="ta-icon-button" style="width:auto;padding:0 12px" type="submit">Keluar</button></form></div>
     </header>
     <main id="v2-main" tabindex="-1">
       {#if selected === 'Dashboard'}
@@ -93,3 +98,5 @@
     </main>
   </div>
 </div>
+
+{/if}

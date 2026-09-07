@@ -21,5 +21,13 @@ export const handle: Handle = async ({ event, resolve }) => {
     }
   }
 
+  const isAdminV2Route = event.url.pathname === '/admin-v2' || event.url.pathname.startsWith('/admin-v2/');
+  if (isAdminV2Route && event.url.pathname !== '/admin-v2/login') {
+    const user = await event.locals.getUser();
+    if (!user) {
+      throw redirect(303, '/admin-v2/login');
+    }
+  }
+
   return resolve(event);
 };

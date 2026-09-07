@@ -1,4 +1,8 @@
-# Admin v2 — Phase 1 foundation
+# Admin v2 — foundation through Phase 3
+
+Current status: Phase 3 CMS auth parity is implemented. The Phase 1/2 notes below preserve historical scope; their unauthenticated-shell and deferred-auth descriptions are superseded by Phase 3. Full real authenticated login/logout E2E verification is still outstanding.
+
+## Phase 1 — historical foundation
 
 Official source: https://github.com/TailAdmin/tailadmin-free-tailwind-dashboard-template
 Pinned source commit: 44ac4719ef1762907c84c4df459842de9eea70b0 (MIT; license alongside this file).
@@ -12,3 +16,29 @@ Ray explicitly approved the shared hook matcher correction: /admin and /admin/* 
 ## Ray visual adjustments
 
 Ray requested pure black backgrounds, a sidebar one-third narrower (290px → 193.333px), colored existing logo.svg one-third smaller (118px → 78.667px; proportional mobile/collapsed sizes), and typography matching https://demo.tailadmin.com/. Demo computed styles verified: Outfit, menu 14px/20px with 8px 12px padding and 12px gap; group headings 12px/20px. Outfit is loaded only by the v2 layout and applied only to .ta-shell. This supersedes the initial Montserrat/white-logo appearance noted above.
+
+## Phase 2 — existing backend plumbing
+
+The v2 server layout consumes `event.locals.supabase`, initialized for every request by `src/hooks.server.ts` using `createSupabaseServerClient` from `src/lib/server/supabase.ts`. The existing `App.Locals` types in `src/app.d.ts` apply to v2 too. No second client factory, browser client, environment configuration, or backend is introduced.
+
+The existing factory uses `PUBLIC_SUPABASE_URL` and `PUBLIC_SUPABASE_ANON_KEY` and the existing SSR cookie getAll/setAll adapter. Keep the existing Supabase project `wikqtjvlmgdmixgrntij`; do not put credentials or environment values in layout data. The only returned field, `supabaseClientReady`, means the request client exists locally. It does not prove network connectivity, valid credentials, an authenticated user, or database access. No live readiness request is made.
+
+Future server loads/actions can use the same `locals.supabase` where appropriate; business database queries must continue through `src/lib/server/db/queries.ts`. Do not return the client or session to the browser. Phase 2 does not call `locals.getUser()`, add redirects/session gating, load dashboard business data, or change the static presentation. Login/auth parity belongs to Phase 3. Schema, migrations, storage and v1 behavior are unchanged.
+
+
+## Phase 3 — CMS auth parity implemented
+
+Phase 3 reuses existing Supabase Auth, `@supabase/ssr`, `locals.getUser()` and the per-request `event.locals.supabase` client. It introduces no new auth tables or separate auth system. The existing v1 auth guard remains unchanged.
+
+- `/admin-v2/login` is public (the exact login path is exempt from the v2 guard). An already authenticated visitor is redirected to `/admin-v2`; successful email/password login also redirects there.
+- `/admin-v2` and `/admin-v2/*` are protected except for the exact `/admin-v2/login` path. The shared server hook checks `locals.getUser()` and redirects unauthenticated requests to `/admin-v2/login`.
+- Logout uses a form POST to `/admin-v2/logout`, calls the existing Supabase Auth `signOut()`, and redirects to `/admin-v2/login` on success. There is no GET logout handler; a returned sign-out error produces a generic 503 response.
+- The login page bypasses the v2 sidebar/header. Login validation and service errors use non-sensitive messages; passwords, clients and sessions are not returned in page data.
+
+`supabaseClientReady` remains only a server-client readiness boolean: it indicates that the request-local client exists. It is not proof of network connectivity, successful authentication, valid credentials or database access, and performs no live readiness request. Auth protection is handled separately by the guard and `locals.getUser()`.
+
+Phase 3 adds no business queries, CRUD, database migrations, storage changes or dependency changes. The dashboard remains a blank landing panel; auth parity does not imply that business CMS features are implemented.
+
+### Verification status
+
+The prior review reported source review and mock checks PASS, with unauthenticated and invalid-login flows verified. This documentation update does not rerun those checks. Full real authenticated login/logout E2E is still outstanding and must not be claimed PASS; mock checks do not establish a successful real-user login/session/logout cycle.
