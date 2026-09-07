@@ -1,6 +1,6 @@
 import { db } from './index';
-import { portfolio, portfolioImages, expertise, expertiseImages, team, settings } from './schema';
-import { eq, asc } from 'drizzle-orm';
+import { portfolio, portfolioImages, expertise, expertiseImages, team, settings, clients, projects, rabs } from './schema';
+import { eq, asc, ilike, or, count, sql } from 'drizzle-orm';
 
 export async function getAllPortfolio() {
   return db.query.portfolio.findMany({
@@ -91,4 +91,54 @@ export async function updateTeamMember(id: number, values: TeamMemberValues) {
 
 export async function deleteTeamMember(id: number) {
 	return db.delete(team).where(eq(team.id, id)).returning({ id: team.id });
+}
+
+export type ClientValues = typeof clients.$inferInsert;
+
+export async function getAllClients(search = '') {
+	const where = search
+		? or(
+				ilike(clients.companyName, `%${search}%`),
+				ilike(clients.directorName, `%${search}%`),
+				ilike(clients.directorEmail, `%${search}%`),
+				ilike(clients.picName, `%${search}%`),
+				ilike(clients.picEmail, `%${search}%`)
+			)
+		: undefined;
+	return db
+		.select({ client: clients, projectCount: count(projects.id) })
+		.from(clients)
+		.leftJoin(projects, eq(projects.clientId, clients.id))
+		.where(where)
+		.groupBy(clients.id)
+		.orderBy(asc(clients.companyName));
+}
+
+export async function getClientById(id: number) {
+	return db.query.clients.findFirst({ where: eq(clients.id, id) });
+}
+export async function createClient(values: ClientValues) {
+	return db.insert(clients).values(values).returning({ id: clients.id });
+}
+export async function updateClient(id: number, values: Partial<ClientValues>) {
+	return db
+		.update(clients)
+		.set({ ...values, updatedAt: new Date() })
+		.where(eq(clients.id, id))
+		.returning({ id: clients.id });
+}
+export async function deleteClient(id: number) {
+	const [{ value }] = await db
+		.select({ value: count() })
+		.from(projects)
+		.where(eq(projects.clientId, id));
+	const history = await db.query.rabs.findFirst({
+		where: sql`(${rabs.frozenDocument}::jsonb #>> '{project,client,id}')::integer = ${id}
+			or (${rabs.inheritedMasters}::jsonb #>> '{project,client,id}')::integer = ${id}`,
+		columns: { id: true }
+	});
+	if (value > 0 || history)
+		return { deleted: false, reason: 'Client masih memiliki project dan tidak bisa dihapus.' };
+	const deleted = await db.delete(clients).where(eq(clients.id, id)).returning({ id: clients.id });
+	return { deleted: deleted.length > 0 };
 }
