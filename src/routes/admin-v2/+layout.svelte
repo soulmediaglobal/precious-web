@@ -9,16 +9,15 @@
   let isTeam = $derived(
     /^\/admin-v2\/team(?:\/|$)/.test(page.url.pathname)
   );
+  let isClients = $derived(/^\/admin-v2\/clients(?:\/|$)/.test(page.url.pathname));
   let placeholder = $derived(
     page.url.pathname === '/admin-v2'
-      ? page.url.hash === '#clients'
-        ? 'Clients'
-        : page.url.hash === '#projects'
+      ? page.url.hash === '#projects'
           ? 'Projects'
           : null
       : null
   );
-  let selected = $derived(isTeam ? 'Team' : placeholder ?? 'Dashboard');
+  let selected = $derived(isTeam ? 'Team' : isClients ? 'Clients' : placeholder ?? 'Dashboard');
   let mobile = $state(false);
   let open = $state(false);
   let collapsed = $state(false);
@@ -34,7 +33,7 @@
     {
       title: 'Management',
       items: [
-        { label: 'Clients', icon: 'clients', href: '/admin-v2#clients' },
+        { label: 'Clients', icon: 'clients', href: '/admin-v2/clients' },
         { label: 'Projects', icon: 'projects', href: '/admin-v2#projects' }
       ]
     },

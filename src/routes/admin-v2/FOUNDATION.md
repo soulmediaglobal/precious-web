@@ -1,6 +1,6 @@
-# Admin v2 — foundation through Phase 5
+# Admin v2 — foundation through Phase 6
 
-Current status: Phase 5 Team is finalized based on Ray-reported QA evidence below. This closes the Team phase only, not the broader CMS. Phase 3 CMS auth parity is implemented. The Phase 1/2 notes below preserve historical scope; their unauthenticated-shell and deferred-auth descriptions are superseded by Phase 3. Full real authenticated login/logout E2E verification is still outstanding.
+Current status: Phase 6 Clients is implemented and finalized with static verification and Ray-reported browser/runtime QA PASS as documented below. Phase 5 Team remains finalized. This closes the Clients phase only, not the broader CMS. Phase 3 CMS auth parity is implemented. The Phase 1/2 notes below preserve historical scope; their unauthenticated-shell and deferred-auth descriptions are superseded by Phase 3. Full real authenticated login/logout E2E verification is still outstanding.
 
 ## Phase 1 — historical foundation
 
@@ -86,3 +86,19 @@ These are Ray-reported category-level results, not browser tests rerun by this d
 Phase 3 full real authenticated login/session/logout E2E remains **outstanding**. Team QA does not explicitly establish that complete auth cycle. Phase 4 dashboard visual QA is not reclassified by the Team evidence.
 
 Finalization validation on 2026-09-07: `npm run check` **PASS** (0 errors, 0 warnings); `npm run build` **PASS** using `@sveltejs/adapter-node`, with a Node `DEP0205` deprecation warning for `module.register()`; `git diff --check` **PASS**. Check/build ran against the current local working tree, which includes unrelated uncommitted work, not an isolated checkout of the WIP commit. No Team source changes were needed for validation. No deployment or migration was performed.
+
+## Phase 6 — Clients finalized
+
+Phase 6 implements `/admin-v2/clients`, `/admin-v2/clients/new` and `/admin-v2/clients/[id]`, with a shared v2 Client form and Clients href/active-state sidebar integration. Scope includes listing/search, project counts, create/edit forms for company, director and PIC details, and delete with confirmation and backend-result feedback. The routes reuse the existing local database query layer and `companyTypes` / `parseClientForm` helper. This supersedes the earlier Clients-placeholder notes; Projects remains a placeholder.
+
+Strict parity search covers only `companyName`, `directorName`, `directorEmail`, `picName` and `picEmail`. Phone numbers and address are intentionally not searchable under the v1 parity baseline. Ray reported that phone search returned no results; this is accepted baseline behavior, not a bug, and no search enhancement is included.
+
+### Finalization evidence
+
+Ray reported all browser/runtime checklist items PASS, with the phone-search observation resolved as baseline behavior above. Phase 6 status is **IMPLEMENTED + STATIC PASS + BROWSER/RUNTIME QA PASS**. Browser/runtime evidence is Ray-reported, not rerun by this finalization task. No additional per-case results, viewport/browser coverage or error-path coverage are inferred.
+
+Source inspection confirmed the seven new v2 Client files are within Phase 6 scope and the layout diff contains only Clients navigation/active-state changes. Finalization validation on 2026-09-07: `npm run check` **PASS** (0 errors, 0 warnings); `npm run build` **PASS** using `@sveltejs/adapter-node`, with Node `DEP0205` deprecation warning for `module.register()`; `git diff --check` **PASS**.
+
+Validation ran against the current local working tree, including unrelated uncommitted backend work, not an isolated checkout of this commit. The v2 Clients routes depend on local `src/lib/server/db/queries.ts`, `src/lib/server/db/schema.ts` and `src/lib/server/client-cms.ts`; those backend changes are explicitly excluded from this finalization commit. These results do not establish that this commit builds independently without those local dependencies. Only this document was edited during finalization; existing Phase 6 implementation files are included unchanged. No deployment, migration or new runtime mutation was performed.
+
+Phase 3 full real authenticated login/session/logout E2E remains **outstanding**. Clients QA does not establish that complete auth cycle. Phase 4 dashboard visual QA is not reclassified by the Clients evidence.
