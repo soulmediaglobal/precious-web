@@ -11,7 +11,7 @@ export const handle: Handle = async ({ event, resolve }) => {
     return user;
   };
 
-  const isAdminRoute = event.url.pathname.startsWith('/admin');
+  const isAdminRoute = event.url.pathname === '/admin' || event.url.pathname.startsWith('/admin/');
   const isLoginRoute = event.url.pathname === '/admin/login';
 
   if (isAdminRoute && !isLoginRoute) {

@@ -1,0 +1,70 @@
+/* Official TailAdmin dark shell utilities adapted locally; provenance in FOUNDATION.md. */
+.ta-shell { --ta-bg:#000000; --ta-border:#262626; --ta-muted:#98a2b3; --ta-text:#d0d5dd; --ta-brand:#7592ff; display:flex; height:100dvh; overflow:hidden; background:var(--ta-bg); color:var(--ta-text); color-scheme:dark; font-family:'Outfit',sans-serif; -webkit-font-smoothing:antialiased; }
+.ta-shell * { box-sizing:border-box; }
+.ta-shell button, .ta-shell a { -webkit-tap-highlight-color:transparent; }
+.ta-shell button { cursor:pointer; }
+.ta-shell :focus-visible { outline:2px solid var(--ta-brand); outline-offset:4px; }
+.ta-sidebar { position:relative; z-index:40; display:flex; width:193.333px; flex-shrink:0; flex-direction:column; overflow-y:auto; border-right:1px solid var(--ta-border); background:var(--ta-bg); padding:0 20px; transition:width .2s,transform .2s; }
+.ta-sidebar-header { display:flex; align-items:center; justify-content:space-between; gap:8px; padding:32px 0 28px; }
+.ta-logo { width:78.667px; height:auto; }
+.ta-nav-group { margin-bottom:24px; }
+.ta-nav-group h2 { margin:0 0 16px; color:var(--ta-muted); font-size:12px; font-weight:400; line-height:20px; text-transform:uppercase; }
+.ta-nav-group ul { display:flex; flex-direction:column; gap:16px; list-style:none; padding:0; margin:0; }
+.ta-menu-item { position:relative; display:flex; align-items:center; gap:12px; padding:8px 12px; border-radius:8px; font-size:14px; line-height:20px; font-weight:500; text-decoration:none; color:var(--ta-text); }
+.ta-menu-item svg { flex-shrink:0; color:var(--ta-muted); }
+.ta-menu-item:hover { background:rgb(255 255 255 / .05); }
+.ta-menu-item.ta-active { color:var(--ta-brand); background:rgb(70 95 255 / .12); }
+.ta-menu-item.ta-active svg { color:var(--ta-brand); }
+.ta-dots, .ta-close, .ta-mobile-brand, .ta-header-toggle { display:none; }
+.ta-content { position:relative; display:flex; flex:1; min-width:0; flex-direction:column; overflow:auto; }
+.ta-header { position:sticky; top:0; z-index:20; display:flex; align-items:center; justify-content:space-between; gap:16px; width:100%; border-bottom:1px solid var(--ta-border); background:var(--ta-bg); padding:16px 24px; }
+.ta-header-main { display:flex; align-items:center; gap:16px; }
+.ta-header-title { font-size:14px; font-weight:500; }
+.ta-icon-button, .ta-close { align-items:center; justify-content:center; width:44px; height:44px; border:1px solid var(--ta-border); border-radius:8px; background:transparent; color:var(--ta-muted); }
+.ta-icon-button { display:flex; }
+.ta-header-toggle { display:none; }
+.ta-icon-button:hover, .ta-close:hover { background:rgb(255 255 255 / .05); }
+.ta-header-menu { display:flex; align-items:center; gap:12px; font-size:14px; white-space:nowrap; }
+.ta-badge { border-radius:999px; padding:4px 10px; background:rgb(70 95 255 / .12); color:var(--ta-brand); font-size:12px; }
+.ta-shell main { width:100%; max-width:1536px; margin:0 auto; padding:24px; }
+.ta-page-heading { display:flex; justify-content:space-between; align-items:center; gap:16px; margin-bottom:24px; }
+.ta-page-heading h1 { font-size:24px; line-height:32px; font-weight:600; color:rgb(255 255 255 / .9); }
+.ta-page-heading > span { font-size:14px; color:var(--ta-muted); }
+.ta-panel { min-height:calc(100dvh - 190px); border:1px solid var(--ta-border); border-radius:16px; background:rgb(255 255 255 / .03); padding:48px 40px; }
+.ta-panel > div { max-width:630px; margin:0 auto; text-align:center; }
+.ta-panel h2 { margin-bottom:16px; font-size:24px; font-weight:600; color:rgb(255 255 255 / .9); }
+.ta-panel p { color:var(--ta-muted); font-size:16px; line-height:24px; }
+.ta-skip { position:fixed; top:-100px; left:16px; z-index:60; padding:12px; background:var(--ta-bg); }
+.ta-skip:focus { top:12px; }
+@media (min-width:1024px) {
+ .ta-sidebar-header { justify-content:center; }
+ .nav-collapsed .ta-sidebar { width:90px; }
+ .nav-collapsed .ta-sidebar .ta-label { display:none; }
+ .nav-collapsed .ta-dots { display:block; text-align:center; }
+ .nav-collapsed .ta-logo { width:33.333px; }
+ .nav-collapsed .ta-menu-item { justify-content:center; }
+}
+@media (max-width:1023px) {
+ .ta-sidebar { position:fixed; top:0; bottom:0; left:0; max-width:calc(100vw - 56px); transform:translateX(-100%); visibility:hidden; }
+ .nav-open .ta-sidebar { transform:translateX(0); visibility:visible; }
+ .ta-overlay { position:fixed; inset:0; z-index:30; background:rgb(0 0 0 / .65); backdrop-filter:blur(4px); }
+ .ta-close { display:flex; font-size:26px; }
+ .ta-header { flex-direction:column; gap:0; padding:0; }
+ .ta-header-main { width:100%; justify-content:space-between; padding:12px; }
+ .ta-header-title { display:none; }
+ .ta-mobile-brand { display:block; }
+ .ta-header-toggle { display:flex; font-size:24px; }
+ .ta-header-menu { display:none; width:100%; justify-content:flex-end; padding:16px; border-top:1px solid var(--ta-border); }
+ .ta-header-visible { display:flex; }
+}
+@media (max-width:767px) {
+ .ta-shell main { padding:16px; }
+ .ta-page-heading { align-items:flex-start; flex-direction:column; gap:8px; }
+ .ta-page-heading h1 { font-size:22px; }
+ .ta-panel { padding:28px 20px; }
+ .ta-panel h2 { font-size:20px; }
+ .ta-panel p { font-size:14px; }
+}
+@media (prefers-reduced-motion:reduce) { .ta-sidebar { transition:none; } }
+
+.ta-mobile-brand img { width:49.333px; height:auto; }
