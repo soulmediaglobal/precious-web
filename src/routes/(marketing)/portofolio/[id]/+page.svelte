@@ -40,12 +40,14 @@
 		style="height: {height ? `${height}px` : '100dvh'}"
 	>
 		<div class="absolute inset-0 overflow-hidden">
+			{#if portofolio.images[0]}
 			<img 
 				src={portofolio.images[0]}
 				alt="" 
 				class="absolute -top-[15%] left-0 w-full h-[130%] object-cover object-center" 
 				style="transform: translate3d(0, {scrollY * 0.3}px, 0);"
 			/>
+			{/if}
 		</div>
 		<div style="background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), linear-gradient(77.04deg, rgba(0, 0, 0, 0.2) 34.66%, rgba(0, 0, 0, 0) 82.22%);" class="absolute inset-0"></div>
     <div class="hidden absolute right-0 bottom-0 z-0 pointer-events-none md:flex items-center justify-end">
@@ -93,26 +95,13 @@
         {portofolio.long_description_p2}
       </div>
     </div>
-    <div class="w-full h-80 md:h-152 relative mb-4">
-      <img src={portofolio.images[1]} alt="" class="object-cover object-center h-full w-full" />
-      <div class="overlay-1 absolute inset-0"></div>
-    </div>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8 md:mb-10">
-      <div class="w-full h-80 md:h-110 relative">
-        <img src={portofolio.images[2]} alt="" class="object-cover object-center h-full w-full" />
-        <div class="overlay-1 absolute inset-0"></div>
-      </div>
-      <div class="w-full h-80 md:h-110 relative">
-        <img src={portofolio.images[3]} alt="" class="object-cover object-center h-full w-full" />
-        <div class="overlay-1 absolute inset-0"></div>
-      </div>
-    </div>
-    <div class="flex items-center w-full justify-center">
-      <button
-        class="inline-flex items-center gap-3 justify-center border border-[#111] px-4 py-2 text-sm text-[#111] no-underline"
-      >
-        LOAD MORE
-      </button>
+      {#each portofolio.images.slice(1) as image, index}
+        <div class="w-full relative" class:md:col-span-2={index === 0}>
+          <img src={image} alt={`${portofolio.project_name} — project image ${index + 1}`} loading="lazy" class={`object-cover object-center h-80 w-full ${index === 0 ? 'md:h-152' : 'md:h-110'}`} />
+          <div class="overlay-1 absolute inset-0"></div>
+        </div>
+      {/each}
     </div>
   </section>
 
@@ -124,7 +113,7 @@
       {#each projects as p (p.slug)}
         <a href="{route.portofolio}/{p.slug}" class="w-full">
           <div class="w-full h-72 relative mb-4">
-            <img src={p.images[0]} alt="" class="object-cover object-center h-full w-full" />
+            {#if p.images[0]}<img src={p.images[0]} alt="" class="object-cover object-center h-full w-full" />{/if}
             <div class="overlay-1 absolute inset-0"></div>
           </div>
           <div class="flex items-center justify-between">

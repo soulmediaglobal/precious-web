@@ -142,3 +142,37 @@ export async function deleteClient(id: number) {
 	const deleted = await db.delete(clients).where(eq(clients.id, id)).returning({ id: clients.id });
 	return { deleted: deleted.length > 0 };
 }
+// Portfolio CMS: slot 0 is the header; slots 1..10 are content images.
+export type PortfolioValues = Pick<typeof portfolio.$inferInsert,
+  'slug' | 'projectName' | 'client' | 'shortDescription' | 'location' |
+  'category' | 'status' | 'longDescriptionP1' | 'longDescriptionP2'>;
+
+export async function getPortfolioById(id: number) {
+  return db.query.portfolio.findFirst({
+    where: eq(portfolio.id, id),
+    with: { images: { orderBy: asc(portfolioImages.sortOrder) } }
+  });
+}
+
+export async function createPortfolio(values: PortfolioValues, images: string[]) {
+  return db.transaction(async (tx) => {
+    const [entry] = await tx.insert(portfolio).values(values).returning({ id: portfolio.id });
+    await tx.insert(portfolioImages).values(images.map((url, sortOrder) => ({ portfolioId: entry.id, url, sortOrder })));
+    return entry;
+  });
+}
+
+export async function updatePortfolio(id: number, values: PortfolioValues, images: string[]) {
+  return db.transaction(async (tx) => {
+    const [entry] = await tx.update(portfolio).set({ ...values, updatedAt: new Date() })
+      .where(eq(portfolio.id, id)).returning({ id: portfolio.id });
+    if (!entry) return null;
+    await tx.delete(portfolioImages).where(eq(portfolioImages.portfolioId, id));
+    await tx.insert(portfolioImages).values(images.map((url, sortOrder) => ({ portfolioId: id, url, sortOrder })));
+    return entry;
+  });
+}
+
+export async function deletePortfolio(id: number) {
+  return db.delete(portfolio).where(eq(portfolio.id, id)).returning({ id: portfolio.id });
+}
