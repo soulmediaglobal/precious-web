@@ -12,7 +12,8 @@
   let isClients = $derived(/^\/admin-v2\/clients(?:\/|$)/.test(page.url.pathname));
   let isProjects = $derived(/^\/admin-v2\/projects(?:\/|$)/.test(page.url.pathname));
   let isPortfolio = $derived(/^\/admin-v2\/portfolio(?:\/|$)/.test(page.url.pathname));
-  let selected = $derived(isPortfolio ? 'Portfolio' : isTeam ? 'Team' : isClients ? 'Clients' : isProjects ? 'Projects' : 'Dashboard');
+  let isContact = $derived(/^\/admin-v2\/contact(?:\/|$)/.test(page.url.pathname));
+  let selected = $derived(isContact ? 'Contact Inbox' : isPortfolio ? 'Portfolio' : isTeam ? 'Team' : isClients ? 'Clients' : isProjects ? 'Projects' : 'Dashboard');
   let mobile = $state(false);
   let open = $state(false);
   let collapsed = $state(false);
@@ -28,6 +29,7 @@
     {
       title: 'Management',
       items: [
+        { label: 'Contact Inbox', icon: 'clients', href: '/admin-v2/contact' },
         { label: 'Clients', icon: 'clients', href: '/admin-v2/clients' },
         { label: 'Projects', icon: 'projects', href: '/admin-v2/projects' }
       ]

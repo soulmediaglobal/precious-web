@@ -1,6 +1,6 @@
 import { db } from './index';
 import { portfolio, portfolioImages, expertise, expertiseImages, team, settings, clients, projects, rabs } from './schema';
-import { eq, asc, ilike, or, count, sql } from 'drizzle-orm';
+import { eq, asc, desc, ilike, or, count, sql } from 'drizzle-orm';
 
 export async function getAllPortfolio() {
   return db.query.portfolio.findMany({
@@ -175,4 +175,32 @@ export async function updatePortfolio(id: number, values: PortfolioValues, image
 
 export async function deletePortfolio(id: number) {
   return db.delete(portfolio).where(eq(portfolio.id, id)).returning({ id: portfolio.id });
+}
+
+// Contact Inbox queries.
+import { contactInquiries } from './schema';
+import type { ContactValues, FollowUpMethod } from '../contact-cms';
+
+export async function createContactInquiry(values: ContactValues) {
+  return db.insert(contactInquiries).values({ ...values, lastName: values.lastName || null, email: values.email || null, phone: values.phone || null }).returning({ id: contactInquiries.id });
+}
+
+export async function getAllContactInquiries() {
+  return db.select({ id: contactInquiries.id, firstName: contactInquiries.firstName, lastName: contactInquiries.lastName, email: contactInquiries.email, phone: contactInquiries.phone, createdAt: contactInquiries.createdAt, isFollowedUp: contactInquiries.isFollowedUp })
+    .from(contactInquiries).orderBy(desc(contactInquiries.createdAt), desc(contactInquiries.id));
+}
+
+export async function getContactInquiryById(id: number) {
+  const [row] = await db.select().from(contactInquiries).where(eq(contactInquiries.id, id));
+  return row;
+}
+
+export async function updateContactInquiryFollowUp(id: number, nextState: { isFollowedUp: boolean; followUpMethod: FollowUpMethod | null }) {
+  return db.update(contactInquiries).set({
+    isFollowedUp: nextState.isFollowedUp,
+    followUpMethod: nextState.isFollowedUp ? nextState.followUpMethod : null,
+    followedUpAt: nextState.isFollowedUp
+      ? sql`case when ${contactInquiries.isFollowedUp} then ${contactInquiries.followedUpAt} else clock_timestamp() end`
+      : null
+  }).where(eq(contactInquiries.id, id)).returning({ id: contactInquiries.id });
 }
