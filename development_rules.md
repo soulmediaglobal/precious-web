@@ -1,8 +1,8 @@
 # Precious CMS — Development Rules
 
-Terakhir diperbarui: 2026-09-07T03:16:10+07:00 (Asia/Jakarta).
+Terakhir diperbarui: 2026-09-08T04:22:16+07:00 (Asia/Jakarta).
 
-Versi dokumentasi: **2.0.0** (SemVer dokumentasi, terpisah dari versi rilis CMS/app; tidak otomatis mengubah versi aplikasi dan bukan production release).
+Versi dokumentasi: **2.1.0** (SemVer dokumentasi, terpisah dari versi rilis CMS/app; tidak otomatis mengubah versi aplikasi dan bukan production release).
 
 ## Governance wajib
 
@@ -66,12 +66,26 @@ Nurey **bukan gate untuk detail implementasi minor/lokal**: spacing, typo, respo
 - **Acceptance principle:** historical RAB harus dapat dibuka kembali di masa depan dengan isi dokumen yang sama seperti saat dibekukan, meskipun master Client, Project, rekening, signatory, atau data terkait sudah berubah.
 - Rule ini melengkapi mekanisme Task 1 `Create Revision` full snapshot di atas tanpa mengubahnya. Status verifikasi Task 1 tidak membuktikan compliance Task 2; penetapan rule canonical ini bukan bukti bahwa implementation historical immutability maupun retention policy sudah compliant.
 
+## Workflow canonical GitHub Issue → development → PR → merge evidence
+
+Berlaku untuk semua pekerjaan development baru yang materially mengubah code: feature, bug fix, refactor, atau perubahan development lain. Pengecualian governance sync untuk detail minor/lokal di atas tidak membatalkan kewajiban workflow ini bila pekerjaan materially mengubah code.
+
+1. **Sebelum coding**, AI wajib memandu Ray membuat GitHub Issue. Baca kedua canonical docs terlebih dahulu, inspeksi kondisi existing, lalu rumuskan scope dan acceptance criteria issue.
+2. AI wajib menyiapkan **Title dan Description issue dalam dua blok `bash` terpisah**, siap copy-paste. Gunakan command lengkap dengan heredoc ber-delimiter unik untuk menghasilkan teks masing-masing; Description memuat konteks/problem, scope, expected behavior, acceptance criteria, dan rencana verifikasi.
+3. **Ray membuat issue secara manual lewat GitHub web**, menggunakan Title dan Description tersebut. AI tidak menganggap draft teks sebagai issue yang sudah dibuat.
+4. Setelah Ray membuat issue, **AI wajib meminta verifikasi lewat terminal sebelum development dimulai**. Berikan command siap-paste untuk `git fetch origin` dan verifikasi issue, misalnya `gh issue view NOMOR_ISSUE --repo soulmediaglobal/precious-web --json number,title,url,state,body` dengan nomor aktual. `git fetch` hanya menyinkronkan referensi Git, bukan bukti keberadaan issue. Jika `gh` tidak tersedia, pandu verifikasi melalui GitHub API dari terminal dengan akses yang sah tanpa menampilkan credential. Periksa output aktual: repo, nomor/URL, judul, dan scope issue harus sesuai; development belum boleh dimulai bila bukti issue belum tersedia.
+5. Development berjalan dengan **issue terverifikasi sebagai scope reference**; cantumkan nomor/URL issue pada branch/commit/PR sesuai kebutuhan. Bila scope berubah, sinkronkan issue dan acceptance criteria; keputusan yang memerlukan governance sync tetap mengikuti rule Nurey/Ray.
+6. Setelah task selesai dan verifikasi relevan tersedia, **AI wajib memandu Ray membuat PR, review, dan merge**. PR merujuk issue (misalnya `Closes #N` bila memang menyelesaikannya), menjelaskan perubahan serta evidence verifikasi; jangan menyamakan push branch dengan PR atau merge yang sudah selesai.
+7. Sesudah merge, **AI wajib memberikan command terminal untuk membuktikan PR benar-benar merged dan branch/main sinkron**. Gunakan nomor PR dan branch aktual: `gh pr view NOMOR_PR --repo soulmediaglobal/precious-web --json number,url,state,mergedAt,mergeCommit,baseRefName,headRefName`, lalu `git fetch origin`, `git status --short --branch`, dan `git rev-list --left-right --count main...origin/main`. Periksa `state=MERGED`, `mergedAt`, base branch yang sesuai, serta merge commit berada dalam history remote main (`git merge-base --is-ancestor SHA_MERGE origin/main` dan exit status sukses). Untuk main yang sinkron, hitungan harus `0 0`; bila working branch masih dipakai, periksa juga terhadap upstream-nya. Jika perlu menyinkronkan main, inspeksi local work lebih dulu lalu pandu fast-forward yang aman; jangan reset, force-push, atau menghapus pekerjaan lokal. Branch fitur yang sudah di-merge tidak harus identik SHA dengan main, terutama setelah squash merge; laporkan statusnya secara tepat.
+8. **Jangan pernah claim issue, PR, atau merge selesai tanpa evidence aktual.** Command yang baru disiapkan, draft, atau laporan tanpa output terverifikasi bukan bukti eksekusi; laporkan langkah yang masih pending secara eksplisit.
+
 ## Workflow dan verifikasi
 
 - Inspeksi file existing, instruksi repo, `git status`, branch, dan remote sebelum menulis. Jangan overwrite, stage, atau commit perubahan lokal tak terkait.
 - Jika memandu Ray lewat terminal, berikan command lengkap siap-paste, quote path yang mengandung `[id]` atau tanda kurung, dan gunakan heredoc dengan delimiter unik untuk isi file. Jika akses langsung telah diotorisasi, kerjakan dalam scope tersebut.
 - Setelah heredoc besar, verifikasi isi/jumlah baris sebelum lanjut; bila Ray yang menjalankan, minta hasil verifikasi. Tag pembuka yang hilang saat paste dapat memicu error penutup elemen Svelte.
 - Jangan meminta atau menampilkan isi `.env` maupun credential. Verifikasi tanpa membocorkan nilainya dan pastikan `.env` tidak ter-track/ikut commit.
+- **Firefox adalah default browser untuk browser QA.**
 - Review diff dan jalankan pemeriksaan yang relevan. Bedakan hasil terverifikasi, laporan konteks, dan asumsi; jangan klaim audit, build, migration, atau deployment sukses tanpa bukti.
 - Setelah satu unit kerja selesai, review status lalu commit file yang relevan secara eksplisit dan push ke branch yang aman. Jangan force-push atau memasukkan pekerjaan lain tanpa instruksi Ray.
 - Catat keputusan permanen dan perubahan relevan melalui governance di atas; jangan mengimpor aturan project lain yang tidak relevan dengan Precious.

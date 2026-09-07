@@ -1,8 +1,8 @@
 # Precious CMS — Changelog
 
-Terakhir diperbarui: 2026-09-07T03:16:10+07:00 (Asia/Jakarta).
+Terakhir diperbarui: 2026-09-08T04:22:16+07:00 (Asia/Jakarta).
 
-Versi dokumentasi: **2.0.0** (SemVer dokumentasi, terpisah dari versi rilis CMS).
+Versi dokumentasi: **2.1.0** (SemVer dokumentasi, terpisah dari versi rilis CMS).
 
 ## Governance wajib
 
@@ -15,6 +15,17 @@ Nurey **bukan gate untuk detail implementasi minor/lokal**: spacing, typo, respo
 ## Riwayat
 
 Entry terbaru di atas, gunakan timestamp dengan zona waktu dan bukti verifikasi. Jangan mengarang versi atau histori rilis. Gunakan SemVer terpisah untuk dokumentasi dan rilis CMS; revisi dokumentasi bukan rilis aplikasi. Versi dokumentasi 1.0.0 memulai penomoran eksplisit; baseline sebelumnya tetap tanpa versi, dan versi rilis CMS tidak diubah atau diasumsikan.
+
+### Dokumentasi 2.1.0 — GitHub Issue → development → PR → merge evidence
+
+Timestamp: 2026-09-08T04:22:16+07:00 (Asia/Jakarta).
+
+- Sesuai instruksi eksplisit Ray, menetapkan workflow canonical untuk semua pekerjaan development baru yang materially mengubah code: feature, bug fix, refactor, dan perubahan development lain. AI wajib memandu pembuatan issue sebelum coding, menyediakan Title dan Description dalam blok bash terpisah siap copy-paste, lalu Ray membuat issue manual lewat GitHub web.
+- AI wajib meminta verifikasi terminal sebelum development dimulai: sinkronisasi Git melalui `git fetch` dan bukti issue aktual melalui `gh` atau GitHub API. `git fetch` sendiri bukan bukti issue ada. Issue terverifikasi menjadi scope reference development.
+- Setelah task selesai, AI wajib memandu PR, review/merge, dan memberikan command terminal untuk memverifikasi status merged, merge commit dalam history remote main, serta sinkronisasi branch/main. Dilarang claim issue/PR/merge selesai tanpa evidence aktual.
+- Kewajiban membaca kedua canonical docs terlebih dahulu tetap berlaku; Firefox ditegaskan sebagai default browser untuk browser QA. Batas governance sync existing tetap berlaku dan tidak mengecualikan workflow issue untuk perubahan code yang material.
+- Versi dokumentasi naik minor dari **2.0.0 ke 2.1.0** karena workflow canonical baru; bukan app release. Implementation state, stack, route, RAB status, dan migration status tidak diubah.
+- Scope hanya `doc_changelog.md` dan `development_rules.md`. Inspeksi awal: branch `main`, remote `origin` repo Precious, staging kosong, `.env` tidak ter-track (hanya `.env.example`); sesudah fetch, HEAD dan origin/main sama. Perubahan lokal aplikasi/migrasi dipertahankan di luar commit. Verifikasi dokumentasi: review diff, `git diff --check`, dan staged diff check sebelum commit; tidak ada klaim build, migration, deployment, atau audit fungsional.
 
 ### Documentation 2.0.0 — Admin UI v2 Parallel Rebuild Baseline
 
