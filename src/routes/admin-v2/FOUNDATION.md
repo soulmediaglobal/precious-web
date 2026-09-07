@@ -1,6 +1,6 @@
-# Admin v2 — foundation through Phase 3
+# Admin v2 — foundation through Phase 5
 
-Current status: Phase 3 CMS auth parity is implemented. The Phase 1/2 notes below preserve historical scope; their unauthenticated-shell and deferred-auth descriptions are superseded by Phase 3. Full real authenticated login/logout E2E verification is still outstanding.
+Current status: Phase 5 Team is finalized based on Ray-reported QA evidence below. This closes the Team phase only, not the broader CMS. Phase 3 CMS auth parity is implemented. The Phase 1/2 notes below preserve historical scope; their unauthenticated-shell and deferred-auth descriptions are superseded by Phase 3. Full real authenticated login/logout E2E verification is still outstanding.
 
 ## Phase 1 — historical foundation
 
@@ -58,3 +58,31 @@ Only `src/routes/admin-v2/+page.svelte` and this document are edited. Existing s
 Visual inspection of the live reference is complete. Local dashboard visual browser QA at desktop/tablet/mobile widths, horizontal overflow and sidebar collapse remains **outstanding**; responsive CSS alone does not establish a visual QA PASS. Check/build results are reported separately after verification.
 
 Phase 3 full real authenticated login/session/logout E2E remains **outstanding**. Phase 4 static rendering or check/build results do not establish an authenticated E2E PASS.
+
+## Phase 5 — Team finalized
+
+Implementation checkpoint: `f6785299e0b29f0698d600d53c80a612ff14fa5c` (`feat(admin-v2): checkpoint team management (WIP)`). Team code is already committed in that checkpoint; this finalization changes only this document.
+
+Phase 5 provides `/admin-v2/team`, `/admin-v2/team/new` and `/admin-v2/team/[id]`, a shared v2 Team form, and Team-aware sidebar navigation. It reuses the existing `parseTeamForm` / `uploadTeamImage` helpers and database query layer, with Team create/update/delete helpers added to `src/lib/server/db/queries.ts`. Clients and Projects remain placeholders; the Sales Dashboard remains static sample content. This is not completion of the broader CMS.
+
+### Preserved baseline semantics
+
+- Admin lists active and inactive members ordered by `sortOrder` ascending, without pagination or filtering. Hierarchy values remain `board`, `management`, and `staff`; admin data uses camelCase.
+- Name and title are required; Board description is required. Empty description/email/LinkedIn values become null on database write. Email uses the existing simple regex; LinkedIn accepts HTTP/HTTPS URLs without restricting the domain. Display order uses `parseInt` with a nonnegative integer check; active is true when the submitted checkbox value is `on`.
+- Portrait is required unless `currentImage` is supplied. Existing behavior trusts that submitted value. Uploads use the `team` bucket, JPEG/PNG/WebP MIME types, a maximum of 1 MiB (1,048,576 bytes), `portraits/UUID.ext`, `upsert: false`, and a stored public URL. The 4:5 ratio remains a recommendation.
+- Replacing a portrait or deleting a member does not remove the old storage object. Delete removes only the database row. Upload happens before the database write, with no orphan cleanup if the write fails. These are preserved baseline limitations, not new guarantees or fixes.
+- Public About shows only active members, grouped Board → Management → Staff with display order within each group; Board descriptions and existing settings/company LinkedIn contact fallbacks are retained.
+
+### Finalization evidence
+
+Ray confirmed the following in the continuation of **Melvin 2** on 2026-09-07:
+
+- Browser read-only QA: **PASS**, reported by Ray.
+- Runtime CRUD/upload: **PASS**, reported by Ray.
+- Public About active/inactive visibility and hierarchy effect: **PASS**, reported by Ray.
+
+These are Ray-reported category-level results, not browser tests rerun by this documentation task. No additional per-case outcomes, browser versions, viewport measurements, or error-path coverage are inferred.
+
+Phase 3 full real authenticated login/session/logout E2E remains **outstanding**. Team QA does not explicitly establish that complete auth cycle. Phase 4 dashboard visual QA is not reclassified by the Team evidence.
+
+Finalization validation on 2026-09-07: `npm run check` **PASS** (0 errors, 0 warnings); `npm run build` **PASS** using `@sveltejs/adapter-node`, with a Node `DEP0205` deprecation warning for `module.register()`; `git diff --check` **PASS**. Check/build ran against the current local working tree, which includes unrelated uncommitted work, not an isolated checkout of the WIP commit. No Team source changes were needed for validation. No deployment or migration was performed.
