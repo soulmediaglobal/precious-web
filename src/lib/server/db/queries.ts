@@ -64,3 +64,31 @@ export async function getSettings() {
   const rows = await db.query.settings.findMany();
   return Object.fromEntries(rows.map((r) => [r.key, r.value]));
 }
+
+export type TeamMemberValues = Pick<
+	typeof team.$inferSelect,
+	'name' | 'title' | 'image' | 'group' | 'description' | 'email' | 'linkedin' | 'sortOrder' | 'isActive'
+>;
+
+export async function createTeamMember(values: TeamMemberValues) {
+	return db.insert(team).values({
+		...values,
+		description: values.description || null,
+		email: values.email || null,
+		linkedin: values.linkedin || null
+	}).returning({ id: team.id });
+}
+
+export async function updateTeamMember(id: number, values: TeamMemberValues) {
+	return db.update(team).set({
+		...values,
+		description: values.description || null,
+		email: values.email || null,
+		linkedin: values.linkedin || null,
+		updatedAt: new Date()
+	}).where(eq(team.id, id)).returning({ id: team.id });
+}
+
+export async function deleteTeamMember(id: number) {
+	return db.delete(team).where(eq(team.id, id)).returning({ id: team.id });
+}
