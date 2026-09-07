@@ -42,3 +42,19 @@ Phase 3 adds no business queries, CRUD, database migrations, storage changes or 
 ### Verification status
 
 The prior review reported source review and mock checks PASS, with unauthenticated and invalid-login flows verified. This documentation update does not rerun those checks. Full real authenticated login/logout E2E is still outstanding and must not be claimed PASS; mock checks do not establish a successful real-user login/session/logout cycle.
+
+## Phase 4 — Sales Dashboard static preview revised
+
+Phase 4 supersedes the historical blank-dashboard descriptions above. The Phase 4 reference has changed from the default eCommerce TailAdmin dashboard at pinned free-template commit `44ac4719ef1762907c84c4df459842de9eea70b0` to the **live Sales Dashboard TailAdmin demo**, https://demo.tailadmin.com/sales, visually inspected on 2026-09-07. The live demo is not claimed to be part of that pinned commit; the existing pin/license continues to document the earlier shell foundation.
+
+The page adapts the observed Sales composition: a Sales Dashboard heading and four KPI cards within one bordered overview panel, small illustrative sparklines, a full-width Users & Revenue Statistics two-series area chart, a three-column row with User Retention triangular heatmap, Sales by Channel segmented bar/table, and Sales by Country list, followed by a Top Products-style six-column table with five dummy rows. The geographic map is omitted; fictional country names, initial medallions and literal indicator bars replace real country/flag content. Product thumbnails use authored generic inline SVG boxes. Filter, Export, View More, Delete, See All, date pickers and chart period controls are omitted; the period text is a plain static label.
+
+All content remains **static/view-only**. Values, names, periods, percentages, status labels and chart geometry are literal dummy examples, explicitly labeled as sample data rather than Precious business data. Charts are illustrative SVG, not calculated series or live metrics. No page script/state, runtime calculation, random/dynamic date, query/fetch, new load/action/backend file, real business data, Alpine/ApexCharts/jsVectorMap, dependency/package change, or global theme import is introduced.
+
+Only `src/routes/admin-v2/+page.svelte` and this document are edited. Existing shell, Outfit, Precious logo and theme tokens are reused. Pure-black card surfaces and scoped local CSS preserve the requested visual direction. Four KPI columns and three insight columns reduce at narrower breakpoints; fluid SVGs and zero-minimum grid columns fit the available content width. The product table has a keyboard-focusable local horizontal scroll region on narrow screens. SVG titles/descriptions, captions, semantic table headers and explicit dummy labels are provided.
+
+### Revision verification
+
+Visual inspection of the live reference is complete. Local dashboard visual browser QA at desktop/tablet/mobile widths, horizontal overflow and sidebar collapse remains **outstanding**; responsive CSS alone does not establish a visual QA PASS. Check/build results are reported separately after verification.
+
+Phase 3 full real authenticated login/session/logout E2E remains **outstanding**. Phase 4 static rendering or check/build results do not establish an authenticated E2E PASS.
