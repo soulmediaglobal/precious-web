@@ -3,6 +3,8 @@
 
 	import Reach from "$lib/components/Reach.svelte";
 
+	let { data, form }: import('./$types').PageProps = $props();
+
 	let height = $state(0);
 	let scrollY = $state(0);
 	let address = $state([
@@ -41,7 +43,7 @@
 <svelte:window bind:scrollY />
 
 <svelte:head>
-	<title>Precious Contractor - Expertise</title>
+	<title>Precious Contractor - Contact</title>
 </svelte:head>
 
 <!-- eslint-disable svelte/no-navigation-without-resolve -->
@@ -73,7 +75,7 @@
 		</div>
 	</section>
 
-	<Reach expand />
+	<Reach expand {form} sent={data.sent} />
 	<div class="mt-4 md:mt-12 bg-[#191A19] px-4 md:px-36 py-8 md:py-14 text-white grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-16">
 		{#each address as a (a.title)}
 			<div class="text-[#CFCFCF]">

@@ -197,3 +197,18 @@ export const rabs = pgTable(
 		index('rabs_bank_account_id_idx').on(t.bankAccountId)
 	]
 );
+
+// Contact Inbox — independent of Clients, Projects and RAB.
+export const contactInquiries = pgTable('contact_inquiries', {
+  id: serial('id').primaryKey(),
+  firstName: text('first_name').notNull(),
+  lastName: text('last_name'),
+  email: text('email'),
+  phone: text('phone'),
+  message: text('message').notNull(),
+  consentAccepted: boolean('consent_accepted').notNull().default(false),
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  isFollowedUp: boolean('is_followed_up').notNull().default(false),
+  followUpMethod: text('follow_up_method'),
+  followedUpAt: timestamp('followed_up_at', { withTimezone: true })
+}).enableRLS();

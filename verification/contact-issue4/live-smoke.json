@@ -1,0 +1,55 @@
+{
+  "at": "2026-09-07T22:45:01.447Z",
+  "marker": "TEST-ISSUE4-20260908-LOCAL-SMOKE",
+  "steps": [
+    {
+      "step": "1 public HTTP POST → live persistence",
+      "status": "PASS",
+      "id": 1,
+      "httpStatus": 200,
+      "note": "Recovered the sole inquiry from initial public POST (default Accept returned HTTP 200); no duplicate submission",
+      "fullMessageLength": 493
+    },
+    {
+      "step": "unauthenticated admin HTTP redirects to login",
+      "status": "PASS"
+    },
+    {
+      "step": "2 actual server list load: test inquiry first",
+      "status": "PASS",
+      "rowCount": 1,
+      "note": "Single row on this live table; DESC createdAt/id also verified in source."
+    },
+    {
+      "step": "3 actual detail load preserves full multiline message",
+      "status": "PASS",
+      "note": "Visual wrapping/escaping reviewed in source; browser rendering pending."
+    },
+    {
+      "step": "4–5 actual action + fresh load: status/method/time persist",
+      "status": "PASS",
+      "firstTimestamp": "2026-09-07 22:45:05.438773+00"
+    },
+    {
+      "step": "6 repeated save preserves exact DB microsecond timestamp",
+      "status": "PASS",
+      "timestamp": "2026-09-07 22:45:05.438773+00"
+    },
+    {
+      "step": "7 reset clears method and timestamp",
+      "status": "PASS"
+    },
+    {
+      "step": "8 re-mark creates new timestamp",
+      "status": "PASS",
+      "secondTimestamp": "2026-09-07 22:45:07.780637+00"
+    }
+  ],
+  "browser": "PENDING: Firefox AX omits page content and screenshot remains stale across navigation; no full browser QA claimed.",
+  "testInquiryId": 1,
+  "cleanup": {
+    "id": 1,
+    "deleted": true,
+    "remaining": 0
+  }
+}

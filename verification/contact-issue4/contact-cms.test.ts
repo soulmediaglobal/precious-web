@@ -1,0 +1,21 @@
+import assert from 'node:assert/strict';
+import { parseContactForm, parseContactFollowUpForm, parseContactId } from '../../src/lib/server/contact-cms.ts';
+const form = (values: Record<string,string>) => { const f = new FormData(); for (const [k,v] of Object.entries(values)) f.set(k,v); return f; };
+const valid = { firstName: ' Ray ', email: 'ray@example.com', message: ' Hi\nthere ' };
+let cases = 0;
+function test(fn: () => void) { fn(); cases++; }
+test(() => { const p=parseContactForm(form(valid)); assert.deepEqual(p.errors,{}); assert.equal(p.values.message,'Hi\nthere'); assert.equal(p.values.consentAccepted,false); });
+test(() => assert.equal(parseContactForm(form({...valid,consentAccepted:'on'})).values.consentAccepted,true));
+for (const key of ['firstName','message']) test(() => assert.ok(parseContactForm(form({...valid,[key]:'   '})).errors[key]));
+for (const [key,max] of [['firstName',100],['lastName',100],['email',254],['phone',32],['message',10000]] as const) test(() => assert.ok(parseContactForm(form({...valid,[key]:'a'.repeat(max+1)})).errors[key]));
+test(() => { const p=parseContactForm(form({...valid,email:''})); assert.ok(p.errors.email); assert.ok(p.errors.phone); });
+for (const phone of ['+62 (812) 345-6789','1234567','123456789012345']) test(() => assert.deepEqual(parseContactForm(form({...valid,email:'',phone})).errors,{}));
+for (const phone of ['123456','1234567890123456','123abc4567']) test(() => assert.ok(parseContactForm(form({...valid,phone})).errors.phone));
+for (const email of ['a@@b.com','a b@c.com','abc']) test(() => assert.ok(parseContactForm(form({...valid,email})).errors.email));
+for (const method of ['WhatsApp','Phone','Email','Lainnya']) test(() => assert.deepEqual(parseContactFollowUpForm(form({status:'Sudah Follow Up',followUpMethod:method})).errors,{}));
+for (const method of ['','SMS']) test(() => assert.ok(parseContactFollowUpForm(form({status:'Sudah Follow Up',followUpMethod:method})).errors.followUpMethod));
+test(() => assert.equal(parseContactFollowUpForm(form({status:'Belum Follow Up',followUpMethod:'Email'})).nextState.followUpMethod,null));
+test(() => assert.ok(parseContactFollowUpForm(form({status:'invalid'})).errors.status));
+for (const id of ['0','-1','1.5','1x','2147483648']) test(() => assert.equal(parseContactId(id),null));
+test(() => assert.equal(parseContactId('42'),42));
+console.log(`${cases} helper cases PASS; no database connection.`);
