@@ -212,3 +212,155 @@ export const contactInquiries = pgTable('contact_inquiries', {
   followUpMethod: text('follow_up_method'),
   followedUpAt: timestamp('followed_up_at', { withTimezone: true })
 }).enableRLS();
+
+// Canonical tables from migrations 0005–0011; RAB application work remains parked.
+export const workTypes = pgTable('work_types', {
+	id: serial('id').primaryKey(),
+	name: text('name').notNull().unique(),
+	slug: text('slug').notNull().unique(),
+	sortOrder: integer('sort_order').notNull().default(0),
+	isActive: boolean('is_active').notNull().default(true),
+	createdAt: timestamp('created_at').defaultNow().notNull(),
+	updatedAt: timestamp('updated_at').defaultNow().notNull()
+});
+
+export const projectWorkTypes = pgTable(
+	'project_work_types',
+	{
+		projectId: integer('project_id')
+			.notNull()
+			.references(() => projects.id, { onDelete: 'cascade' }),
+		workTypeId: integer('work_type_id')
+			.notNull()
+			.references(() => workTypes.id, { onDelete: 'restrict' })
+	},
+	(t) => ({
+		pk: primaryKey({ columns: [t.projectId, t.workTypeId] }),
+		workTypeIdx: index('project_work_types_work_type_id_idx').on(t.workTypeId)
+	})
+);
+
+export const projectDocuments = pgTable(
+	'project_documents',
+	{
+		id: serial('id').primaryKey(),
+		projectId: integer('project_id')
+			.notNull()
+			.references(() => projects.id, { onDelete: 'cascade' }),
+		documentType: text('document_type').notNull().default('other'),
+		name: text('name').notNull(),
+		storagePath: text('storage_path').notNull(),
+		mimeType: text('mime_type'),
+		sizeBytes: integer('size_bytes'),
+		createdByUserId: uuid('created_by_user_id'),
+		createdAt: timestamp('created_at').defaultNow().notNull()
+	},
+	(t) => [index('project_documents_project_id_idx').on(t.projectId)]
+);
+
+export const rabNumberCounters = pgTable('rab_number_counters', {
+	year: integer('year').primaryKey(),
+	lastNumber: integer('last_number').notNull().default(0),
+	updatedAt: timestamp('updated_at').defaultNow().notNull()
+});
+
+export const rabSections = pgTable(
+	'rab_sections',
+	{
+		id: serial('id').primaryKey(),
+		rabId: integer('rab_id')
+			.notNull()
+			.references(() => rabs.id, { onDelete: 'cascade' }),
+		name: text('name').notNull(),
+		sortOrder: integer('sort_order').notNull().default(0)
+	},
+	(t) => [index('rab_sections_rab_id_idx').on(t.rabId)]
+);
+
+export const rabGroups = pgTable(
+	'rab_groups',
+	{
+		id: serial('id').primaryKey(),
+		sectionId: integer('section_id')
+			.notNull()
+			.references(() => rabSections.id, { onDelete: 'cascade' }),
+		name: text('name').notNull(),
+		sortOrder: integer('sort_order').notNull().default(0)
+	},
+	(t) => [index('rab_groups_section_id_idx').on(t.sectionId)]
+);
+
+export const rabSubgroups = pgTable(
+	'rab_subgroups',
+	{
+		id: serial('id').primaryKey(),
+		groupId: integer('group_id')
+			.notNull()
+			.references(() => rabGroups.id, { onDelete: 'cascade' }),
+		name: text('name').notNull(),
+		sortOrder: integer('sort_order').notNull().default(0)
+	},
+	(t) => [index('rab_subgroups_group_id_idx').on(t.groupId)]
+);
+
+export const rabItems = pgTable(
+	'rab_items',
+	{
+		id: serial('id').primaryKey(),
+		groupId: integer('group_id')
+			.notNull()
+			.references(() => rabGroups.id, { onDelete: 'cascade' }),
+		subgroupId: integer('subgroup_id').references(() => rabSubgroups.id, {
+			onDelete: 'cascade'
+		}),
+		description: text('description').notNull(),
+		unit: text('unit').notNull(),
+		volume: numeric('volume', { precision: 14, scale: 4 }).notNull().default('0'),
+		unitPrice: numeric('unit_price', { precision: 18, scale: 2 }).notNull().default('0'),
+		total: numeric('total', { precision: 18, scale: 2 }).notNull().default('0'),
+		weight: numeric('weight', { precision: 9, scale: 6 }).notNull().default('0'),
+		sortOrder: integer('sort_order').notNull().default(0),
+		notes: text('notes')
+	},
+	(t) => [
+		index('rab_items_group_id_idx').on(t.groupId),
+		index('rab_items_subgroup_id_idx').on(t.subgroupId)
+	]
+);
+
+export const rabStages = pgTable(
+	'rab_stages',
+	{
+		id: serial('id').primaryKey(),
+		rabId: integer('rab_id')
+			.notNull()
+			.references(() => rabs.id, { onDelete: 'cascade' }),
+		name: text('name').notNull(),
+		description: text('description'),
+		sortOrder: integer('sort_order').notNull().default(0)
+	},
+	(t) => [index('rab_stages_rab_id_idx').on(t.rabId)]
+);
+
+export const rabPaymentTerms = pgTable(
+	'rab_payment_terms',
+	{
+		id: serial('id').primaryKey(),
+		rabId: integer('rab_id')
+			.notNull()
+			.references(() => rabs.id, { onDelete: 'cascade' }),
+		stageId: integer('stage_id')
+			.notNull()
+			.references(() => rabStages.id, { onDelete: 'restrict' }),
+		name: text('name').notNull(),
+		amount: numeric('amount', { precision: 18, scale: 2 }).notNull().default('0'),
+		paymentTrigger: text('payment_trigger'),
+		sortOrder: integer('sort_order').notNull().default(0)
+	},
+	(t) => [
+		index('rab_payment_terms_rab_id_idx').on(t.rabId),
+		index('rab_payment_terms_stage_id_idx').on(t.stageId)
+	]
+);
+
+// Relations

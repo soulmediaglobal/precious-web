@@ -1,0 +1,191 @@
+{
+  "sqlReplayMatches": true,
+  "sequenceDefinitionsMatch": true,
+  "normalization": "Exclude PG18 pg_constraint NOT NULL rows; nullability compared independently in all columns.",
+  "verifiedAt": "2026-09-08T08:06:40.057Z",
+  "transaction": "READ ONLY",
+  "tableCount": 22,
+  "matched": true,
+  "counts": {
+    "columns": 170,
+    "constraints": 46,
+    "indexes": 46,
+    "rls": 22
+  },
+  "diffs": {},
+  "sequences": [
+    {
+      "sequencename": "clients_id_seq",
+      "data_type": "integer",
+      "start_value": "1",
+      "min_value": "1",
+      "max_value": "2147483647",
+      "increment_by": "1",
+      "cycle": false
+    },
+    {
+      "sequencename": "company_bank_accounts_id_seq",
+      "data_type": "integer",
+      "start_value": "1",
+      "min_value": "1",
+      "max_value": "2147483647",
+      "increment_by": "1",
+      "cycle": false
+    },
+    {
+      "sequencename": "contact_inquiries_id_seq",
+      "data_type": "integer",
+      "start_value": "1",
+      "min_value": "1",
+      "max_value": "2147483647",
+      "increment_by": "1",
+      "cycle": false
+    },
+    {
+      "sequencename": "expertise_id_seq",
+      "data_type": "integer",
+      "start_value": "1",
+      "min_value": "1",
+      "max_value": "2147483647",
+      "increment_by": "1",
+      "cycle": false
+    },
+    {
+      "sequencename": "expertise_images_id_seq",
+      "data_type": "integer",
+      "start_value": "1",
+      "min_value": "1",
+      "max_value": "2147483647",
+      "increment_by": "1",
+      "cycle": false
+    },
+    {
+      "sequencename": "portfolio_id_seq",
+      "data_type": "integer",
+      "start_value": "1",
+      "min_value": "1",
+      "max_value": "2147483647",
+      "increment_by": "1",
+      "cycle": false
+    },
+    {
+      "sequencename": "portfolio_images_id_seq",
+      "data_type": "integer",
+      "start_value": "1",
+      "min_value": "1",
+      "max_value": "2147483647",
+      "increment_by": "1",
+      "cycle": false
+    },
+    {
+      "sequencename": "project_documents_id_seq",
+      "data_type": "integer",
+      "start_value": "1",
+      "min_value": "1",
+      "max_value": "2147483647",
+      "increment_by": "1",
+      "cycle": false
+    },
+    {
+      "sequencename": "project_number_seq",
+      "data_type": "bigint",
+      "start_value": "1",
+      "min_value": "1",
+      "max_value": "9223372036854775807",
+      "increment_by": "1",
+      "cycle": false
+    },
+    {
+      "sequencename": "projects_id_seq",
+      "data_type": "integer",
+      "start_value": "1",
+      "min_value": "1",
+      "max_value": "2147483647",
+      "increment_by": "1",
+      "cycle": false
+    },
+    {
+      "sequencename": "rab_groups_id_seq",
+      "data_type": "integer",
+      "start_value": "1",
+      "min_value": "1",
+      "max_value": "2147483647",
+      "increment_by": "1",
+      "cycle": false
+    },
+    {
+      "sequencename": "rab_items_id_seq",
+      "data_type": "integer",
+      "start_value": "1",
+      "min_value": "1",
+      "max_value": "2147483647",
+      "increment_by": "1",
+      "cycle": false
+    },
+    {
+      "sequencename": "rab_payment_terms_id_seq",
+      "data_type": "integer",
+      "start_value": "1",
+      "min_value": "1",
+      "max_value": "2147483647",
+      "increment_by": "1",
+      "cycle": false
+    },
+    {
+      "sequencename": "rab_sections_id_seq",
+      "data_type": "integer",
+      "start_value": "1",
+      "min_value": "1",
+      "max_value": "2147483647",
+      "increment_by": "1",
+      "cycle": false
+    },
+    {
+      "sequencename": "rab_stages_id_seq",
+      "data_type": "integer",
+      "start_value": "1",
+      "min_value": "1",
+      "max_value": "2147483647",
+      "increment_by": "1",
+      "cycle": false
+    },
+    {
+      "sequencename": "rab_subgroups_id_seq",
+      "data_type": "integer",
+      "start_value": "1",
+      "min_value": "1",
+      "max_value": "2147483647",
+      "increment_by": "1",
+      "cycle": false
+    },
+    {
+      "sequencename": "rabs_id_seq",
+      "data_type": "integer",
+      "start_value": "1",
+      "min_value": "1",
+      "max_value": "2147483647",
+      "increment_by": "1",
+      "cycle": false
+    },
+    {
+      "sequencename": "team_id_seq",
+      "data_type": "integer",
+      "start_value": "1",
+      "min_value": "1",
+      "max_value": "2147483647",
+      "increment_by": "1",
+      "cycle": false
+    },
+    {
+      "sequencename": "work_types_id_seq",
+      "data_type": "integer",
+      "start_value": "1",
+      "min_value": "1",
+      "max_value": "2147483647",
+      "increment_by": "1",
+      "cycle": false
+    }
+  ],
+  "policies": [],
+  "enums": []
+}
