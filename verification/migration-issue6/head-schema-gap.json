@@ -1,0 +1,15 @@
+{
+  "missingFromHead": [
+    "public.project_documents",
+    "public.project_work_types",
+    "public.rab_groups",
+    "public.rab_items",
+    "public.rab_number_counters",
+    "public.rab_payment_terms",
+    "public.rab_sections",
+    "public.rab_stages",
+    "public.rab_subgroups",
+    "public.work_types"
+  ],
+  "method": "0011 snapshot retained unchanged; Contact table metadata generated exclusively from committed HEAD export"
+}

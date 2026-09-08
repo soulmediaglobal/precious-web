@@ -1,0 +1,24 @@
+{
+  "check": {
+    "exitCode": 0,
+    "errors": 0,
+    "warnings": 0
+  },
+  "build": {
+    "exitCode": 0,
+    "adapterNode": true,
+    "warnings": [
+      "(node:28146) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.",
+      "(Use `node --trace-deprecation ...` to show where the warning was created)"
+    ]
+  },
+  "drizzleCheck": {
+    "exitCode": 0,
+    "result": "Everything's fine 🐶🔥"
+  },
+  "versions": {
+    "orm": "0.45.2",
+    "kit": "0.31.10",
+    "postgres": "3.4.9"
+  }
+}

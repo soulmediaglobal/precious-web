@@ -22,6 +22,76 @@
       "when": 1788450000000,
       "tag": "0002_limit_team_uploads",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1788481321448,
+      "tag": "0003_lazy_metal_master",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1788482136592,
+      "tag": "0004_lively_tiger_shark",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1788482326434,
+      "tag": "0005_aberrant_tenebrous",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1788482589871,
+      "tag": "0006_equal_black_tarantula",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1788483169109,
+      "tag": "0007_blushing_redwing",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1788483425121,
+      "tag": "0008_red_wind_dancer",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1788551042218,
+      "tag": "0009_funny_vindicator",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1788552626207,
+      "tag": "0010_reflective_gressill",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1788652150533,
+      "tag": "0011_historical_rab_freeze",
+      "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1788853539219,
+      "tag": "0012_contact_inquiries",
+      "breakpoints": true
     }
   ]
 }

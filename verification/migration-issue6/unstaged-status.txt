@@ -1,0 +1,16 @@
+ M src/lib/server/db/queries.ts
+ M src/lib/server/db/schema.ts
+ M src/routes/admin/(app)/+layout.svelte
+ M src/routes/admin/(app)/+page.server.ts
+ M src/routes/admin/(app)/+page.svelte
+?? src/lib/components/admin/ClientForm.svelte
+?? src/lib/components/admin/ProjectForm.svelte
+?? src/lib/components/admin/RabItemForm.svelte
+?? src/lib/components/admin/RabItemTable.svelte
+?? src/lib/server/project-cms.ts
+?? src/lib/server/rab-cms.ts
+?? src/routes/admin/(app)/clients/
+?? src/routes/admin/(app)/projects/
+?? src/routes/admin/rab-preview/
+?? verification/contact-issue4/contact_inquiries.pending.sql
+?? verification/task2/

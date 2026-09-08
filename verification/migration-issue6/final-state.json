@@ -1,0 +1,15 @@
+{
+  "head": "2e5896cccefedf7f5f77af568a7e8b968a29e8a7",
+  "branch": "6-reconcile-canonical-drizzle-migration-state-with-live-database",
+  "workingDiffCheck": true,
+  "stagedDiffCheck": true,
+  "existingFilesHashed": 316,
+  "onlyChangedExistingFile": [
+    "drizzle/meta/_journal.json"
+  ],
+  "oldJournalEntriesPreserved": true,
+  "unrelatedSourceHashesPreserved": true,
+  "envTracked": false,
+  "stagedFileCount": 40,
+  "stoppedBeforeCommitPushPrMergeDeploy": true
+}

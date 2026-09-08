@@ -1,0 +1,1687 @@
+{
+  "head": "2e5896cccefedf7f5f77af568a7e8b968a29e8a7",
+  "branch": "6-reconcile-canonical-drizzle-migration-state-with-live-database",
+  "committed": [
+    "drizzle/0000_charming_jazinda.sql",
+    "drizzle/0001_sparkling_sheva_callister.sql",
+    "drizzle/0002_limit_team_uploads.sql",
+    "drizzle/meta/0000_snapshot.json",
+    "drizzle/meta/0001_snapshot.json",
+    "drizzle/meta/_journal.json"
+  ],
+  "inventory": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1788432301024,
+      "tag": "0000_charming_jazinda",
+      "breakpoints": true,
+      "sha256": "92d3cc352e2b4a9579a5176848eedaa097933218f2b56372b687bbde7406b0f3"
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1788444923390,
+      "tag": "0001_sparkling_sheva_callister",
+      "breakpoints": true,
+      "sha256": "253994ec69292a6b9cc8aa543dd0af10cac81fe084ae13f2d524e7d8f17b303a"
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1788450000000,
+      "tag": "0002_limit_team_uploads",
+      "breakpoints": true,
+      "sha256": "268b5737529462da34811895ff21f3281a5605f53df002ce8ccb344df123ab61"
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1788481321448,
+      "tag": "0003_lazy_metal_master",
+      "breakpoints": true,
+      "sha256": "87ee45fb165ba4355e625dd165e012b5ed0d21ebe8a16a1be7413c794e25b0ae"
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1788482136592,
+      "tag": "0004_lively_tiger_shark",
+      "breakpoints": true,
+      "sha256": "468945f4b8a1dacdf858afd642461956ae10763c3ddc3d9382d6c2ff70eeb669"
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1788482326434,
+      "tag": "0005_aberrant_tenebrous",
+      "breakpoints": true,
+      "sha256": "550ad6d74ac744ae35903b0d12fe78520a05bf23f325bb097b69b1c7886c183a"
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1788482589871,
+      "tag": "0006_equal_black_tarantula",
+      "breakpoints": true,
+      "sha256": "f010614fbe069cfdfb028b15a9b08457db1ea965ed7522d795670e08ac1f79dc"
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1788483169109,
+      "tag": "0007_blushing_redwing",
+      "breakpoints": true,
+      "sha256": "c145551d6c92487aa7fde8c3b8b7bc5c796a3ac038427387ba2374dd74bccf41"
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1788483425121,
+      "tag": "0008_red_wind_dancer",
+      "breakpoints": true,
+      "sha256": "d48eae615b98836711399f00a17ad1b566c23ddc8b02c507bee1aa46d7c4da5c"
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1788551042218,
+      "tag": "0009_funny_vindicator",
+      "breakpoints": true,
+      "sha256": "2d4517a035fd625e1fb2f3b23b130db732f1412509200fb41b6c2615971ec259"
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1788552626207,
+      "tag": "0010_reflective_gressill",
+      "breakpoints": true,
+      "sha256": "8d4c747b9020f2ff45826d02597bd5c150c73c1732c2cd0579bf72016f01961b"
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1788652150533,
+      "tag": "0011_historical_rab_freeze",
+      "breakpoints": true,
+      "sha256": "a08726f2230a4310e4288579fad83c7ceb871b2fe77107e6d7e699b4801baa3a"
+    }
+  ],
+  "rows": [
+    {
+      "id": 1,
+      "hash": "92d3cc352e2b4a9579a5176848eedaa097933218f2b56372b687bbde7406b0f3",
+      "created_at": "1788432301024"
+    },
+    {
+      "id": 2,
+      "hash": "253994ec69292a6b9cc8aa543dd0af10cac81fe084ae13f2d524e7d8f17b303a",
+      "created_at": "1788444923390"
+    },
+    {
+      "id": 3,
+      "hash": "268b5737529462da34811895ff21f3281a5605f53df002ce8ccb344df123ab61",
+      "created_at": "1788450000000"
+    },
+    {
+      "id": 4,
+      "hash": "87ee45fb165ba4355e625dd165e012b5ed0d21ebe8a16a1be7413c794e25b0ae",
+      "created_at": "1788481321448"
+    },
+    {
+      "id": 5,
+      "hash": "468945f4b8a1dacdf858afd642461956ae10763c3ddc3d9382d6c2ff70eeb669",
+      "created_at": "1788482136592"
+    },
+    {
+      "id": 6,
+      "hash": "550ad6d74ac744ae35903b0d12fe78520a05bf23f325bb097b69b1c7886c183a",
+      "created_at": "1788482326434"
+    },
+    {
+      "id": 7,
+      "hash": "f010614fbe069cfdfb028b15a9b08457db1ea965ed7522d795670e08ac1f79dc",
+      "created_at": "1788482589871"
+    },
+    {
+      "id": 8,
+      "hash": "c145551d6c92487aa7fde8c3b8b7bc5c796a3ac038427387ba2374dd74bccf41",
+      "created_at": "1788483169109"
+    },
+    {
+      "id": 9,
+      "hash": "d48eae615b98836711399f00a17ad1b566c23ddc8b02c507bee1aa46d7c4da5c",
+      "created_at": "1788483425121"
+    },
+    {
+      "id": 10,
+      "hash": "2d4517a035fd625e1fb2f3b23b130db732f1412509200fb41b6c2615971ec259",
+      "created_at": "1788551042218"
+    },
+    {
+      "id": 11,
+      "hash": "8d4c747b9020f2ff45826d02597bd5c150c73c1732c2cd0579bf72016f01961b",
+      "created_at": "1788552626207"
+    },
+    {
+      "id": 12,
+      "hash": "a08726f2230a4310e4288579fad83c7ceb871b2fe77107e6d7e699b4801baa3a",
+      "created_at": "1788652150533"
+    }
+  ],
+  "matched": true,
+  "columns": [
+    {
+      "table_name": "clients",
+      "column_name": "id",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": "nextval('clients_id_seq'::regclass)"
+    },
+    {
+      "table_name": "clients",
+      "column_name": "company_name",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "clients",
+      "column_name": "company_type",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "clients",
+      "column_name": "address",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "clients",
+      "column_name": "director_name",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "clients",
+      "column_name": "phone",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "clients",
+      "column_name": "email",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "clients",
+      "column_name": "created_at",
+      "data_type": "timestamp without time zone",
+      "is_nullable": "NO",
+      "column_default": "now()"
+    },
+    {
+      "table_name": "clients",
+      "column_name": "updated_at",
+      "data_type": "timestamp without time zone",
+      "is_nullable": "NO",
+      "column_default": "now()"
+    },
+    {
+      "table_name": "clients",
+      "column_name": "pic_name",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "clients",
+      "column_name": "pic_phone",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "clients",
+      "column_name": "pic_email",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "company_bank_accounts",
+      "column_name": "id",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": "nextval('company_bank_accounts_id_seq'::regclass)"
+    },
+    {
+      "table_name": "company_bank_accounts",
+      "column_name": "bank_name",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "company_bank_accounts",
+      "column_name": "account_number",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "company_bank_accounts",
+      "column_name": "account_name",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "company_bank_accounts",
+      "column_name": "branch",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "company_bank_accounts",
+      "column_name": "is_active",
+      "data_type": "boolean",
+      "is_nullable": "NO",
+      "column_default": "true"
+    },
+    {
+      "table_name": "company_bank_accounts",
+      "column_name": "sort_order",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": "0"
+    },
+    {
+      "table_name": "company_bank_accounts",
+      "column_name": "created_at",
+      "data_type": "timestamp without time zone",
+      "is_nullable": "NO",
+      "column_default": "now()"
+    },
+    {
+      "table_name": "company_bank_accounts",
+      "column_name": "updated_at",
+      "data_type": "timestamp without time zone",
+      "is_nullable": "NO",
+      "column_default": "now()"
+    },
+    {
+      "table_name": "contact_inquiries",
+      "column_name": "id",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": "nextval('contact_inquiries_id_seq'::regclass)"
+    },
+    {
+      "table_name": "contact_inquiries",
+      "column_name": "first_name",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "contact_inquiries",
+      "column_name": "last_name",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "contact_inquiries",
+      "column_name": "email",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "contact_inquiries",
+      "column_name": "phone",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "contact_inquiries",
+      "column_name": "message",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "contact_inquiries",
+      "column_name": "consent_accepted",
+      "data_type": "boolean",
+      "is_nullable": "NO",
+      "column_default": "false"
+    },
+    {
+      "table_name": "contact_inquiries",
+      "column_name": "created_at",
+      "data_type": "timestamp with time zone",
+      "is_nullable": "NO",
+      "column_default": "now()"
+    },
+    {
+      "table_name": "contact_inquiries",
+      "column_name": "is_followed_up",
+      "data_type": "boolean",
+      "is_nullable": "NO",
+      "column_default": "false"
+    },
+    {
+      "table_name": "contact_inquiries",
+      "column_name": "follow_up_method",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "contact_inquiries",
+      "column_name": "followed_up_at",
+      "data_type": "timestamp with time zone",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "expertise",
+      "column_name": "id",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": "nextval('expertise_id_seq'::regclass)"
+    },
+    {
+      "table_name": "expertise",
+      "column_name": "slug",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "expertise",
+      "column_name": "title",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "expertise",
+      "column_name": "description",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "expertise",
+      "column_name": "how",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "expertise",
+      "column_name": "why",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "expertise",
+      "column_name": "created_at",
+      "data_type": "timestamp without time zone",
+      "is_nullable": "NO",
+      "column_default": "now()"
+    },
+    {
+      "table_name": "expertise",
+      "column_name": "updated_at",
+      "data_type": "timestamp without time zone",
+      "is_nullable": "NO",
+      "column_default": "now()"
+    },
+    {
+      "table_name": "expertise_images",
+      "column_name": "id",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": "nextval('expertise_images_id_seq'::regclass)"
+    },
+    {
+      "table_name": "expertise_images",
+      "column_name": "expertise_id",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "expertise_images",
+      "column_name": "url",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "expertise_images",
+      "column_name": "sort_order",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": "0"
+    },
+    {
+      "table_name": "expertise_portfolio",
+      "column_name": "expertise_id",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "expertise_portfolio",
+      "column_name": "portfolio_id",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "portfolio",
+      "column_name": "id",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": "nextval('portfolio_id_seq'::regclass)"
+    },
+    {
+      "table_name": "portfolio",
+      "column_name": "slug",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "portfolio",
+      "column_name": "project_name",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "portfolio",
+      "column_name": "client",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "portfolio",
+      "column_name": "short_description",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "portfolio",
+      "column_name": "long_description_p1",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "portfolio",
+      "column_name": "long_description_p2",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "portfolio",
+      "column_name": "location",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "portfolio",
+      "column_name": "category",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "portfolio",
+      "column_name": "status",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "portfolio",
+      "column_name": "created_at",
+      "data_type": "timestamp without time zone",
+      "is_nullable": "NO",
+      "column_default": "now()"
+    },
+    {
+      "table_name": "portfolio",
+      "column_name": "updated_at",
+      "data_type": "timestamp without time zone",
+      "is_nullable": "NO",
+      "column_default": "now()"
+    },
+    {
+      "table_name": "portfolio_images",
+      "column_name": "id",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": "nextval('portfolio_images_id_seq'::regclass)"
+    },
+    {
+      "table_name": "portfolio_images",
+      "column_name": "portfolio_id",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "portfolio_images",
+      "column_name": "url",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "portfolio_images",
+      "column_name": "sort_order",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": "0"
+    },
+    {
+      "table_name": "project_documents",
+      "column_name": "id",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": "nextval('project_documents_id_seq'::regclass)"
+    },
+    {
+      "table_name": "project_documents",
+      "column_name": "project_id",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "project_documents",
+      "column_name": "document_type",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": "'other'::text"
+    },
+    {
+      "table_name": "project_documents",
+      "column_name": "name",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "project_documents",
+      "column_name": "storage_path",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "project_documents",
+      "column_name": "mime_type",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "project_documents",
+      "column_name": "size_bytes",
+      "data_type": "integer",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "project_documents",
+      "column_name": "created_by_user_id",
+      "data_type": "uuid",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "project_documents",
+      "column_name": "created_at",
+      "data_type": "timestamp without time zone",
+      "is_nullable": "NO",
+      "column_default": "now()"
+    },
+    {
+      "table_name": "project_work_types",
+      "column_name": "project_id",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "project_work_types",
+      "column_name": "work_type_id",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "projects",
+      "column_name": "id",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": "nextval('projects_id_seq'::regclass)"
+    },
+    {
+      "table_name": "projects",
+      "column_name": "project_number",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": "((('PC-'::text || to_char((CURRENT_DATE)::timestamp with time zone, 'YYYY'::text)) || '-'::text) || lpad((nextval('project_number_seq'::regclass))::text, 5, '0'::text))"
+    },
+    {
+      "table_name": "projects",
+      "column_name": "client_id",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "projects",
+      "column_name": "project_name",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "projects",
+      "column_name": "transaction_title",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "projects",
+      "column_name": "location",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "projects",
+      "column_name": "acquisition_type",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "projects",
+      "column_name": "status",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": "'draft'::text"
+    },
+    {
+      "table_name": "projects",
+      "column_name": "description",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "projects",
+      "column_name": "pic_user_id",
+      "data_type": "uuid",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "projects",
+      "column_name": "created_by_user_id",
+      "data_type": "uuid",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "projects",
+      "column_name": "created_at",
+      "data_type": "timestamp without time zone",
+      "is_nullable": "NO",
+      "column_default": "now()"
+    },
+    {
+      "table_name": "projects",
+      "column_name": "updated_at",
+      "data_type": "timestamp without time zone",
+      "is_nullable": "NO",
+      "column_default": "now()"
+    },
+    {
+      "table_name": "projects",
+      "column_name": "client_project_number",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "rab_groups",
+      "column_name": "id",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": "nextval('rab_groups_id_seq'::regclass)"
+    },
+    {
+      "table_name": "rab_groups",
+      "column_name": "section_id",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "rab_groups",
+      "column_name": "name",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "rab_groups",
+      "column_name": "sort_order",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": "0"
+    },
+    {
+      "table_name": "rab_items",
+      "column_name": "id",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": "nextval('rab_items_id_seq'::regclass)"
+    },
+    {
+      "table_name": "rab_items",
+      "column_name": "group_id",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "rab_items",
+      "column_name": "description",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "rab_items",
+      "column_name": "unit",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "rab_items",
+      "column_name": "volume",
+      "data_type": "numeric",
+      "is_nullable": "NO",
+      "column_default": "'0'::numeric"
+    },
+    {
+      "table_name": "rab_items",
+      "column_name": "unit_price",
+      "data_type": "numeric",
+      "is_nullable": "NO",
+      "column_default": "'0'::numeric"
+    },
+    {
+      "table_name": "rab_items",
+      "column_name": "total",
+      "data_type": "numeric",
+      "is_nullable": "NO",
+      "column_default": "'0'::numeric"
+    },
+    {
+      "table_name": "rab_items",
+      "column_name": "weight",
+      "data_type": "numeric",
+      "is_nullable": "NO",
+      "column_default": "'0'::numeric"
+    },
+    {
+      "table_name": "rab_items",
+      "column_name": "sort_order",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": "0"
+    },
+    {
+      "table_name": "rab_items",
+      "column_name": "notes",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "rab_items",
+      "column_name": "subgroup_id",
+      "data_type": "integer",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "rab_number_counters",
+      "column_name": "year",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "rab_number_counters",
+      "column_name": "last_number",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": "0"
+    },
+    {
+      "table_name": "rab_number_counters",
+      "column_name": "updated_at",
+      "data_type": "timestamp without time zone",
+      "is_nullable": "NO",
+      "column_default": "now()"
+    },
+    {
+      "table_name": "rab_payment_terms",
+      "column_name": "id",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": "nextval('rab_payment_terms_id_seq'::regclass)"
+    },
+    {
+      "table_name": "rab_payment_terms",
+      "column_name": "rab_id",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "rab_payment_terms",
+      "column_name": "stage_id",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "rab_payment_terms",
+      "column_name": "name",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "rab_payment_terms",
+      "column_name": "amount",
+      "data_type": "numeric",
+      "is_nullable": "NO",
+      "column_default": "'0'::numeric"
+    },
+    {
+      "table_name": "rab_payment_terms",
+      "column_name": "payment_trigger",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "rab_payment_terms",
+      "column_name": "sort_order",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": "0"
+    },
+    {
+      "table_name": "rab_sections",
+      "column_name": "id",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": "nextval('rab_sections_id_seq'::regclass)"
+    },
+    {
+      "table_name": "rab_sections",
+      "column_name": "rab_id",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "rab_sections",
+      "column_name": "name",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "rab_sections",
+      "column_name": "sort_order",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": "0"
+    },
+    {
+      "table_name": "rab_stages",
+      "column_name": "id",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": "nextval('rab_stages_id_seq'::regclass)"
+    },
+    {
+      "table_name": "rab_stages",
+      "column_name": "rab_id",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "rab_stages",
+      "column_name": "name",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "rab_stages",
+      "column_name": "description",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "rab_stages",
+      "column_name": "sort_order",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": "0"
+    },
+    {
+      "table_name": "rab_subgroups",
+      "column_name": "id",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": "nextval('rab_subgroups_id_seq'::regclass)"
+    },
+    {
+      "table_name": "rab_subgroups",
+      "column_name": "group_id",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "rab_subgroups",
+      "column_name": "name",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "rab_subgroups",
+      "column_name": "sort_order",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": "0"
+    },
+    {
+      "table_name": "rabs",
+      "column_name": "id",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": "nextval('rabs_id_seq'::regclass)"
+    },
+    {
+      "table_name": "rabs",
+      "column_name": "project_id",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "rabs",
+      "column_name": "revision_number",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": "0"
+    },
+    {
+      "table_name": "rabs",
+      "column_name": "document_number",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "rabs",
+      "column_name": "status",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": "'draft'::text"
+    },
+    {
+      "table_name": "rabs",
+      "column_name": "subtotal",
+      "data_type": "numeric",
+      "is_nullable": "NO",
+      "column_default": "'0'::numeric"
+    },
+    {
+      "table_name": "rabs",
+      "column_name": "tax_rate",
+      "data_type": "numeric",
+      "is_nullable": "NO",
+      "column_default": "'11'::numeric"
+    },
+    {
+      "table_name": "rabs",
+      "column_name": "tax_amount",
+      "data_type": "numeric",
+      "is_nullable": "NO",
+      "column_default": "'0'::numeric"
+    },
+    {
+      "table_name": "rabs",
+      "column_name": "grand_total",
+      "data_type": "numeric",
+      "is_nullable": "NO",
+      "column_default": "'0'::numeric"
+    },
+    {
+      "table_name": "rabs",
+      "column_name": "created_by_user_id",
+      "data_type": "uuid",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "rabs",
+      "column_name": "internal_approved_by_user_id",
+      "data_type": "uuid",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "rabs",
+      "column_name": "internal_approved_at",
+      "data_type": "timestamp without time zone",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "rabs",
+      "column_name": "client_approved_at",
+      "data_type": "timestamp without time zone",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "rabs",
+      "column_name": "client_approval_evidence",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "rabs",
+      "column_name": "supersedes_rab_id",
+      "data_type": "integer",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "rabs",
+      "column_name": "created_at",
+      "data_type": "timestamp without time zone",
+      "is_nullable": "NO",
+      "column_default": "now()"
+    },
+    {
+      "table_name": "rabs",
+      "column_name": "updated_at",
+      "data_type": "timestamp without time zone",
+      "is_nullable": "NO",
+      "column_default": "now()"
+    },
+    {
+      "table_name": "rabs",
+      "column_name": "offer_date",
+      "data_type": "date",
+      "is_nullable": "NO",
+      "column_default": "now()"
+    },
+    {
+      "table_name": "rabs",
+      "column_name": "greeting",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "rabs",
+      "column_name": "bank_account_id",
+      "data_type": "integer",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "rabs",
+      "column_name": "signatory_name",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "rabs",
+      "column_name": "signatory_title",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "rabs",
+      "column_name": "frozen_document",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "rabs",
+      "column_name": "inherited_masters",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "settings",
+      "column_name": "key",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "settings",
+      "column_name": "value",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "team",
+      "column_name": "id",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": "nextval('team_id_seq'::regclass)"
+    },
+    {
+      "table_name": "team",
+      "column_name": "name",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "team",
+      "column_name": "title",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "team",
+      "column_name": "image",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "team",
+      "column_name": "sort_order",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": "0"
+    },
+    {
+      "table_name": "team",
+      "column_name": "group",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": "'staff'::text"
+    },
+    {
+      "table_name": "team",
+      "column_name": "description",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "team",
+      "column_name": "email",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "team",
+      "column_name": "linkedin",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "team",
+      "column_name": "is_active",
+      "data_type": "boolean",
+      "is_nullable": "NO",
+      "column_default": "true"
+    },
+    {
+      "table_name": "team",
+      "column_name": "created_at",
+      "data_type": "timestamp without time zone",
+      "is_nullable": "NO",
+      "column_default": "now()"
+    },
+    {
+      "table_name": "team",
+      "column_name": "updated_at",
+      "data_type": "timestamp without time zone",
+      "is_nullable": "NO",
+      "column_default": "now()"
+    },
+    {
+      "table_name": "work_types",
+      "column_name": "id",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": "nextval('work_types_id_seq'::regclass)"
+    },
+    {
+      "table_name": "work_types",
+      "column_name": "name",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "work_types",
+      "column_name": "slug",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "work_types",
+      "column_name": "sort_order",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": "0"
+    },
+    {
+      "table_name": "work_types",
+      "column_name": "is_active",
+      "data_type": "boolean",
+      "is_nullable": "NO",
+      "column_default": "true"
+    },
+    {
+      "table_name": "work_types",
+      "column_name": "created_at",
+      "data_type": "timestamp without time zone",
+      "is_nullable": "NO",
+      "column_default": "now()"
+    },
+    {
+      "table_name": "work_types",
+      "column_name": "updated_at",
+      "data_type": "timestamp without time zone",
+      "is_nullable": "NO",
+      "column_default": "now()"
+    }
+  ],
+  "constraints": [
+    {
+      "table_name": "clients",
+      "conname": "clients_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "company_bank_accounts",
+      "conname": "company_bank_accounts_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "contact_inquiries",
+      "conname": "contact_inquiries_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "expertise",
+      "conname": "expertise_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "expertise",
+      "conname": "expertise_slug_unique",
+      "definition": "UNIQUE (slug)"
+    },
+    {
+      "table_name": "expertise_images",
+      "conname": "expertise_images_expertise_id_expertise_id_fk",
+      "definition": "FOREIGN KEY (expertise_id) REFERENCES expertise(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "expertise_images",
+      "conname": "expertise_images_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "expertise_portfolio",
+      "conname": "expertise_portfolio_expertise_id_expertise_id_fk",
+      "definition": "FOREIGN KEY (expertise_id) REFERENCES expertise(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "expertise_portfolio",
+      "conname": "expertise_portfolio_expertise_id_portfolio_id_pk",
+      "definition": "PRIMARY KEY (expertise_id, portfolio_id)"
+    },
+    {
+      "table_name": "expertise_portfolio",
+      "conname": "expertise_portfolio_portfolio_id_portfolio_id_fk",
+      "definition": "FOREIGN KEY (portfolio_id) REFERENCES portfolio(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "portfolio",
+      "conname": "portfolio_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "portfolio",
+      "conname": "portfolio_slug_unique",
+      "definition": "UNIQUE (slug)"
+    },
+    {
+      "table_name": "portfolio_images",
+      "conname": "portfolio_images_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "portfolio_images",
+      "conname": "portfolio_images_portfolio_id_portfolio_id_fk",
+      "definition": "FOREIGN KEY (portfolio_id) REFERENCES portfolio(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "project_documents",
+      "conname": "project_documents_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "project_documents",
+      "conname": "project_documents_project_id_projects_id_fk",
+      "definition": "FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "project_work_types",
+      "conname": "project_work_types_project_id_projects_id_fk",
+      "definition": "FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "project_work_types",
+      "conname": "project_work_types_project_id_work_type_id_pk",
+      "definition": "PRIMARY KEY (project_id, work_type_id)"
+    },
+    {
+      "table_name": "project_work_types",
+      "conname": "project_work_types_work_type_id_work_types_id_fk",
+      "definition": "FOREIGN KEY (work_type_id) REFERENCES work_types(id) ON DELETE RESTRICT"
+    },
+    {
+      "table_name": "projects",
+      "conname": "projects_client_id_clients_id_fk",
+      "definition": "FOREIGN KEY (client_id) REFERENCES clients(id) ON DELETE RESTRICT"
+    },
+    {
+      "table_name": "projects",
+      "conname": "projects_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "projects",
+      "conname": "projects_project_number_unique",
+      "definition": "UNIQUE (project_number)"
+    },
+    {
+      "table_name": "rab_groups",
+      "conname": "rab_groups_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "rab_groups",
+      "conname": "rab_groups_section_id_rab_sections_id_fk",
+      "definition": "FOREIGN KEY (section_id) REFERENCES rab_sections(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "rab_items",
+      "conname": "rab_items_group_id_rab_groups_id_fk",
+      "definition": "FOREIGN KEY (group_id) REFERENCES rab_groups(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "rab_items",
+      "conname": "rab_items_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "rab_items",
+      "conname": "rab_items_subgroup_id_rab_subgroups_id_fk",
+      "definition": "FOREIGN KEY (subgroup_id) REFERENCES rab_subgroups(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "rab_number_counters",
+      "conname": "rab_number_counters_pkey",
+      "definition": "PRIMARY KEY (year)"
+    },
+    {
+      "table_name": "rab_payment_terms",
+      "conname": "rab_payment_terms_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "rab_payment_terms",
+      "conname": "rab_payment_terms_rab_id_rabs_id_fk",
+      "definition": "FOREIGN KEY (rab_id) REFERENCES rabs(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "rab_payment_terms",
+      "conname": "rab_payment_terms_stage_id_rab_stages_id_fk",
+      "definition": "FOREIGN KEY (stage_id) REFERENCES rab_stages(id) ON DELETE RESTRICT"
+    },
+    {
+      "table_name": "rab_sections",
+      "conname": "rab_sections_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "rab_sections",
+      "conname": "rab_sections_rab_id_rabs_id_fk",
+      "definition": "FOREIGN KEY (rab_id) REFERENCES rabs(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "rab_stages",
+      "conname": "rab_stages_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "rab_stages",
+      "conname": "rab_stages_rab_id_rabs_id_fk",
+      "definition": "FOREIGN KEY (rab_id) REFERENCES rabs(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "rab_subgroups",
+      "conname": "rab_subgroups_group_id_rab_groups_id_fk",
+      "definition": "FOREIGN KEY (group_id) REFERENCES rab_groups(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "rab_subgroups",
+      "conname": "rab_subgroups_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "rabs",
+      "conname": "rabs_bank_account_id_company_bank_accounts_id_fk",
+      "definition": "FOREIGN KEY (bank_account_id) REFERENCES company_bank_accounts(id) ON DELETE SET NULL"
+    },
+    {
+      "table_name": "rabs",
+      "conname": "rabs_document_number_unique",
+      "definition": "UNIQUE (document_number)"
+    },
+    {
+      "table_name": "rabs",
+      "conname": "rabs_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "rabs",
+      "conname": "rabs_project_id_projects_id_fk",
+      "definition": "FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE RESTRICT"
+    },
+    {
+      "table_name": "settings",
+      "conname": "settings_pkey",
+      "definition": "PRIMARY KEY (key)"
+    },
+    {
+      "table_name": "team",
+      "conname": "team_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "work_types",
+      "conname": "work_types_name_unique",
+      "definition": "UNIQUE (name)"
+    },
+    {
+      "table_name": "work_types",
+      "conname": "work_types_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "work_types",
+      "conname": "work_types_slug_unique",
+      "definition": "UNIQUE (slug)"
+    }
+  ],
+  "tables": [
+    {
+      "relname": "clients",
+      "relrowsecurity": false
+    },
+    {
+      "relname": "company_bank_accounts",
+      "relrowsecurity": false
+    },
+    {
+      "relname": "contact_inquiries",
+      "relrowsecurity": true
+    },
+    {
+      "relname": "expertise",
+      "relrowsecurity": false
+    },
+    {
+      "relname": "expertise_images",
+      "relrowsecurity": false
+    },
+    {
+      "relname": "expertise_portfolio",
+      "relrowsecurity": false
+    },
+    {
+      "relname": "portfolio",
+      "relrowsecurity": false
+    },
+    {
+      "relname": "portfolio_images",
+      "relrowsecurity": false
+    },
+    {
+      "relname": "project_documents",
+      "relrowsecurity": false
+    },
+    {
+      "relname": "project_work_types",
+      "relrowsecurity": false
+    },
+    {
+      "relname": "projects",
+      "relrowsecurity": false
+    },
+    {
+      "relname": "rab_groups",
+      "relrowsecurity": false
+    },
+    {
+      "relname": "rab_items",
+      "relrowsecurity": false
+    },
+    {
+      "relname": "rab_number_counters",
+      "relrowsecurity": false
+    },
+    {
+      "relname": "rab_payment_terms",
+      "relrowsecurity": false
+    },
+    {
+      "relname": "rab_sections",
+      "relrowsecurity": false
+    },
+    {
+      "relname": "rab_stages",
+      "relrowsecurity": false
+    },
+    {
+      "relname": "rab_subgroups",
+      "relrowsecurity": false
+    },
+    {
+      "relname": "rabs",
+      "relrowsecurity": false
+    },
+    {
+      "relname": "settings",
+      "relrowsecurity": false
+    },
+    {
+      "relname": "team",
+      "relrowsecurity": false
+    },
+    {
+      "relname": "work_types",
+      "relrowsecurity": false
+    }
+  ]
+}

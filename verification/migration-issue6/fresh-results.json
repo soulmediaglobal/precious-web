@@ -1,0 +1,255 @@
+{
+  "engine": "PGlite 0.5.8",
+  "postgres": [
+    {
+      "version": "PostgreSQL 18.3 (PGlite 0.5.8) on wasm32-unknown-emscripten, compiled by emcc (Emscripten gcc/clang-like replacement + linker emulating GNU ld) 3.1.74 (1092ec30a3fb1d46b1782ff1b4db5094d3d06ae5), 32-bit"
+    }
+  ],
+  "fixture": "minimal storage.buckets/storage.objects plus anon/authenticated roles; no Supabase services",
+  "snapshots": [
+    {
+      "index": 0,
+      "id": "6f2525fd-a871-45a1-a44d-bbee3efca4e7",
+      "prevId": "00000000-0000-0000-0000-000000000000",
+      "tables": 7,
+      "tableColumnNullabilityMatch": true
+    },
+    {
+      "index": 1,
+      "id": "696f261e-3e2b-4854-8b7a-40eb5122ab4f",
+      "prevId": "6f2525fd-a871-45a1-a44d-bbee3efca4e7",
+      "tables": 7,
+      "tableColumnNullabilityMatch": true
+    },
+    {
+      "index": 3,
+      "id": "50ec0fbd-4435-4df3-a494-9afda1f5fd38",
+      "prevId": "696f261e-3e2b-4854-8b7a-40eb5122ab4f",
+      "tables": 11,
+      "tableColumnNullabilityMatch": true
+    },
+    {
+      "index": 4,
+      "id": "d4ece6b9-cbed-4948-b9e8-4a03026442e8",
+      "prevId": "50ec0fbd-4435-4df3-a494-9afda1f5fd38",
+      "tables": 11,
+      "tableColumnNullabilityMatch": true
+    },
+    {
+      "index": 5,
+      "id": "1523168d-2135-454a-9c16-7a950607cf52",
+      "prevId": "d4ece6b9-cbed-4948-b9e8-4a03026442e8",
+      "tables": 11,
+      "tableColumnNullabilityMatch": true
+    },
+    {
+      "index": 6,
+      "id": "5cba481f-b934-4223-8526-e0f071110f8f",
+      "prevId": "1523168d-2135-454a-9c16-7a950607cf52",
+      "tables": 11,
+      "tableColumnNullabilityMatch": true
+    },
+    {
+      "index": 7,
+      "id": "2c65eda8-978d-48bf-a082-5e927ce0cc83",
+      "prevId": "5cba481f-b934-4223-8526-e0f071110f8f",
+      "tables": 11,
+      "tableColumnNullabilityMatch": true
+    },
+    {
+      "index": 8,
+      "id": "53d271f8-d1b5-4888-84a7-28ed1208285b",
+      "prevId": "2c65eda8-978d-48bf-a082-5e927ce0cc83",
+      "tables": 15,
+      "tableColumnNullabilityMatch": true
+    },
+    {
+      "index": 9,
+      "id": "4d8d039e-8116-48f9-890f-b6eaea90da27",
+      "prevId": "53d271f8-d1b5-4888-84a7-28ed1208285b",
+      "tables": 20,
+      "tableColumnNullabilityMatch": true
+    },
+    {
+      "index": 10,
+      "id": "4ebe99d6-ade1-4152-babb-90f2c1013e95",
+      "prevId": "4d8d039e-8116-48f9-890f-b6eaea90da27",
+      "tables": 21,
+      "tableColumnNullabilityMatch": true
+    },
+    {
+      "index": 11,
+      "id": "27d8f68e-30bb-4618-a0c2-8e0f7d1161f7",
+      "prevId": "4ebe99d6-ade1-4152-babb-90f2c1013e95",
+      "tables": 21,
+      "tableColumnNullabilityMatch": true
+    },
+    {
+      "index": 12,
+      "id": "ce15236c-4f66-4abc-b006-834c4b43dcd5",
+      "prevId": "27d8f68e-30bb-4618-a0c2-8e0f7d1161f7",
+      "tables": 22,
+      "tableColumnNullabilityMatch": true
+    }
+  ],
+  "history": [
+    {
+      "id": 1,
+      "hash": "92d3cc352e2b4a9579a5176848eedaa097933218f2b56372b687bbde7406b0f3",
+      "created_at": 1788432301024
+    },
+    {
+      "id": 2,
+      "hash": "253994ec69292a6b9cc8aa543dd0af10cac81fe084ae13f2d524e7d8f17b303a",
+      "created_at": 1788444923390
+    },
+    {
+      "id": 3,
+      "hash": "268b5737529462da34811895ff21f3281a5605f53df002ce8ccb344df123ab61",
+      "created_at": 1788450000000
+    },
+    {
+      "id": 4,
+      "hash": "87ee45fb165ba4355e625dd165e012b5ed0d21ebe8a16a1be7413c794e25b0ae",
+      "created_at": 1788481321448
+    },
+    {
+      "id": 5,
+      "hash": "468945f4b8a1dacdf858afd642461956ae10763c3ddc3d9382d6c2ff70eeb669",
+      "created_at": 1788482136592
+    },
+    {
+      "id": 6,
+      "hash": "550ad6d74ac744ae35903b0d12fe78520a05bf23f325bb097b69b1c7886c183a",
+      "created_at": 1788482326434
+    },
+    {
+      "id": 7,
+      "hash": "f010614fbe069cfdfb028b15a9b08457db1ea965ed7522d795670e08ac1f79dc",
+      "created_at": 1788482589871
+    },
+    {
+      "id": 8,
+      "hash": "c145551d6c92487aa7fde8c3b8b7bc5c796a3ac038427387ba2374dd74bccf41",
+      "created_at": 1788483169109
+    },
+    {
+      "id": 9,
+      "hash": "d48eae615b98836711399f00a17ad1b566c23ddc8b02c507bee1aa46d7c4da5c",
+      "created_at": 1788483425121
+    },
+    {
+      "id": 10,
+      "hash": "2d4517a035fd625e1fb2f3b23b130db732f1412509200fb41b6c2615971ec259",
+      "created_at": 1788551042218
+    },
+    {
+      "id": 11,
+      "hash": "8d4c747b9020f2ff45826d02597bd5c150c73c1732c2cd0579bf72016f01961b",
+      "created_at": 1788552626207
+    },
+    {
+      "id": 12,
+      "hash": "a08726f2230a4310e4288579fad83c7ceb871b2fe77107e6d7e699b4801baa3a",
+      "created_at": 1788652150533
+    },
+    {
+      "id": 13,
+      "hash": "633682ff30aa133b7cfec1eed49a4b35f1a9afc93fac80ac132ff28d3ca55ad3",
+      "created_at": 1788853539219
+    }
+  ],
+  "tables": [
+    {
+      "relname": "clients",
+      "relrowsecurity": false
+    },
+    {
+      "relname": "company_bank_accounts",
+      "relrowsecurity": false
+    },
+    {
+      "relname": "contact_inquiries",
+      "relrowsecurity": true
+    },
+    {
+      "relname": "expertise",
+      "relrowsecurity": false
+    },
+    {
+      "relname": "expertise_images",
+      "relrowsecurity": false
+    },
+    {
+      "relname": "expertise_portfolio",
+      "relrowsecurity": false
+    },
+    {
+      "relname": "portfolio",
+      "relrowsecurity": false
+    },
+    {
+      "relname": "portfolio_images",
+      "relrowsecurity": false
+    },
+    {
+      "relname": "project_documents",
+      "relrowsecurity": false
+    },
+    {
+      "relname": "project_work_types",
+      "relrowsecurity": false
+    },
+    {
+      "relname": "projects",
+      "relrowsecurity": false
+    },
+    {
+      "relname": "rab_groups",
+      "relrowsecurity": false
+    },
+    {
+      "relname": "rab_items",
+      "relrowsecurity": false
+    },
+    {
+      "relname": "rab_number_counters",
+      "relrowsecurity": false
+    },
+    {
+      "relname": "rab_payment_terms",
+      "relrowsecurity": false
+    },
+    {
+      "relname": "rab_sections",
+      "relrowsecurity": false
+    },
+    {
+      "relname": "rab_stages",
+      "relrowsecurity": false
+    },
+    {
+      "relname": "rab_subgroups",
+      "relrowsecurity": false
+    },
+    {
+      "relname": "rabs",
+      "relrowsecurity": false
+    },
+    {
+      "relname": "settings",
+      "relrowsecurity": false
+    },
+    {
+      "relname": "team",
+      "relrowsecurity": false
+    },
+    {
+      "relname": "work_types",
+      "relrowsecurity": false
+    }
+  ],
+  "allLivePublicColumnsAndConstraintsMatch": true,
+  "contactRlsAndRevokes": true,
+  "rerunNoop": true
+}
