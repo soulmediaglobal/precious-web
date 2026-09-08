@@ -1,0 +1,225 @@
+{
+  "baselineBranch": "10-redesign-admin-v2-login-with-precious-brand-split-layout",
+  "baselineHEAD": "0e7e48e5cbe84a3c8638b948063aa38693d2e50c",
+  "baselineStatus": " M src/lib/server/db/queries.ts\n M src/lib/server/db/schema.ts\n M src/routes/admin/(app)/+layout.svelte\n M src/routes/admin/(app)/+page.server.ts\n M src/routes/admin/(app)/+page.svelte\n?? src/lib/components/admin/ClientForm.svelte\n?? src/lib/components/admin/ProjectForm.svelte\n?? src/lib/components/admin/RabItemForm.svelte\n?? src/lib/components/admin/RabItemTable.svelte\n?? src/lib/server/project-cms.ts\n?? src/lib/server/rab-cms.ts\n?? src/routes/admin/(app)/clients/\n?? src/routes/admin/(app)/projects/\n?? src/routes/admin/rab-preview/\n?? verification/contact-issue4/contact_inquiries.pending.sql\n?? verification/task2/\n",
+  "wipCount": 36,
+  "wip": {
+    "src/lib/components/admin/ClientForm.svelte": {
+      "before": "6f57b13bde23576cce2807bd39650ce28f2d2b3b6e7f9da9dbb4420677d0710b",
+      "after": "6f57b13bde23576cce2807bd39650ce28f2d2b3b6e7f9da9dbb4420677d0710b",
+      "identical": true
+    },
+    "src/lib/components/admin/ProjectForm.svelte": {
+      "before": "83a3d0f84f64512dbe352e5c59a4f57798f3a5e44ae9b365857df7865881273a",
+      "after": "83a3d0f84f64512dbe352e5c59a4f57798f3a5e44ae9b365857df7865881273a",
+      "identical": true
+    },
+    "src/lib/components/admin/RabItemForm.svelte": {
+      "before": "b456931fa5eecc294065e8f7c9cd9062764763020f7a2fe184b1b83ae211ed78",
+      "after": "b456931fa5eecc294065e8f7c9cd9062764763020f7a2fe184b1b83ae211ed78",
+      "identical": true
+    },
+    "src/lib/components/admin/RabItemTable.svelte": {
+      "before": "0db66287868b5123039bb7f28710878356653e2bfee7632701ab9b0ad8451c22",
+      "after": "0db66287868b5123039bb7f28710878356653e2bfee7632701ab9b0ad8451c22",
+      "identical": true
+    },
+    "src/lib/server/project-cms.ts": {
+      "before": "c4e4541b8b809a01c2b520af18bc9a526171ec36043bef32c4b0976f687d06ca",
+      "after": "c4e4541b8b809a01c2b520af18bc9a526171ec36043bef32c4b0976f687d06ca",
+      "identical": true
+    },
+    "src/lib/server/rab-cms.ts": {
+      "before": "e4a0733c39dfe0aa73abd6f121e288a39e71435f5053ba7fff446db1063df9be",
+      "after": "e4a0733c39dfe0aa73abd6f121e288a39e71435f5053ba7fff446db1063df9be",
+      "identical": true
+    },
+    "src/routes/admin/(app)/clients/+page.server.ts": {
+      "before": "1e844c477c04e9e5efce645c7838a437a9af984e75753ef9c0776348b6a4a2ea",
+      "after": "1e844c477c04e9e5efce645c7838a437a9af984e75753ef9c0776348b6a4a2ea",
+      "identical": true
+    },
+    "src/routes/admin/(app)/clients/+page.svelte": {
+      "before": "43946a9fa2d8aedd460f1c40dd30cf6feaa38138d0ee5b5a98db054e1aa45b69",
+      "after": "43946a9fa2d8aedd460f1c40dd30cf6feaa38138d0ee5b5a98db054e1aa45b69",
+      "identical": true
+    },
+    "src/routes/admin/(app)/clients/[id]/+page.server.ts": {
+      "before": "1a149a4d93b4d567fa32042c8e0a49ef9ba2c9bd3cb6d932588d9b9ef0c67564",
+      "after": "1a149a4d93b4d567fa32042c8e0a49ef9ba2c9bd3cb6d932588d9b9ef0c67564",
+      "identical": true
+    },
+    "src/routes/admin/(app)/clients/[id]/+page.svelte": {
+      "before": "6da4531d67cffe52e75f4754c0bcf107ada2b060703e7e0b9922acfdcc63f9ce",
+      "after": "6da4531d67cffe52e75f4754c0bcf107ada2b060703e7e0b9922acfdcc63f9ce",
+      "identical": true
+    },
+    "src/routes/admin/(app)/clients/new/+page.server.ts": {
+      "before": "1eb9c2ca61e7d8451f4f5df092751cecd72a220240794c8772f9b96fab8b1b7e",
+      "after": "1eb9c2ca61e7d8451f4f5df092751cecd72a220240794c8772f9b96fab8b1b7e",
+      "identical": true
+    },
+    "src/routes/admin/(app)/clients/new/+page.svelte": {
+      "before": "5a9fc81d6abdaa6cf9f714f4fb64c8d6be49a371548e549f53d014e11c451cb4",
+      "after": "5a9fc81d6abdaa6cf9f714f4fb64c8d6be49a371548e549f53d014e11c451cb4",
+      "identical": true
+    },
+    "src/routes/admin/(app)/projects/+page.server.ts": {
+      "before": "e29484b3a76b711551187d8b27dcc067f5c0f3858d485ba7f5b0f7b12d5d8da5",
+      "after": "e29484b3a76b711551187d8b27dcc067f5c0f3858d485ba7f5b0f7b12d5d8da5",
+      "identical": true
+    },
+    "src/routes/admin/(app)/projects/+page.svelte": {
+      "before": "73d15b0497b40a439ed18d14e082251d9c182f76d04033ff2d831d10f4e8da8a",
+      "after": "73d15b0497b40a439ed18d14e082251d9c182f76d04033ff2d831d10f4e8da8a",
+      "identical": true
+    },
+    "src/routes/admin/(app)/projects/[id]/+page.server.ts": {
+      "before": "49ba2c42535bcdfb5b1382eca7e96d318da76b3752933508e60c1a23f948742f",
+      "after": "49ba2c42535bcdfb5b1382eca7e96d318da76b3752933508e60c1a23f948742f",
+      "identical": true
+    },
+    "src/routes/admin/(app)/projects/[id]/+page.svelte": {
+      "before": "573a497687cff37e39e07fcbbbd7e3aa8e4a6be8e88971032e0c7a03ceb89ab4",
+      "after": "573a497687cff37e39e07fcbbbd7e3aa8e4a6be8e88971032e0c7a03ceb89ab4",
+      "identical": true
+    },
+    "src/routes/admin/(app)/projects/[id]/edit/+page.server.ts": {
+      "before": "240ef17bb763032e1385ae8d27ba30da19440872bcd889e64af54e1991a7c121",
+      "after": "240ef17bb763032e1385ae8d27ba30da19440872bcd889e64af54e1991a7c121",
+      "identical": true
+    },
+    "src/routes/admin/(app)/projects/[id]/edit/+page.svelte": {
+      "before": "1674747bfcc5be2ce8f2651969316d6d758d2e5d2e2fa909cf21eca818ac0764",
+      "after": "1674747bfcc5be2ce8f2651969316d6d758d2e5d2e2fa909cf21eca818ac0764",
+      "identical": true
+    },
+    "src/routes/admin/(app)/projects/[id]/rab/[rabId]/+page.server.ts": {
+      "before": "9cd0479360fd093f07b808d71cde41700b659dfd19689e78204829b21d920d5b",
+      "after": "9cd0479360fd093f07b808d71cde41700b659dfd19689e78204829b21d920d5b",
+      "identical": true
+    },
+    "src/routes/admin/(app)/projects/[id]/rab/[rabId]/+page.svelte": {
+      "before": "e465f4027cf87c0fcb7f48d0b0a19af7d0f176290c04bc7766fb2d56be068028",
+      "after": "e465f4027cf87c0fcb7f48d0b0a19af7d0f176290c04bc7766fb2d56be068028",
+      "identical": true
+    },
+    "src/routes/admin/(app)/projects/new/+page.server.ts": {
+      "before": "c15cb7bef3ee1c388a10047d44b45bd9cca9a5809b3ab3580ae93aaec61d80e1",
+      "after": "c15cb7bef3ee1c388a10047d44b45bd9cca9a5809b3ab3580ae93aaec61d80e1",
+      "identical": true
+    },
+    "src/routes/admin/(app)/projects/new/+page.svelte": {
+      "before": "ad0e2d1e3fc476139d9334581fc84b6d7bf48bb3ca256c44b9579201fc432ae2",
+      "after": "ad0e2d1e3fc476139d9334581fc84b6d7bf48bb3ca256c44b9579201fc432ae2",
+      "identical": true
+    },
+    "src/routes/admin/rab-preview/[projectId]/[rabId]/+page.server.ts": {
+      "before": "a5d7627c8e8a3193c1329f37a80a27ac4e087c37c463ad00fdfc64cfec5bfaaa",
+      "after": "a5d7627c8e8a3193c1329f37a80a27ac4e087c37c463ad00fdfc64cfec5bfaaa",
+      "identical": true
+    },
+    "src/routes/admin/rab-preview/[projectId]/[rabId]/+page.svelte": {
+      "before": "edacfdf8fe18c4d20bfb2090090fdce759b5d6f52d95e316d93713913d15e579",
+      "after": "edacfdf8fe18c4d20bfb2090090fdce759b5d6f52d95e316d93713913d15e579",
+      "identical": true
+    },
+    "verification/contact-issue4/contact_inquiries.pending.sql": {
+      "before": "587edb643264450d055472b3a224e9a4bfd21388c6ae336ef05bb14c2f5dfd2f",
+      "after": "587edb643264450d055472b3a224e9a4bfd21388c6ae336ef05bb14c2f5dfd2f",
+      "identical": true
+    },
+    "verification/task2/README.md": {
+      "before": "207457560727725c3d594d6c23beb5c040f687063f94699d725dace994554ed8",
+      "after": "207457560727725c3d594d6c23beb5c040f687063f94699d725dace994554ed8",
+      "identical": true
+    },
+    "verification/task2/fixture.mjs": {
+      "before": "82f6304c83b4ee363e063ee335b24709530cd982d5b184d118929d6257361f80",
+      "after": "82f6304c83b4ee363e063ee335b24709530cd982d5b184d118929d6257361f80",
+      "identical": true
+    },
+    "verification/task2/implementation-only.patch": {
+      "before": "f9bd74da8fae0ca91770bc5f23d388bd2813be95abe10f496caa095f92769c03",
+      "after": "f9bd74da8fae0ca91770bc5f23d388bd2813be95abe10f496caa095f92769c03",
+      "identical": true
+    },
+    "verification/task2/results.json": {
+      "before": "16a64fc6941df0636352e0bc697fdc51baacee592210cc2a267d1688f2842e24",
+      "after": "16a64fc6941df0636352e0bc697fdc51baacee592210cc2a267d1688f2842e24",
+      "identical": true
+    },
+    "verification/task2/run.mjs": {
+      "before": "d8ac69548efff42ac377ef7085e3d8d9d974daee3e788ef638afb10de55855f8",
+      "after": "d8ac69548efff42ac377ef7085e3d8d9d974daee3e788ef638afb10de55855f8",
+      "identical": true
+    },
+    "verification/task2/source-sha256.json": {
+      "before": "71b676f6a54df654f40f522d8ac686af72058d4abb03ceda4bd1bd6ff9488240",
+      "after": "71b676f6a54df654f40f522d8ac686af72058d4abb03ceda4bd1bd6ff9488240",
+      "identical": true
+    },
+    "src/lib/server/db/queries.ts": {
+      "before": "8c28549dcb3fce7742b092e3e364da863cd8ee92c6230864b9828b62afbac9b2",
+      "after": "8c28549dcb3fce7742b092e3e364da863cd8ee92c6230864b9828b62afbac9b2",
+      "identical": true
+    },
+    "src/lib/server/db/schema.ts": {
+      "before": "fe46375228c23c1f36bb2ca3899de1fd4c8a14603df39fe3ad6304bc33827551",
+      "after": "fe46375228c23c1f36bb2ca3899de1fd4c8a14603df39fe3ad6304bc33827551",
+      "identical": true
+    },
+    "src/routes/admin/(app)/+layout.svelte": {
+      "before": "e011e7169e25d4ff52b3d048ce3bfb9a53d26f23101a2bccdccb46e00969ac2f",
+      "after": "e011e7169e25d4ff52b3d048ce3bfb9a53d26f23101a2bccdccb46e00969ac2f",
+      "identical": true
+    },
+    "src/routes/admin/(app)/+page.server.ts": {
+      "before": "7c614f5713ff1046657d83568b4199f4a70620c4d323dc0a526faabd534657a3",
+      "after": "7c614f5713ff1046657d83568b4199f4a70620c4d323dc0a526faabd534657a3",
+      "identical": true
+    },
+    "src/routes/admin/(app)/+page.svelte": {
+      "before": "78ee0fb467325c83bd00bdbad2a3b331abd07d05e2bc7fb16316962eee7911c6",
+      "after": "78ee0fb467325c83bd00bdbad2a3b331abd07d05e2bc7fb16316962eee7911c6",
+      "identical": true
+    }
+  },
+  "authAndLayout": {
+    "src/routes/admin-v2/login/+page.server.ts": {
+      "before": "d38b60514bae32a9a85ce22f4ab76615ed3ff85bf67a0a4a413ce45f32c27236",
+      "after": "d38b60514bae32a9a85ce22f4ab76615ed3ff85bf67a0a4a413ce45f32c27236",
+      "identical": true
+    },
+    "src/hooks.server.ts": {
+      "before": "e76b8b782b8c213f08038fb7998c39143998f9e636a102423883728d49f5002e",
+      "after": "e76b8b782b8c213f08038fb7998c39143998f9e636a102423883728d49f5002e",
+      "identical": true
+    },
+    "src/routes/admin-v2/logout/+server.ts": {
+      "before": "cf02d6ba73a8b7a9a22767a86199d865f986edddef3c52ce88714bf1ab2bf486",
+      "after": "cf02d6ba73a8b7a9a22767a86199d865f986edddef3c52ce88714bf1ab2bf486",
+      "identical": true
+    },
+    "src/routes/admin-v2/+layout.svelte": {
+      "before": "ca5c69606c40563292a1e912fcbcbf5c0e6e02150da123551a1f325c77d4c89a",
+      "after": "ca5c69606c40563292a1e912fcbcbf5c0e6e02150da123551a1f325c77d4c89a",
+      "identical": true
+    },
+    "src/routes/admin-v2/shell.css": {
+      "before": "2222b4c9b9f55c0ad3db5d031111fdf8d7511d40d662fbaf35e05540a77c8d59",
+      "after": "2222b4c9b9f55c0ad3db5d031111fdf8d7511d40d662fbaf35e05540a77c8d59",
+      "identical": true
+    },
+    "src/routes/+layout.svelte": {
+      "before": "4d255a8ed980c9157dce98ba4b8852724fc1010e459b6cf6bf55c4440db335d9",
+      "after": "4d255a8ed980c9157dce98ba4b8852724fc1010e459b6cf6bf55c4440db335d9",
+      "identical": true
+    }
+  },
+  "trackedCompared": 316,
+  "changedSinceBaseline": [
+    "src/routes/admin-v2/login/+page.svelte"
+  ],
+  "dbSchemaMigrationsUnchangedSinceBaseline": true
+}

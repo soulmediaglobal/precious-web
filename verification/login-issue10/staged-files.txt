@@ -1,0 +1,11 @@
+src/routes/admin-v2/login/+page.svelte
+verification/login-issue10/README.md
+verification/login-issue10/checks.json
+verification/login-issue10/desktop.png
+verification/login-issue10/final-state.json
+verification/login-issue10/mobile-error.png
+verification/login-issue10/mobile.png
+verification/login-issue10/preservation.json
+verification/login-issue10/responsive-qa.md
+verification/login-issue10/staged-files.txt
+verification/login-issue10/tablet.png

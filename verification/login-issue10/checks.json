@@ -1,0 +1,251 @@
+{
+  "issue": 10,
+  "issueStateVerified": "OPEN",
+  "check": {
+    "exitCode": 0,
+    "summary": "0 errors, 0 warnings"
+  },
+  "build": {
+    "exitCode": 0,
+    "adapter": "adapter-node",
+    "note": "Node module.register deprecation warning only"
+  },
+  "diffCheck": {
+    "exitCode": 0
+  },
+  "browserQA": {
+    "browser": "Firefox 153.0",
+    "viewports": [
+      {
+        "name": "desktop",
+        "status": 200,
+        "width": 1440,
+        "height": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 900,
+        "brandWidth": 720,
+        "brandHeight": 900,
+        "font": "\"Montserrat\", ui-sans-serif, system-ui, sans-serif",
+        "fontLoaded": true,
+        "images": [
+          {
+            "src": "/home-image-1.webp",
+            "loaded": true
+          },
+          {
+            "src": "/mask-6.webp",
+            "loaded": true
+          },
+          {
+            "src": "/logo.svg",
+            "loaded": true
+          }
+        ],
+        "submitBottom": 622.5999755859375
+      },
+      {
+        "name": "tablet",
+        "status": 304,
+        "width": 1024,
+        "height": 768,
+        "scrollWidth": 1024,
+        "scrollHeight": 768,
+        "brandWidth": 512,
+        "brandHeight": 768,
+        "font": "\"Montserrat\", ui-sans-serif, system-ui, sans-serif",
+        "fontLoaded": true,
+        "images": [
+          {
+            "src": "/home-image-1.webp",
+            "loaded": true
+          },
+          {
+            "src": "/mask-6.webp",
+            "loaded": true
+          },
+          {
+            "src": "/logo.svg",
+            "loaded": true
+          }
+        ],
+        "submitBottom": 554.2000122070312
+      },
+      {
+        "name": "mobile",
+        "status": 304,
+        "width": 390,
+        "height": 844,
+        "scrollWidth": 390,
+        "scrollHeight": 844,
+        "brandWidth": 390,
+        "brandHeight": 260,
+        "font": "\"Montserrat\", ui-sans-serif, system-ui, sans-serif",
+        "fontLoaded": true,
+        "images": [
+          {
+            "src": "/home-image-1.webp",
+            "loaded": true
+          },
+          {
+            "src": "/mask-6.webp",
+            "loaded": true
+          },
+          {
+            "src": "/logo.svg",
+            "loaded": true
+          }
+        ],
+        "submitBottom": 676.4000244140625
+      }
+    ],
+    "functional": {
+      "emptyBrowser": {
+        "invalid": true,
+        "focused": true
+      },
+      "toggle": true,
+      "invalid": {
+        "status": 200,
+        "message": "Email atau password tidak sesuai.",
+        "buttonEnabled": true
+      },
+      "emptyServer": {
+        "status": 200,
+        "messagePresent": true,
+        "actionType": "failure",
+        "actionStatus": 400,
+        "transportNote": "Enhanced action uses HTTP 200 with failure status 400 inside SvelteKit action envelope."
+      },
+      "protected": [
+        {
+          "route": "/admin-v2",
+          "status": 303,
+          "location": "/admin-v2/login"
+        },
+        {
+          "route": "/admin-v2/team",
+          "status": 303,
+          "location": "/admin-v2/login"
+        },
+        {
+          "route": "/admin-v2/clients",
+          "status": 303,
+          "location": "/admin-v2/login"
+        },
+        {
+          "route": "/admin-v2/portfolio",
+          "status": 303,
+          "location": "/admin-v2/login"
+        },
+        {
+          "route": "/admin-v2/contact",
+          "status": 303,
+          "location": "/admin-v2/login"
+        },
+        {
+          "route": "/admin-v2/logout",
+          "status": 303,
+          "location": "/admin-v2/login"
+        }
+      ],
+      "logoutUnauthenticated": {
+        "status": 303,
+        "location": "/admin-v2/login"
+      },
+      "keyboardPassword": true,
+      "keyboardToggle": {
+        "focused": true,
+        "outline": "rgb(224, 177, 38)"
+      },
+      "successLogin": "PENDING: no safe test account/session supplied; no authenticated login or live sign-out attempted.",
+      "pendingMockResponse": {
+        "disabled": true,
+        "busy": "true",
+        "method": "Browser POST intercepted locally and delayed; no network auth call.",
+        "restored": true
+      }
+    },
+    "errors": []
+  },
+  "isolatedAuthSourceTests": {
+    "method": "Actual unchanged server source transpiled in memory; mocked locals/Supabase, no network or DB access.",
+    "cases": [
+      {
+        "name": "empty",
+        "status": "PASS",
+        "response": {
+          "status": 400,
+          "data": {
+            "error": "Email dan password wajib diisi."
+          }
+        }
+      },
+      {
+        "name": "invalid",
+        "status": "PASS",
+        "response": {
+          "status": 400,
+          "data": {
+            "error": "Email atau password tidak sesuai."
+          }
+        }
+      },
+      {
+        "name": "serviceError",
+        "status": "PASS",
+        "response": {
+          "status": 400,
+          "data": {
+            "error": "Belum bisa masuk. Coba lagi dalam beberapa saat."
+          }
+        }
+      },
+      {
+        "name": "serviceThrow",
+        "status": "PASS",
+        "response": {
+          "status": 503,
+          "data": {
+            "error": "Layanan login belum bisa dihubungi. Coba lagi dalam beberapa saat."
+          }
+        }
+      },
+      {
+        "name": "successRedirect",
+        "status": "PASS",
+        "response": {
+          "status": 303,
+          "location": "/admin-v2"
+        }
+      },
+      {
+        "name": "authenticatedLoad",
+        "status": "PASS",
+        "response": {
+          "status": 303,
+          "location": "/admin-v2"
+        }
+      },
+      {
+        "name": "logoutSuccess",
+        "status": "PASS",
+        "response": {
+          "status": 303,
+          "location": "/admin-v2/login"
+        }
+      },
+      {
+        "name": "logoutFailure",
+        "status": "PASS",
+        "response": {
+          "status": 503,
+          "message": "Belum bisa keluar. Silakan coba lagi."
+        }
+      }
+    ]
+  },
+  "limitations": [
+    "Successful authenticated login and authenticated live logout E2E PENDING: no safe test account/session supplied.",
+    "Isolated auth tests mock Supabase and are not successful-login E2E evidence."
+  ]
+}
