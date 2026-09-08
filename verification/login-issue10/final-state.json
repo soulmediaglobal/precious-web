@@ -1,0 +1,35 @@
+{
+  "branch": "10-redesign-admin-v2-login-with-precious-brand-split-layout",
+  "HEAD": "0e7e48e5cbe84a3c8638b948063aa38693d2e50c",
+  "changedSource": [
+    "src/routes/admin-v2/login/+page.svelte"
+  ],
+  "sourceSHA256": "c2c5d008196a0a7ccb712c5504aae2a0ca23d66232986b5ab5984abe75a2bf09",
+  "stagedFiles": [
+    "src/routes/admin-v2/login/+page.svelte",
+    "verification/login-issue10/README.md",
+    "verification/login-issue10/checks.json",
+    "verification/login-issue10/desktop.png",
+    "verification/login-issue10/final-state.json",
+    "verification/login-issue10/mobile-error.png",
+    "verification/login-issue10/mobile.png",
+    "verification/login-issue10/preservation.json",
+    "verification/login-issue10/responsive-qa.md",
+    "verification/login-issue10/staged-files.txt",
+    "verification/login-issue10/tablet.png"
+  ],
+  "stagedCount": 11,
+  "wipPreservedByteIdentical": 36,
+  "successLoginE2E": "PENDING",
+  "commitPushPRMergeDeployPerformed": false,
+  "RAB": "PARKED",
+  "status": " M src/lib/server/db/queries.ts\n M src/lib/server/db/schema.ts\nM  src/routes/admin-v2/login/+page.svelte\n M src/routes/admin/(app)/+layout.svelte\n M src/routes/admin/(app)/+page.server.ts\n M src/routes/admin/(app)/+page.svelte\nA  verification/login-issue10/README.md\nA  verification/login-issue10/checks.json\nA  verification/login-issue10/desktop.png\nA  verification/login-issue10/final-state.json\nA  verification/login-issue10/mobile-error.png\nA  verification/login-issue10/mobile.png\nA  verification/login-issue10/preservation.json\nA  verification/login-issue10/responsive-qa.md\nA  verification/login-issue10/staged-files.txt\nA  verification/login-issue10/tablet.png\n?? src/lib/components/admin/ClientForm.svelte\n?? src/lib/components/admin/ProjectForm.svelte\n?? src/lib/components/admin/RabItemForm.svelte\n?? src/lib/components/admin/RabItemTable.svelte\n?? src/lib/server/project-cms.ts\n?? src/lib/server/rab-cms.ts\n?? src/routes/admin/(app)/clients/+page.server.ts\n?? src/routes/admin/(app)/clients/+page.svelte\n?? src/routes/admin/(app)/clients/[id]/+page.server.ts\n?? src/routes/admin/(app)/clients/[id]/+page.svelte\n?? src/routes/admin/(app)/clients/new/+page.server.ts\n?? src/routes/admin/(app)/clients/new/+page.svelte\n?? src/routes/admin/(app)/projects/+page.server.ts\n?? src/routes/admin/(app)/projects/+page.svelte\n?? src/routes/admin/(app)/projects/[id]/+page.server.ts\n?? src/routes/admin/(app)/projects/[id]/+page.svelte\n?? src/routes/admin/(app)/projects/[id]/edit/+page.server.ts\n?? src/routes/admin/(app)/projects/[id]/edit/+page.svelte\n?? src/routes/admin/(app)/projects/[id]/rab/[rabId]/+page.server.ts\n?? src/routes/admin/(app)/projects/[id]/rab/[rabId]/+page.svelte\n?? src/routes/admin/(app)/projects/new/+page.server.ts\n?? src/routes/admin/(app)/projects/new/+page.svelte\n?? src/routes/admin/rab-preview/[projectId]/[rabId]/+page.server.ts\n?? src/routes/admin/rab-preview/[projectId]/[rabId]/+page.svelte\n?? verification/contact-issue4/contact_inquiries.pending.sql\n?? verification/task2/README.md\n?? verification/task2/fixture.mjs\n?? verification/task2/implementation-only.patch\n?? verification/task2/results.json\n?? verification/task2/run.mjs\n?? verification/task2/source-sha256.json\n",
+  "unstagedTrackedFiles": [
+    "src/lib/server/db/queries.ts",
+    "src/lib/server/db/schema.ts",
+    "src/routes/admin/(app)/+layout.svelte",
+    "src/routes/admin/(app)/+page.server.ts",
+    "src/routes/admin/(app)/+page.svelte"
+  ],
+  "stagedDiffCheckExitCode": 0
+}
