@@ -1,0 +1,72 @@
+{
+  "branch": "8-align-committed-drizzle-application-schema-with-canonical-migration-baseline",
+  "head": "95406e2c6cf1e0e9b417a586efa09c34f7824262",
+  "checks": {
+    "workingDiff": {
+      "exitCode": 0,
+      "output": ""
+    },
+    "cachedDiff": {
+      "exitCode": 0,
+      "output": ""
+    }
+  },
+  "intendedSchemaEqualsIndex": true,
+  "all36WipHashesUnchanged": true,
+  "migrationChanges": [],
+  "unstagedTracked": [
+    "src/lib/server/db/queries.ts",
+    "src/lib/server/db/schema.ts",
+    "src/routes/admin/(app)/+layout.svelte",
+    "src/routes/admin/(app)/+page.server.ts",
+    "src/routes/admin/(app)/+page.svelte"
+  ],
+  "untrackedOriginal": [
+    "src/lib/components/admin/ClientForm.svelte",
+    "src/lib/components/admin/ProjectForm.svelte",
+    "src/lib/components/admin/RabItemForm.svelte",
+    "src/lib/components/admin/RabItemTable.svelte",
+    "src/lib/server/project-cms.ts",
+    "src/lib/server/rab-cms.ts",
+    "src/routes/admin/(app)/clients/+page.server.ts",
+    "src/routes/admin/(app)/clients/+page.svelte",
+    "src/routes/admin/(app)/clients/[id]/+page.server.ts",
+    "src/routes/admin/(app)/clients/[id]/+page.svelte",
+    "src/routes/admin/(app)/clients/new/+page.server.ts",
+    "src/routes/admin/(app)/clients/new/+page.svelte",
+    "src/routes/admin/(app)/projects/+page.server.ts",
+    "src/routes/admin/(app)/projects/+page.svelte",
+    "src/routes/admin/(app)/projects/[id]/+page.server.ts",
+    "src/routes/admin/(app)/projects/[id]/+page.svelte",
+    "src/routes/admin/(app)/projects/[id]/edit/+page.server.ts",
+    "src/routes/admin/(app)/projects/[id]/edit/+page.svelte",
+    "src/routes/admin/(app)/projects/[id]/rab/[rabId]/+page.server.ts",
+    "src/routes/admin/(app)/projects/[id]/rab/[rabId]/+page.svelte",
+    "src/routes/admin/(app)/projects/new/+page.server.ts",
+    "src/routes/admin/(app)/projects/new/+page.svelte",
+    "src/routes/admin/rab-preview/[projectId]/[rabId]/+page.server.ts",
+    "src/routes/admin/rab-preview/[projectId]/[rabId]/+page.svelte",
+    "verification/contact-issue4/contact_inquiries.pending.sql",
+    "verification/task2/README.md",
+    "verification/task2/fixture.mjs",
+    "verification/task2/implementation-only.patch",
+    "verification/task2/results.json",
+    "verification/task2/run.mjs",
+    "verification/task2/source-sha256.json"
+  ],
+  "stagedFiles": [
+    "src/lib/server/db/schema.ts",
+    "verification/schema-issue8/README.md",
+    "verification/schema-issue8/checks.json",
+    "verification/schema-issue8/committed-schema-gap.json",
+    "verification/schema-issue8/drizzle-generation.json",
+    "verification/schema-issue8/final-state.json",
+    "verification/schema-issue8/live-schema-compare.json",
+    "verification/schema-issue8/migration-preservation.json",
+    "verification/schema-issue8/preservation.json",
+    "verification/schema-issue8/staged-files.txt",
+    "verification/schema-issue8/table-inventory.md"
+  ],
+  "stagedCount": 11,
+  "statusBeforeFinalEvidenceStage": " M src/lib/server/db/queries.ts\nMM src/lib/server/db/schema.ts\n M src/routes/admin/(app)/+layout.svelte\n M src/routes/admin/(app)/+page.server.ts\n M src/routes/admin/(app)/+page.svelte\nA  verification/schema-issue8/README.md\nA  verification/schema-issue8/checks.json\nA  verification/schema-issue8/committed-schema-gap.json\nA  verification/schema-issue8/drizzle-generation.json\nA  verification/schema-issue8/live-schema-compare.json\nA  verification/schema-issue8/migration-preservation.json\nA  verification/schema-issue8/preservation.json\nA  verification/schema-issue8/staged-files.txt\nA  verification/schema-issue8/table-inventory.md\n?? src/lib/components/admin/ClientForm.svelte\n?? src/lib/components/admin/ProjectForm.svelte\n?? src/lib/components/admin/RabItemForm.svelte\n?? src/lib/components/admin/RabItemTable.svelte\n?? src/lib/server/project-cms.ts\n?? src/lib/server/rab-cms.ts\n?? src/routes/admin/(app)/clients/\n?? src/routes/admin/(app)/projects/\n?? src/routes/admin/rab-preview/\n?? verification/contact-issue4/contact_inquiries.pending.sql\n?? verification/task2/\n"
+}

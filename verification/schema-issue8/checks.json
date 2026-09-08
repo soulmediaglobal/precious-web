@@ -1,0 +1,17 @@
+{
+  "check": {
+    "exitCode": 0,
+    "errors": 0,
+    "warnings": 0
+  },
+  "build": {
+    "exitCode": 0,
+    "adapter": "node",
+    "warnings": [
+      "Node DEP0205 module.register() deprecation; already recorded in Issue #6"
+    ]
+  },
+  "environment": "Isolated git archive HEAD plus intended schema, own copied node_modules; existing .env loaded in child process only; no credentials persisted. Initial symlink build blocked by sandbox .vite-temp write; rerun with isolated dependencies passed.",
+  "schemaImportSanity": "All original HEAD exports/relations preserved verbatim; committed application check/build pass.",
+  "diffCheck": 0
+}

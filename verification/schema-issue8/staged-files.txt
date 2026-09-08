@@ -1,0 +1,11 @@
+src/lib/server/db/schema.ts
+verification/schema-issue8/README.md
+verification/schema-issue8/checks.json
+verification/schema-issue8/committed-schema-gap.json
+verification/schema-issue8/drizzle-generation.json
+verification/schema-issue8/final-state.json
+verification/schema-issue8/live-schema-compare.json
+verification/schema-issue8/migration-preservation.json
+verification/schema-issue8/preservation.json
+verification/schema-issue8/staged-files.txt
+verification/schema-issue8/table-inventory.md

@@ -1,0 +1,13 @@
+{
+  "semanticMetadataMatch": true,
+  "tableCount": 22,
+  "proposals": [],
+  "destructiveProposals": 0,
+  "drizzleKitCheck": "PASS: Everything\u2019s fine",
+  "cliGenerate": "PASS: No schema changes, nothing to migrate",
+  "versions": {
+    "drizzle-kit": "0.31.10",
+    "drizzle-orm": "0.45.2"
+  },
+  "normalization": "JSON round trip strips undefined JS properties, matching serialized snapshot format; no semantic metadata discarded."
+}
