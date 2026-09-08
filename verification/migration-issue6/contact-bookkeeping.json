@@ -1,0 +1,341 @@
+{
+  "timestamp": "2026-09-08T07:47:37.878Z",
+  "sql": "INSERT INTO drizzle.__drizzle_migrations (hash, created_at) VALUES ($1, $2) RETURNING id, hash, created_at",
+  "parameters": [
+    "633682ff30aa133b7cfec1eed49a4b35f1a9afc93fac80ac132ff28d3ca55ad3",
+    1788853539219
+  ],
+  "inserted": [
+    {
+      "id": 13,
+      "hash": "633682ff30aa133b7cfec1eed49a4b35f1a9afc93fac80ac132ff28d3ca55ad3",
+      "created_at": "1788853539219"
+    }
+  ],
+  "before": [
+    {
+      "id": 1,
+      "hash": "92d3cc352e2b4a9579a5176848eedaa097933218f2b56372b687bbde7406b0f3",
+      "created_at": "1788432301024"
+    },
+    {
+      "id": 2,
+      "hash": "253994ec69292a6b9cc8aa543dd0af10cac81fe084ae13f2d524e7d8f17b303a",
+      "created_at": "1788444923390"
+    },
+    {
+      "id": 3,
+      "hash": "268b5737529462da34811895ff21f3281a5605f53df002ce8ccb344df123ab61",
+      "created_at": "1788450000000"
+    },
+    {
+      "id": 4,
+      "hash": "87ee45fb165ba4355e625dd165e012b5ed0d21ebe8a16a1be7413c794e25b0ae",
+      "created_at": "1788481321448"
+    },
+    {
+      "id": 5,
+      "hash": "468945f4b8a1dacdf858afd642461956ae10763c3ddc3d9382d6c2ff70eeb669",
+      "created_at": "1788482136592"
+    },
+    {
+      "id": 6,
+      "hash": "550ad6d74ac744ae35903b0d12fe78520a05bf23f325bb097b69b1c7886c183a",
+      "created_at": "1788482326434"
+    },
+    {
+      "id": 7,
+      "hash": "f010614fbe069cfdfb028b15a9b08457db1ea965ed7522d795670e08ac1f79dc",
+      "created_at": "1788482589871"
+    },
+    {
+      "id": 8,
+      "hash": "c145551d6c92487aa7fde8c3b8b7bc5c796a3ac038427387ba2374dd74bccf41",
+      "created_at": "1788483169109"
+    },
+    {
+      "id": 9,
+      "hash": "d48eae615b98836711399f00a17ad1b566c23ddc8b02c507bee1aa46d7c4da5c",
+      "created_at": "1788483425121"
+    },
+    {
+      "id": 10,
+      "hash": "2d4517a035fd625e1fb2f3b23b130db732f1412509200fb41b6c2615971ec259",
+      "created_at": "1788551042218"
+    },
+    {
+      "id": 11,
+      "hash": "8d4c747b9020f2ff45826d02597bd5c150c73c1732c2cd0579bf72016f01961b",
+      "created_at": "1788552626207"
+    },
+    {
+      "id": 12,
+      "hash": "a08726f2230a4310e4288579fad83c7ceb871b2fe77107e6d7e699b4801baa3a",
+      "created_at": "1788652150533"
+    }
+  ],
+  "after": [
+    {
+      "id": 1,
+      "hash": "92d3cc352e2b4a9579a5176848eedaa097933218f2b56372b687bbde7406b0f3",
+      "created_at": "1788432301024"
+    },
+    {
+      "id": 2,
+      "hash": "253994ec69292a6b9cc8aa543dd0af10cac81fe084ae13f2d524e7d8f17b303a",
+      "created_at": "1788444923390"
+    },
+    {
+      "id": 3,
+      "hash": "268b5737529462da34811895ff21f3281a5605f53df002ce8ccb344df123ab61",
+      "created_at": "1788450000000"
+    },
+    {
+      "id": 4,
+      "hash": "87ee45fb165ba4355e625dd165e012b5ed0d21ebe8a16a1be7413c794e25b0ae",
+      "created_at": "1788481321448"
+    },
+    {
+      "id": 5,
+      "hash": "468945f4b8a1dacdf858afd642461956ae10763c3ddc3d9382d6c2ff70eeb669",
+      "created_at": "1788482136592"
+    },
+    {
+      "id": 6,
+      "hash": "550ad6d74ac744ae35903b0d12fe78520a05bf23f325bb097b69b1c7886c183a",
+      "created_at": "1788482326434"
+    },
+    {
+      "id": 7,
+      "hash": "f010614fbe069cfdfb028b15a9b08457db1ea965ed7522d795670e08ac1f79dc",
+      "created_at": "1788482589871"
+    },
+    {
+      "id": 8,
+      "hash": "c145551d6c92487aa7fde8c3b8b7bc5c796a3ac038427387ba2374dd74bccf41",
+      "created_at": "1788483169109"
+    },
+    {
+      "id": 9,
+      "hash": "d48eae615b98836711399f00a17ad1b566c23ddc8b02c507bee1aa46d7c4da5c",
+      "created_at": "1788483425121"
+    },
+    {
+      "id": 10,
+      "hash": "2d4517a035fd625e1fb2f3b23b130db732f1412509200fb41b6c2615971ec259",
+      "created_at": "1788551042218"
+    },
+    {
+      "id": 11,
+      "hash": "8d4c747b9020f2ff45826d02597bd5c150c73c1732c2cd0579bf72016f01961b",
+      "created_at": "1788552626207"
+    },
+    {
+      "id": 12,
+      "hash": "a08726f2230a4310e4288579fad83c7ceb871b2fe77107e6d7e699b4801baa3a",
+      "created_at": "1788652150533"
+    },
+    {
+      "id": 13,
+      "hash": "633682ff30aa133b7cfec1eed49a4b35f1a9afc93fac80ac132ff28d3ca55ad3",
+      "created_at": "1788853539219"
+    }
+  ],
+  "columns": [
+    {
+      "table_name": "contact_inquiries",
+      "column_name": "id",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": "nextval('contact_inquiries_id_seq'::regclass)"
+    },
+    {
+      "table_name": "contact_inquiries",
+      "column_name": "first_name",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "contact_inquiries",
+      "column_name": "last_name",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "contact_inquiries",
+      "column_name": "email",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "contact_inquiries",
+      "column_name": "phone",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "contact_inquiries",
+      "column_name": "message",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "contact_inquiries",
+      "column_name": "consent_accepted",
+      "data_type": "boolean",
+      "is_nullable": "NO",
+      "column_default": "false"
+    },
+    {
+      "table_name": "contact_inquiries",
+      "column_name": "created_at",
+      "data_type": "timestamp with time zone",
+      "is_nullable": "NO",
+      "column_default": "now()"
+    },
+    {
+      "table_name": "contact_inquiries",
+      "column_name": "is_followed_up",
+      "data_type": "boolean",
+      "is_nullable": "NO",
+      "column_default": "false"
+    },
+    {
+      "table_name": "contact_inquiries",
+      "column_name": "follow_up_method",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "contact_inquiries",
+      "column_name": "followed_up_at",
+      "data_type": "timestamp with time zone",
+      "is_nullable": "YES",
+      "column_default": null
+    }
+  ],
+  "constraints": [
+    {
+      "table_name": "contact_inquiries",
+      "conname": "contact_inquiries_pkey",
+      "definition": "PRIMARY KEY (id)"
+    }
+  ],
+  "security": {
+    "relrowsecurity": true,
+    "relforcerowsecurity": false
+  },
+  "policies": [],
+  "indexes": [
+    {
+      "indexname": "contact_inquiries_pkey",
+      "indexdef": "CREATE UNIQUE INDEX contact_inquiries_pkey ON public.contact_inquiries USING btree (id)"
+    }
+  ],
+  "privileges": [
+    {
+      "role": "anon",
+      "table_access": false,
+      "sequence_access": false
+    },
+    {
+      "role": "authenticated",
+      "table_access": false,
+      "sequence_access": false
+    }
+  ],
+  "dataBefore": {
+    "count": "1",
+    "digest": "26c157aa387a479417fcac88909f9fff"
+  },
+  "dataAfter": {
+    "count": "1",
+    "digest": "26c157aa387a479417fcac88909f9fff"
+  },
+  "contactSequenceBefore": [
+    {
+      "last_value": "2",
+      "is_called": true
+    }
+  ],
+  "contactSequenceAfter": [
+    {
+      "last_value": "2",
+      "is_called": true
+    }
+  ],
+  "applicationDdlExecuted": false,
+  "committedReadback": [
+    {
+      "id": 1,
+      "hash": "92d3cc352e2b4a9579a5176848eedaa097933218f2b56372b687bbde7406b0f3",
+      "created_at": "1788432301024"
+    },
+    {
+      "id": 2,
+      "hash": "253994ec69292a6b9cc8aa543dd0af10cac81fe084ae13f2d524e7d8f17b303a",
+      "created_at": "1788444923390"
+    },
+    {
+      "id": 3,
+      "hash": "268b5737529462da34811895ff21f3281a5605f53df002ce8ccb344df123ab61",
+      "created_at": "1788450000000"
+    },
+    {
+      "id": 4,
+      "hash": "87ee45fb165ba4355e625dd165e012b5ed0d21ebe8a16a1be7413c794e25b0ae",
+      "created_at": "1788481321448"
+    },
+    {
+      "id": 5,
+      "hash": "468945f4b8a1dacdf858afd642461956ae10763c3ddc3d9382d6c2ff70eeb669",
+      "created_at": "1788482136592"
+    },
+    {
+      "id": 6,
+      "hash": "550ad6d74ac744ae35903b0d12fe78520a05bf23f325bb097b69b1c7886c183a",
+      "created_at": "1788482326434"
+    },
+    {
+      "id": 7,
+      "hash": "f010614fbe069cfdfb028b15a9b08457db1ea965ed7522d795670e08ac1f79dc",
+      "created_at": "1788482589871"
+    },
+    {
+      "id": 8,
+      "hash": "c145551d6c92487aa7fde8c3b8b7bc5c796a3ac038427387ba2374dd74bccf41",
+      "created_at": "1788483169109"
+    },
+    {
+      "id": 9,
+      "hash": "d48eae615b98836711399f00a17ad1b566c23ddc8b02c507bee1aa46d7c4da5c",
+      "created_at": "1788483425121"
+    },
+    {
+      "id": 10,
+      "hash": "2d4517a035fd625e1fb2f3b23b130db732f1412509200fb41b6c2615971ec259",
+      "created_at": "1788551042218"
+    },
+    {
+      "id": 11,
+      "hash": "8d4c747b9020f2ff45826d02597bd5c150c73c1732c2cd0579bf72016f01961b",
+      "created_at": "1788552626207"
+    },
+    {
+      "id": 12,
+      "hash": "a08726f2230a4310e4288579fad83c7ceb871b2fe77107e6d7e699b4801baa3a",
+      "created_at": "1788652150533"
+    },
+    {
+      "id": 13,
+      "hash": "633682ff30aa133b7cfec1eed49a4b35f1a9afc93fac80ac132ff28d3ca55ad3",
+      "created_at": "1788853539219"
+    }
+  ]
+}
