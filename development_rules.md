@@ -1,8 +1,8 @@
 # Precious CMS — Development Rules
 
-Terakhir diperbarui: 2026-09-12T09:06:02+07:00 (Asia/Jakarta).
+Terakhir diperbarui: 2026-09-12T09:33:24+07:00 (Asia/Jakarta).
 
-Versi dokumentasi: **2.2.0** (SemVer dokumentasi, terpisah dari versi rilis CMS/app; tidak otomatis mengubah versi aplikasi dan bukan production release).
+Versi dokumentasi: **2.3.0** (SemVer dokumentasi, terpisah dari versi rilis CMS/app; tidak otomatis mengubah versi aplikasi dan bukan production release).
 
 ## Governance wajib
 
@@ -51,19 +51,25 @@ Nurey **bukan gate untuk detail implementasi minor/lokal**: spacing, typo, respo
 - Server load memetakan camelCase Drizzle (misalnya `projectName`) ke snake_case template lama (`project_name`) untuk menjaga kompatibilitas.
 - Putuskan strategi penyimpanan gambar bersama Ray sebelum mengembangkan form upload. Jangan menganggap keputusan baseline yang tertunda sudah selesai.
 
-## Business/document identity dan RAB direction — Documentation 2.2.0
+## Business/document identity dan RAB direction — Documentation 2.3.0
 
 ### Global numbering convention
 
-- Existing Project numbering `PC-YYYY-00001` **SUPERSEDED** oleh `PRE-YYYY-XXXXX`. Prefix global business/document sekarang **`PRE`**, bukan `PC`.
-- Format canonical: Project `PRE-YYYY-XXXXX`; RAB `PRE-YYYY-XXXXX/RAB-XXX/RXX`; Invoice `PRE-YYYY-XXXXX/INV-XXX`; BAST `PRE-YYYY-XXXXX/BAST-XXX`.
+- **Resolusi konflik v2.2.0:** convention `PRE-YYYY-XXXXX` berlaku untuk **Project BARU saja**. Project legacy `PC-YYYY-XXXXX` tetap immutable; supersession v2.2.0 tidak berarti mengganti ID Project existing. Root PC tetap valid untuk downstream documents baru.
+- Format canonical untuk Project baru: Project `PRE-YYYY-XXXXX`; RAB `PRE-YYYY-XXXXX/RAB-XXX/RXX`; Invoice `PRE-YYYY-XXXXX/INV-XXX`; BAST `PRE-YYYY-XXXXX/BAST-XXX`.
 - Contoh: Project `PRE-2026-00001`; RAB pertama `PRE-2026-00001/RAB-001/R00`; revision berikutnya `PRE-2026-00001/RAB-001/R01`; family kedua `PRE-2026-00001/RAB-002/R00`; Invoice `PRE-2026-00001/INV-001`; BAST `PRE-2026-00001/BAST-001`.
 - Separator dash `-` = primary identity structure; slash `/` = document/sub-document hierarchy.
 - Ini convention human-readable/business identifier saja. Database relational integrity **dilarang bergantung pada parsing string nomor dokumen**; parent, family, revision, dan relationships lain wajib memakai explicit FK/relations.
 - Supersession convention ini tidak mengotorisasi renumbering historical documents atau perubahan data frozen; aturan Task 2 tetap berlaku.
 
+- RAB baru mewarisi actual Project business ID root: Project legacy `PC-2026-00001` → `PC-2026-00001/RAB-001/R00`; Project baru `PRE-2026-00001` → `PRE-2026-00001/RAB-001/R00`. Jangan memaksakan root PRE pada Project PC.
+- Dilarang blanket renumbering historical Project/RAB/document IDs. Jangan pernah menulis ulang frozen historical identifiers semata-mata agar sesuai PRE; nomor PC historis wajib dipertahankan.
+- **Project sequence semantics LOCKED oleh Ray: reset setiap tahun kalender; tahun baru mulai lagi dari `00001`.** Alokasi wajib deterministic, unique, dan concurrency-safe. Contoh Project baru: `PRE-2026-00001` dan `PRE-2027-00001`; keputusan ini tidak mengubah nomor PC historis.
+
 ### RAB family/revision dan future lineage
 
+- **Satu Project dapat memiliki banyak RAB Families.** Family number dan alokasinya scoped per Project; revision number dan alokasinya scoped per RAB Family. Kedua alokasi wajib concurrency-safe dan unik dalam scope masing-masing.
+- Revision bukan family baru; historical revisions tetap lineage dari family yang sama. Setiap revision wajib attributable ke Project, RAB Family, revision number, dan source/previous revision where applicable melalui explicit FK/relations, bukan parsing document number.
 - `RAB-001` adalah satu RAB family; `R00`, `R01`, dan `R02` adalah revisions dari family yang sama. Historical revisions tetap visible; revisions tidak boleh diperlakukan sebagai unrelated flat documents.
 - High-level future lineage canonical: **Project → RAB Family → RAB Revision → Tahapan/Termin → Invoice → BAST**.
 - Preferred future traceability: **Invoice → Termin → RAB Revision → RAB Family → Project** dan **BAST → Tahapan → RAB Revision → RAB Family → Project**.
@@ -71,19 +77,28 @@ Nurey **bukan gate untuk detail implementasi minor/lokal**: spacing, typo, respo
 
 ### Issue #12 — Phase 1 project-centric document workspace
 
-- Issue #12, **Build Admin v2 Project RAB list and lifecycle foundation**, membuka kembali RAB development secara terbatas dan menjadi **satu-satunya active RAB implementation scope**.
+- Issue #12, **Build Admin v2 Project RAB list and lifecycle foundation**, tetap **satu-satunya scope RAB Phase 1 yang ditetapkan**, tetapi **formally BLOCKED untuk full implementation** sampai prerequisite di bawah selesai dan terverifikasi.
 - UX/product direction locked: **Option 3 — Project-centric document workspace**. Project menjadi root context yang selalu terlihat.
 - Workspace minimum menampilkan Project Name, Project Business ID, Client, RAB document/history area, RAB family + revision relationship, dan selected RAB detail. Hierarchy Project → RAB family → revisions harus jelas, bukan flat list tanpa lineage.
-- Scope aktif hanya: **Project → RAB list, Create RAB, Open RAB, lifecycle/status foundation, historical RAB visibility**.
+- Scope Phase 1 (tunduk pada BLOCKED gate) hanya: **Project → RAB list, Create RAB, Open RAB, lifecycle/status foundation, historical RAB visibility**.
 - Explicitly excluded: **RAB Builder/editor; Area/Kelompok/Subkelompok/Item editor; Tahapan; Termin; Invoice implementation; BAST implementation; Preview/PDF; dan new revision cloning/freeze implementation**.
 - RAB Builder tetap parked; requirements retained. Canonical Task 1 full revision snapshot serta Task 2 frozen historical data/content dan retention policy tetap berlaku tanpa perubahan; scope terbatas ini tidak membatalkan rules atau mengubah status verifikasi/compliance sebelumnya.
 
 ### Mandatory schema/query audit gate sebelum implementasi Issue #12
 
-- Dev AI wajib mengaudit schema/query existing sebelum implementasi Issue #12 untuk memastikan model saat ini dapat merepresentasikan: **PRE Project business ID, RAB family identity, revision identity, lineage/history, dan future relationship compatibility**.
-- Compatibility dinilai terhadap arah lineage canonical tanpa mengunci exact Invoice/BAST schema/FK yang masih pending. Penetapan gate ini bukan bukti audit telah dilakukan atau lulus.
+- Dev AI wajib mengaudit schema/query existing sebelum implementasi Issue #12 untuk memastikan model saat ini dapat merepresentasikan: **Project business ID (PRE baru dan PC legacy), RAB family identity, revision identity, lineage/history, dan future relationship compatibility**.
+- Compatibility dinilai terhadap arah lineage canonical tanpa mengunci exact Invoice/BAST schema/FK yang masih pending. Hasil gate yang disampaikan Ray dicatat di bawah; pencatatan ini bukan audit ulang maupun bukti gate lulus.
 - Bila model tidak dapat merepresentasikan kebutuhan tersebut secara clean, **Dev AI wajib STOP**. Melvin membawa **exact schema gap + proposed canonical change** ke **Ray/Nurey** sebelum schema migration/change apa pun.
 - Jangan invent, membuat, atau commit migration semata-mata dari product direction. Perubahan schema menunggu keputusan canonical Ray/Nurey melalui governance yang berlaku.
+
+### Hasil audit gate Issue #12 dan arah prerequisite — Documentation 2.3.0
+
+- **Mandatory audit gate result = BLOCKED**, berdasarkan hasil audit yang disampaikan Ray melalui Nurey Sync. Current canonical schema belum dapat merepresentasikan RAB family + revision lineage secara clean. Update dokumentasi ini mencatat hasil tersebut, bukan menjalankan audit fungsional/schema/query ulang.
+- Identified schema gaps dari audit: row `rabs` pada praktiknya berfungsi sebagai revision; sudah ada `revision_number` dan `supersedes_rab_id`, tetapi belum ada family identity; `supersedes_rab_id` belum memiliki FK integrity; uniqueness `unique(project_id, revision_number)` tidak mendukung multiple RAB Families per Project.
+- **Issue #12 tetap formally BLOCKED untuk full implementation canonical Create RAB, family grouping, dan revision lineage** sampai prerequisite menyelesaikan family identity, lineage/FK integrity, numbering compatibility, dan hasilnya terverifikasi. Approved UX **Option 3** tetap valid secara konseptual; bukan izin melewati gate.
+- **Arah prerequisite task saja:** define dan implement canonical RAB family identity, revision FK integrity, serta PRE numbering compatibility dengan legacy PC. Exact physical schema tidak ditetapkan di sini; pilih smallest safe change setelah audit dan ikuti governance/issue workflow sebelum implementasi. Update dokumentasi ini **tidak membuat prerequisite task/issue dan tidak mengimplementasikannya**.
+- Existing lifecycle semantics wajib dipertahankan: `rejected` / `superseded` tidak otomatis berarti `Cancelled`; internal approval **tidak sama dengan** client approval. Lifecycle redesign tidak diminta; jangan flatten status existing.
+- Rules Task 1 full revision snapshot dan Task 2 frozen historical data/content serta retention tetap unchanged, termasuk status verifikasi/compliance/blocker sebelumnya. Convention v2.2.0 lainnya tetap berlaku; hanya konflik prefix/scope dan status gate diperjelas oleh v2.3.0.
 
 ## Mekanisme dan workflow RAB
 
