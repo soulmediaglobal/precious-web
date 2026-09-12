@@ -1,8 +1,8 @@
 # Precious CMS — Changelog
 
-Terakhir diperbarui: 2026-09-08T04:22:16+07:00 (Asia/Jakarta).
+Terakhir diperbarui: 2026-09-12T09:06:02+07:00 (Asia/Jakarta).
 
-Versi dokumentasi: **2.1.0** (SemVer dokumentasi, terpisah dari versi rilis CMS).
+Versi dokumentasi: **2.2.0** (SemVer dokumentasi, terpisah dari versi rilis CMS).
 
 ## Governance wajib
 
@@ -15,6 +15,21 @@ Nurey **bukan gate untuk detail implementasi minor/lokal**: spacing, typo, respo
 ## Riwayat
 
 Entry terbaru di atas, gunakan timestamp dengan zona waktu dan bukti verifikasi. Jangan mengarang versi atau histori rilis. Gunakan SemVer terpisah untuk dokumentasi dan rilis CMS; revisi dokumentasi bukan rilis aplikasi. Versi dokumentasi 1.0.0 memulai penomoran eksplisit; baseline sebelumnya tetap tanpa versi, dan versi rilis CMS tidak diubah atau diasumsikan.
+
+### Dokumentasi 2.2.0 — Global PRE business/document convention dan RAB Phase 1 direction
+
+Timestamp: 2026-09-12T09:06:02+07:00 (Asia/Jakarta).
+
+- Sesuai instruksi eksplisit Ray, SemVer dokumentasi naik minor **2.1.0 → 2.2.0** karena convention business/document lintas fitur baru; **bukan app release** dan tidak mengubah versi aplikasi.
+- Existing Project numbering **`PC-YYYY-00001` SUPERSEDED by `PRE-YYYY-XXXXX`**. Prefix global `PRE`; format canonical Project `PRE-YYYY-XXXXX`, RAB `PRE-YYYY-XXXXX/RAB-XXX/RXX`, Invoice `PRE-YYYY-XXXXX/INV-XXX`, BAST `PRE-YYYY-XXXXX/BAST-XXX`. Dua canonical docs versi 2.1.0 belum mencantumkan numbering `PC`; entry ini mencatat supersession eksplisit dari convention existing yang disampaikan Ray.
+- Dash `-` berarti primary identity structure; slash `/` berarti document/sub-document hierarchy. Identifier ini human-readable/business convention saja; relational integrity dilarang bergantung pada parsing string, relationships wajib explicit FK/relations. Tidak mengotorisasi renumbering historical documents/data frozen.
+- `RAB-001` adalah satu family; `R00/R01/R02` adalah revisions family yang sama. Historical revisions tetap visible; revisions tidak boleh menjadi unrelated flat documents.
+- UX Phase 1 Issue #12 locked pada **Option 3 — Project-centric document workspace**: Project root context selalu terlihat; minimum Project Name, Project Business ID, Client, RAB document/history area, family + revision relationship, selected RAB detail.
+- High-level future lineage canonical: **Project → RAB Family → RAB Revision → Tahapan/Termin → Invoice → BAST**. Preferred traceability **Invoice → Termin → RAB Revision → RAB Family → Project** dan **BAST → Tahapan → RAB Revision → RAB Family → Project**. Exact schema/FK Invoice/BAST **belum locked** dan keduanya **bukan active implementation scope**.
+- Mandatory schema/query audit gate sebelum implementasi Issue #12: verifikasi kemampuan model existing merepresentasikan PRE Project business ID, RAB family identity, revision identity, lineage/history, future relationship compatibility. Jika tidak clean, **Dev AI STOP**; Melvin membawa **exact schema gap + proposed canonical change ke Ray/Nurey sebelum schema migration/change apa pun**. Jangan invent/membuat/commit migration solely dari product direction.
+- Issue #12 tetap satu-satunya active RAB implementation scope: **Project → RAB list, Create RAB, Open RAB, lifecycle/status foundation, historical RAB visibility**. Excluded: **RAB Builder/editor, Area/Kelompok/Subkelompok/Item editor, Tahapan, Termin, Invoice implementation, BAST implementation, Preview/PDF, new revision cloning/freeze implementation**.
+- Pembukaan terbatas Phase 1 tidak membuka RAB Builder; requirements tetap retained/parked. Canonical Task 1 full snapshot dan Task 2 historical freeze/retention tetap unchanged, termasuk status verifikasi/compliance/blocker sebelumnya. Keputusan ini bukan bukti implementation sesuai atau schema/query audit gate lulus.
+- Scope hanya `doc_changelog.md` dan `development_rules.md`. Inspeksi awal: branch `12-build-admin-v2-project-rab-list-and-lifecycle-foundation`, origin repo Precious, staging kosong; sesudah fetch HEAD sama dengan origin/main dan remote branch aktif. `.env` tidak ter-track (hanya `.env.example`); perubahan aplikasi lokal existing dipertahankan di luar commit. Verifikasi pekerjaan ini terbatas pada review diff dokumentasi, `git diff --check`, dan staged diff check sebelum commit; tidak dilakukan build, migration, deployment, atau audit fungsional.
 
 ### Dokumentasi 2.1.0 — GitHub Issue → development → PR → merge evidence
 
