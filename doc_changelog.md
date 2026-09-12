@@ -1,8 +1,8 @@
 # Precious CMS — Changelog
 
-Terakhir diperbarui: 2026-09-12T09:06:02+07:00 (Asia/Jakarta).
+Terakhir diperbarui: 2026-09-12T09:33:24+07:00 (Asia/Jakarta).
 
-Versi dokumentasi: **2.2.0** (SemVer dokumentasi, terpisah dari versi rilis CMS).
+Versi dokumentasi: **2.3.0** (SemVer dokumentasi, terpisah dari versi rilis CMS).
 
 ## Governance wajib
 
@@ -15,6 +15,22 @@ Nurey **bukan gate untuk detail implementasi minor/lokal**: spacing, typo, respo
 ## Riwayat
 
 Entry terbaru di atas, gunakan timestamp dengan zona waktu dan bukti verifikasi. Jangan mengarang versi atau histori rilis. Gunakan SemVer terpisah untuk dokumentasi dan rilis CMS; revisi dokumentasi bukan rilis aplikasi. Versi dokumentasi 1.0.0 memulai penomoran eksplisit; baseline sebelumnya tetap tanpa versi, dan versi rilis CMS tidak diubah atau diasumsikan.
+
+### Dokumentasi 2.3.0 — Issue #12 BLOCKED, RAB family/revision dan legacy numbering compatibility
+
+Timestamp: 2026-09-12T09:33:24+07:00 (Asia/Jakarta).
+
+- Sesuai keputusan eksplisit Ray, versi dokumentasi naik minor **2.2.0 → 2.3.0**; **bukan app release**, versi aplikasi tidak berubah.
+- Hasil mandatory audit gate Issue #12 yang disampaikan Ray = **BLOCKED**: current schema belum dapat merepresentasikan RAB family + revision lineage secara clean. Gap yang dilaporkan: `rabs` berfungsi sebagai revision; `revision_number` dan `supersedes_rab_id` tersedia, tetapi family identity belum ada, `supersedes_rab_id` belum memiliki FK integrity, dan `unique(project_id, revision_number)` tidak mendukung multiple families per Project. Ini pencatatan hasil audit, bukan audit ulang.
+- Product model locked: satu Project dapat memiliki banyak RAB Families; family number scoped per Project, revision number scoped per Family. Revision bukan family baru; historical revisions tetap lineage family yang sama. Alokasi family/revision wajib concurrency-safe dan unik di scope masing-masing.
+- **Resolusi konflik v2.2.0:** `PRE-YYYY-XXXXX` hanya untuk **Project BARU**; legacy `PC-YYYY-XXXXX` tetap immutable dan valid sebagai root downstream documents baru. RAB baru mewarisi actual Project business ID: `PC-.../RAB-XXX/RXX` untuk Project PC, `PRE-.../RAB-XXX/RXX` untuk Project PRE. Dilarang blanket renumbering historical Project/RAB/document IDs atau rewrite frozen identifiers semata-mata agar sesuai PRE. Entry v2.2.0 di bawah dipertahankan sebagai histori, dibaca dengan klarifikasi ini.
+- **LOCKED oleh Ray: Project sequence reset setiap tahun kalender; tahun baru mulai `00001`.** Alokasi deterministic, unique, concurrency-safe; nomor PC historis dipertahankan.
+- Integrity wajib explicit FK/relations, tidak boleh parsing nomor dokumen. Setiap revision attributable ke Project, Family, revision number, dan source/previous revision where applicable. Exact physical schema tidak ditetapkan dalam keputusan ini.
+- Lifecycle existing tidak diflatten: `rejected` / `superseded` tidak otomatis `Cancelled`; internal approval != client approval. Lifecycle redesign tidak diminta.
+- **Issue #12 tetap formally BLOCKED** untuk full implementation canonical Create RAB/family grouping/revision lineage sampai prerequisite family identity, lineage/FK integrity, numbering compatibility selesai dan terverifikasi. Option 3 — Project-centric document workspace tetap valid secara konseptual.
+- Arah prerequisite saja: define dan implement canonical RAB family identity, revision FK integrity, serta PRE numbering compatibility; exact schema adalah smallest safe change setelah audit melalui governance/issue workflow. Tidak membuat task/issue prerequisite atau mengimplementasikannya dalam update ini.
+- Task 1 full snapshot, Task 2 historical freeze/retention, status verifikasi/compliance/blocker sebelumnya, serta convention v2.2.0 lain tetap dipertahankan.
+- Scope hanya `doc_changelog.md` dan `development_rules.md`, berbasis origin/main setelah fetch; checkout dokumentasi terpisah pada `docs/issue-12-canonical-v2.3.0` mempertahankan seluruh perubahan aplikasi lokal pada branch Issue #12. Verifikasi terbatas pada review diff dokumentasi, `git diff --check`, dan staged diff check sebelum commit; `.env` tidak ter-track (hanya `.env.example`). Tidak dilakukan build, migration, deployment, atau audit fungsional; tidak mengklaim schema/query gate passed.
 
 ### Dokumentasi 2.2.0 — Global PRE business/document convention dan RAB Phase 1 direction
 
