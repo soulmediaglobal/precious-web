@@ -1,4 +1,5 @@
-import { pgTable, serial, text, integer, timestamp, primaryKey, boolean, index, uuid, uniqueIndex, date, numeric } from 'drizzle-orm/pg-core';
+import { pgTable,
+ foreignKey, unique, check, serial, text, integer, timestamp, primaryKey, boolean, index, uuid, uniqueIndex, date, numeric } from 'drizzle-orm/pg-core';
 import { relations, sql } from 'drizzle-orm';
 
 export const portfolio = pgTable('portfolio', {
@@ -119,7 +120,7 @@ export const projects = pgTable(
 			.notNull()
 			.unique()
 			.default(
-				sql`'PC-' || to_char(CURRENT_DATE, 'YYYY') || '-' || lpad(nextval('project_number_seq')::text, 5, '0')`
+				sql`next_project_number()`
 			),
 		clientId: integer('client_id')
 			.notNull()
@@ -159,6 +160,30 @@ export const companyBankAccounts = pgTable(
 	(t) => [uniqueIndex('company_bank_accounts_number_unique').on(t.bankName, t.accountNumber)]
 );
 
+
+// Issue #15: family is a parent identity; existing rabs remain revisions.
+export const projectNumberCounters = pgTable('project_number_counters', {
+ year: integer('year').primaryKey(),
+ lastNumber: integer('last_number').notNull().default(0)
+}, (t) => [check('project_counter_bounds', sql`${t.year} BETWEEN 1 AND 9999 AND ${t.lastNumber} BETWEEN 0 AND 99999`)]);
+
+export const rabFamilies = pgTable('rab_families', {
+ id: serial('id').primaryKey(),
+ projectId: integer('project_id').notNull().references(() => projects.id, { onDelete: 'restrict' }),
+ familyNumber: integer('family_number').notNull(),
+ lastRevisionNumber: integer('last_revision_number').notNull().default(0)
+}, (t) => [
+ uniqueIndex('rab_families_project_number_unique').on(t.projectId, t.familyNumber),
+ unique('rab_families_id_project_unique').on(t.id, t.projectId),
+ check('rab_family_number_positive', sql`${t.familyNumber} > 0`),
+ check('rab_family_revision_nonnegative', sql`${t.lastRevisionNumber} >= 0`)
+]);
+
+export const rabFamilyCounters = pgTable('rab_family_counters', {
+ projectId: integer('project_id').primaryKey().references(() => projects.id, { onDelete: 'cascade' }),
+ lastNumber: integer('last_number').notNull().default(0)
+}, (t) => [check('rab_family_counter_nonnegative', sql`${t.lastNumber} >= 0`)]);
+
 export const rabs = pgTable(
 	'rabs',
 	{
@@ -166,6 +191,7 @@ export const rabs = pgTable(
 		projectId: integer('project_id')
 			.notNull()
 			.references(() => projects.id, { onDelete: 'restrict' }),
+		familyId: integer('family_id').notNull(),
 		revisionNumber: integer('revision_number').notNull().default(0),
 		documentNumber: text('document_number').notNull().unique(),
 		status: text('status').notNull().default('draft'),
@@ -192,7 +218,12 @@ export const rabs = pgTable(
 		updatedAt: timestamp('updated_at').defaultNow().notNull()
 	},
 	(t) => [
-		uniqueIndex('rabs_project_revision_unique').on(t.projectId, t.revisionNumber),
+		uniqueIndex('rabs_family_revision_unique').on(t.familyId, t.revisionNumber),
+        unique('rabs_id_family_unique').on(t.id, t.familyId),
+        foreignKey({ name: 'rabs_family_project_fk', columns: [t.familyId, t.projectId], foreignColumns: [rabFamilies.id, rabFamilies.projectId] }).onDelete('restrict'),
+        foreignKey({ name: 'rabs_source_family_fk', columns: [t.supersedesRabId, t.familyId], foreignColumns: [t.id, t.familyId] }).onDelete('restrict'),
+        check('rabs_revision_nonnegative', sql`${t.revisionNumber} >= 0`),
+        check('rabs_source_not_self', sql`${t.supersedesRabId} IS NULL OR ${t.supersedesRabId} <> ${t.id}`),
 		index('rabs_project_id_idx').on(t.projectId),
 		index('rabs_bank_account_id_idx').on(t.bankAccountId)
 	]

@@ -1,0 +1,181 @@
+{
+  "before": {
+    "revisionPk": "rabs.id",
+    "revisionUnique": [
+      "project_id",
+      "revision_number"
+    ],
+    "sourceFk": false,
+    "family": false
+  },
+  "after": [
+    {
+      "conname": "projects_client_id_clients_id_fk",
+      "definition": "FOREIGN KEY (client_id) REFERENCES clients(id) ON DELETE RESTRICT"
+    },
+    {
+      "conname": "projects_client_id_not_null",
+      "definition": "NOT NULL client_id"
+    },
+    {
+      "conname": "projects_client_project_number_not_null",
+      "definition": "NOT NULL client_project_number"
+    },
+    {
+      "conname": "projects_created_at_not_null",
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "conname": "projects_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "conname": "projects_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "conname": "projects_project_name_not_null",
+      "definition": "NOT NULL project_name"
+    },
+    {
+      "conname": "projects_project_number_not_null",
+      "definition": "NOT NULL project_number"
+    },
+    {
+      "conname": "projects_project_number_unique",
+      "definition": "UNIQUE (project_number)"
+    },
+    {
+      "conname": "projects_status_not_null",
+      "definition": "NOT NULL status"
+    },
+    {
+      "conname": "projects_updated_at_not_null",
+      "definition": "NOT NULL updated_at"
+    },
+    {
+      "conname": "rab_families_family_number_not_null",
+      "definition": "NOT NULL family_number"
+    },
+    {
+      "conname": "rab_families_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "conname": "rab_families_id_project_unique",
+      "definition": "UNIQUE (id, project_id)"
+    },
+    {
+      "conname": "rab_families_last_revision_number_not_null",
+      "definition": "NOT NULL last_revision_number"
+    },
+    {
+      "conname": "rab_families_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "conname": "rab_families_project_id_not_null",
+      "definition": "NOT NULL project_id"
+    },
+    {
+      "conname": "rab_families_project_id_projects_id_fk",
+      "definition": "FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE RESTRICT"
+    },
+    {
+      "conname": "rab_family_number_positive",
+      "definition": "CHECK ((family_number > 0))"
+    },
+    {
+      "conname": "rab_family_revision_nonnegative",
+      "definition": "CHECK ((last_revision_number >= 0))"
+    },
+    {
+      "conname": "rabs_bank_account_id_company_bank_accounts_id_fk",
+      "definition": "FOREIGN KEY (bank_account_id) REFERENCES company_bank_accounts(id) ON DELETE SET NULL"
+    },
+    {
+      "conname": "rabs_created_at_not_null",
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "conname": "rabs_document_number_not_null",
+      "definition": "NOT NULL document_number"
+    },
+    {
+      "conname": "rabs_document_number_unique",
+      "definition": "UNIQUE (document_number)"
+    },
+    {
+      "conname": "rabs_family_id_not_null",
+      "definition": "NOT NULL family_id"
+    },
+    {
+      "conname": "rabs_family_project_fk",
+      "definition": "FOREIGN KEY (family_id, project_id) REFERENCES rab_families(id, project_id) ON DELETE RESTRICT"
+    },
+    {
+      "conname": "rabs_grand_total_not_null",
+      "definition": "NOT NULL grand_total"
+    },
+    {
+      "conname": "rabs_id_family_unique",
+      "definition": "UNIQUE (id, family_id)"
+    },
+    {
+      "conname": "rabs_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "conname": "rabs_offer_date_not_null",
+      "definition": "NOT NULL offer_date"
+    },
+    {
+      "conname": "rabs_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "conname": "rabs_project_id_not_null",
+      "definition": "NOT NULL project_id"
+    },
+    {
+      "conname": "rabs_project_id_projects_id_fk",
+      "definition": "FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE RESTRICT"
+    },
+    {
+      "conname": "rabs_revision_nonnegative",
+      "definition": "CHECK ((revision_number >= 0))"
+    },
+    {
+      "conname": "rabs_revision_number_not_null",
+      "definition": "NOT NULL revision_number"
+    },
+    {
+      "conname": "rabs_source_family_fk",
+      "definition": "FOREIGN KEY (supersedes_rab_id, family_id) REFERENCES rabs(id, family_id) ON DELETE RESTRICT"
+    },
+    {
+      "conname": "rabs_source_not_self",
+      "definition": "CHECK (((supersedes_rab_id IS NULL) OR (supersedes_rab_id <> id)))"
+    },
+    {
+      "conname": "rabs_status_not_null",
+      "definition": "NOT NULL status"
+    },
+    {
+      "conname": "rabs_subtotal_not_null",
+      "definition": "NOT NULL subtotal"
+    },
+    {
+      "conname": "rabs_tax_amount_not_null",
+      "definition": "NOT NULL tax_amount"
+    },
+    {
+      "conname": "rabs_tax_rate_not_null",
+      "definition": "NOT NULL tax_rate"
+    },
+    {
+      "conname": "rabs_updated_at_not_null",
+      "definition": "NOT NULL updated_at"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "environment": "PostgreSQL 18.6 / postgres-js",
+  "assertions": [
+    "F/internal: full revision clone preserves A, new IDs/remapped relations; editing clone leaves source snapshot identical",
+    "F/client: existing client_revision_requested and rejected revision paths retain full snapshot behavior",
+    "12 concurrent clone requests: exactly one succeeds, same-family source; no duplicate clone"
+  ],
+  "limit": "Existing full clone implementation exists only in unrelated WIP. Tested minimal numbering adaptation; no full clone workflow introduced into canonical index. Apply the documented WIP integration delta when that existing work is promoted.",
+  "legacySnapshotWithoutFamilyId": true
+}

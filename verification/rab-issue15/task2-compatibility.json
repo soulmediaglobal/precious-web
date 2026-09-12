@@ -1,0 +1,28 @@
+{
+  "passed": true,
+  "results": [
+    "K: migrations 0000–0013 applied to isolated PostgreSQL 18.6; storage prerequisite stub only",
+    "A: draft fixture contains full structure, masters A, signatory, terms/tax",
+    "B/C: first departure from draft persists full snapshot with status transition",
+    "D/E: exact full query payload unchanged after Client/Project/work type/bank/signatory source mutation A→B",
+    "Frozen source cannot reopen as draft or accept document editing",
+    "Preview server loader uses frozen project/client; internal revision POST redirects to new draft",
+    "F/internal: full revision clone preserves A, new IDs/remapped relations; editing clone leaves source snapshot identical",
+    "F/client: existing client_revision_requested and rejected revision paths retain full snapshot behavior",
+    "G: project without RAB hard deletes",
+    "H: normal project delete refused, FK independently blocks cascade destruction",
+    "I: client deletion refused for current projects AND frozen history after project reassignment",
+    "Legacy non-draft without snapshot fails closed; no fabricated backfill",
+    "Deleting master bank preserves frozen bank details",
+    "12 concurrent clone requests: exactly one succeeds, same-family source; no duplicate clone"
+  ],
+  "environment": "PostgreSQL 18.6 / postgres-js",
+  "scope": "WIP compatibility; not promotion of Task1/Task2 into staged HEAD",
+  "legacySnapshotWithoutFamilyId": true,
+  "concurrentCloneRequests": 12,
+  "successfulClones": 1,
+  "limitations": [
+    "No live apply, browser/PDF or broad editor concurrency certification",
+    "Task1/Task2 query implementation still pre-existing WIP"
+  ]
+}

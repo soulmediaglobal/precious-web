@@ -1,0 +1,159 @@
+--- a/src/lib/server/db/schema.ts
++++ b/src/lib/server/db/schema.ts
+@@ -2,0 +3 @@
++ foreignKey, unique, check,
+@@ -133 +134 @@
+-				sql`'PC-' || to_char(CURRENT_DATE, 'YYYY') || '-' || lpad(nextval('project_number_seq')::text, 5, '0')`
++				sql`next_project_number()`
+@@ -212,0 +214,24 @@
++
++// Issue #15: family is a parent identity; existing rabs remain revisions.
++export const projectNumberCounters = pgTable('project_number_counters', {
++ year: integer('year').primaryKey(),
++ lastNumber: integer('last_number').notNull().default(0)
++}, (t) => [check('project_counter_bounds', sql`${t.year} BETWEEN 1 AND 9999 AND ${t.lastNumber} BETWEEN 0 AND 99999`)]);
++
++export const rabFamilies = pgTable('rab_families', {
++ id: serial('id').primaryKey(),
++ projectId: integer('project_id').notNull().references(() => projects.id, { onDelete: 'restrict' }),
++ familyNumber: integer('family_number').notNull(),
++ lastRevisionNumber: integer('last_revision_number').notNull().default(0)
++}, (t) => [
++ uniqueIndex('rab_families_project_number_unique').on(t.projectId, t.familyNumber),
++ unique('rab_families_id_project_unique').on(t.id, t.projectId),
++ check('rab_family_number_positive', sql`${t.familyNumber} > 0`),
++ check('rab_family_revision_nonnegative', sql`${t.lastRevisionNumber} >= 0`)
++]);
++
++export const rabFamilyCounters = pgTable('rab_family_counters', {
++ projectId: integer('project_id').primaryKey().references(() => projects.id, { onDelete: 'cascade' }),
++ lastNumber: integer('last_number').notNull().default(0)
++}, (t) => [check('rab_family_counter_nonnegative', sql`${t.lastNumber} >= 0`)]);
++
+@@ -219,0 +245 @@
++		familyId: integer('family_id').notNull(),
+@@ -246 +272,6 @@
+-		uniqueIndex('rabs_project_revision_unique').on(t.projectId, t.revisionNumber),
++		uniqueIndex('rabs_family_revision_unique').on(t.familyId, t.revisionNumber),
++        unique('rabs_id_family_unique').on(t.id, t.familyId),
++        foreignKey({ name: 'rabs_family_project_fk', columns: [t.familyId, t.projectId], foreignColumns: [rabFamilies.id, rabFamilies.projectId] }).onDelete('restrict'),
++        foreignKey({ name: 'rabs_source_family_fk', columns: [t.supersedesRabId, t.familyId], foreignColumns: [t.id, t.familyId] }).onDelete('restrict'),
++        check('rabs_revision_nonnegative', sql`${t.revisionNumber} >= 0`),
++        check('rabs_source_not_self', sql`${t.supersedesRabId} IS NULL OR ${t.supersedesRabId} <> ${t.id}`),
+--- a/src/lib/server/db/queries.ts
++++ b/src/lib/server/db/queries.ts
+@@ -191,33 +190,0 @@
+-	});
+-}
+-export async function createInitialRab(projectId: number, createdByUserId: string | null) {
+-	return db.transaction(async (tx) => {
+-		const project = await tx.query.projects.findFirst({
+-			where: eq(projects.id, projectId),
+-			columns: { id: true, clientProjectNumber: true }
+-		});
+-		if (!project) return null;
+-		const existing = await tx.query.rabs.findFirst({
+-			where: eq(rabs.projectId, projectId),
+-			columns: { id: true }
+-		});
+-		if (existing) return { id: existing.id, alreadyExists: true };
+-		const year = new Date().getFullYear();
+-		const [counter] = await tx
+-			.insert(rabNumberCounters)
+-			.values({ year, lastNumber: 1 })
+-			.onConflictDoUpdate({
+-				target: rabNumberCounters.year,
+-				set: { lastNumber: sql`${rabNumberCounters.lastNumber} + 1`, updatedAt: new Date() }
+-			})
+-			.returning({ number: rabNumberCounters.lastNumber });
+-		const [rab] = await tx
+-			.insert(rabs)
+-			.values({
+-				projectId,
+-				revisionNumber: 0,
+-				documentNumber: `PRE/RAB/${year}-${String(project.clientProjectNumber).padStart(3, '0')}-${String(counter.number).padStart(3, '0')}`,
+-				createdByUserId
+-			})
+-			.returning({ id: rabs.id });
+-		return { id: rab.id, alreadyExists: false };
+@@ -648,13 +615,7 @@
+-		const source = await getRabById(projectId, sourceRabId, tx);
+-		if (!source || !['internal_review', 'client_revision_requested', 'rejected'].includes(source.status)) return null;
+-		const [liveSource] = await tx.select({ bankAccountId: rabs.bankAccountId }).from(rabs).where(eq(rabs.id, sourceRabId));
+-		const revisionNumber = source.revisionNumber + 1;
+-		const year = new Date().getFullYear();
+-		const [counter] = await tx
+-			.insert(rabNumberCounters)
+-			.values({ year, lastNumber: 1 })
+-			.onConflictDoUpdate({
+-				target: rabNumberCounters.year,
+-				set: { lastNumber: sql`${rabNumberCounters.lastNumber} + 1`, updatedAt: new Date() }
+-			})
+-			.returning({ number: rabNumberCounters.lastNumber });
++        // Lock live source before eligibility/frozen reads; old snapshots need not contain familyId.
++        const [liveSource] = await tx.select().from(rabs)
++            .where(and(eq(rabs.id, sourceRabId), eq(rabs.projectId, projectId))).for('update');
++        if (!liveSource || !['internal_review', 'client_revision_requested', 'rejected'].includes(liveSource.status)) return null;
++        const source = await getRabById(projectId, sourceRabId, tx);
++        if (!source) return null;
++        const identity = await allocateRabRevisionIdentity(tx, projectId, sourceRabId);
+@@ -665,2 +626 @@
+-				revisionNumber,
+-				documentNumber: `PRE/RAB/${year}-${String(source.project.clientProjectNumber).padStart(3, '0')}-${String(counter.number).padStart(3, '0')}`,
++                ...identity,
+@@ -756 +716 @@
+-		await tx.execute(sql`select pg_advisory_xact_lock(${values.clientId})`);
++		await tx.select({ id: clients.id }).from(clients).where(eq(clients.id, values.clientId)).for('update');
+@@ -907,0 +868,52 @@
++
++// Issue #15 allocation primitives. Call revision allocation INSIDE the same transaction
++// that writes the full snapshot. This reserves identity only; it never clones content.
++import { rabFamilies, rabFamilyCounters } from './schema';
++type RabAllocationTransaction = Parameters<Parameters<typeof db.transaction>[0]>[0];
++
++export async function allocateRabRevisionIdentity(
++ tx: RabAllocationTransaction, projectId: number, sourceRabId: number
++) {
++ const [source] = await tx.select().from(rabs)
++  .where(and(eq(rabs.id, sourceRabId), eq(rabs.projectId, projectId))).for('update');
++ if (!source) throw new Error('RAB source not found in Project');
++ const [family] = await tx.update(rabFamilies)
++  .set({ lastRevisionNumber: sql`greatest(${rabFamilies.lastRevisionNumber} + 1,
++   (select coalesce(max(revision_number),0)+1 from rabs where family_id=${source.familyId}))` })
++  .where(and(eq(rabFamilies.id, source.familyId), eq(rabFamilies.projectId, projectId)))
++  .returning();
++ if (!family) throw new Error('RAB family not found in Project');
++ const [project] = await tx.select({ projectNumber: projects.projectNumber }).from(projects).where(eq(projects.id, projectId));
++ return { familyId: family.id, revisionNumber: family.lastRevisionNumber,
++  supersedesRabId: source.id,
++  documentNumber: `${project.projectNumber}/RAB-${String(family.familyNumber).padStart(3,'0')}/R${String(family.lastRevisionNumber).padStart(2,'0')}` };
++}
++
++export async function createInitialRab(projectId: number, createdByUserId: string | null) {
++ return db.transaction(async (tx) => {
++  const [project] = await tx.select().from(projects).where(eq(projects.id, projectId)).for('update');
++  if (!project) return null;
++  const [counter] = await tx.insert(rabFamilyCounters).values({ projectId, lastNumber: 1 })
++   .onConflictDoUpdate({ target: rabFamilyCounters.projectId,
++    set: { lastNumber: sql`${rabFamilyCounters.lastNumber} + 1` } }).returning();
++  const [family] = await tx.insert(rabFamilies).values({ projectId, familyNumber: counter.lastNumber }).returning();
++  const [rab] = await tx.insert(rabs).values({ projectId, familyId: family.id, revisionNumber: 0,
++   documentNumber: `${project.projectNumber}/RAB-${String(family.familyNumber).padStart(3,'0')}/R00`, createdByUserId }).returning({ id: rabs.id });
++  return { id: rab.id, familyId: family.id, alreadyExists: false };
++ });
++}
++
++// Database default allocates PRE by Asia/Jakarta transaction calendar year.
++// Serialize the existing client-local project ordinal independently of the PRE year counter.
++export async function createCanonicalProject(
++ values: Omit<typeof projects.$inferInsert, 'id' | 'projectNumber' | 'clientProjectNumber' | 'createdAt' | 'updatedAt'>
++) {
++ return db.transaction(async (tx) => {
++  const [client] = await tx.select({ id: clients.id }).from(clients).where(eq(clients.id, values.clientId)).for('update');
++  if (!client) throw new Error('Client not found');
++  const [latest] = await tx.select({ number: projects.clientProjectNumber }).from(projects)
++   .where(eq(projects.clientId, values.clientId)).orderBy(desc(projects.clientProjectNumber)).limit(1);
++  const [project] = await tx.insert(projects).values({ ...values, clientProjectNumber: (latest?.number ?? 0)+1 }).returning();
++  return project;
++ });
++}

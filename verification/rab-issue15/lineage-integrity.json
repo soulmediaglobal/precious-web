@@ -1,0 +1,42 @@
+{
+  "passed": true,
+  "rejected": [
+    {
+      "name": "cross-family source",
+      "sqlstate": "23503"
+    },
+    {
+      "name": "cross-project source",
+      "sqlstate": "23503"
+    },
+    {
+      "name": "revision project differs from family",
+      "sqlstate": "23503"
+    },
+    {
+      "name": "orphan source",
+      "sqlstate": "23503"
+    },
+    {
+      "name": "source deletion",
+      "sqlstate": "23001"
+    },
+    {
+      "name": "duplicate family",
+      "sqlstate": "23505"
+    },
+    {
+      "name": "duplicate revision",
+      "sqlstate": "23505"
+    },
+    {
+      "name": "project counter overflow",
+      "sqlstate": "23514"
+    },
+    {
+      "name": "annual sequence overflow",
+      "sqlstate": "23514"
+    }
+  ],
+  "legacyInvalidMigrationRolledBack": true
+}

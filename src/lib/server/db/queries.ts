@@ -1,6 +1,6 @@
 import { db } from './index';
 import { portfolio, portfolioImages, expertise, expertiseImages, team, settings, clients, projects, rabs } from './schema';
-import { eq, asc, desc, ilike, or, count, sql } from 'drizzle-orm';
+import { eq, asc, desc, ilike, or, count, and, sql } from 'drizzle-orm';
 
 export async function getAllPortfolio() {
   return db.query.portfolio.findMany({
@@ -203,4 +203,56 @@ export async function updateContactInquiryFollowUp(id: number, nextState: { isFo
       ? sql`case when ${contactInquiries.isFollowedUp} then ${contactInquiries.followedUpAt} else clock_timestamp() end`
       : null
   }).where(eq(contactInquiries.id, id)).returning({ id: contactInquiries.id });
+}
+
+// Issue #15 allocation primitives. Call revision allocation INSIDE the same transaction
+// that writes the full snapshot. This reserves identity only; it never clones content.
+import { rabFamilies, rabFamilyCounters } from './schema';
+type RabAllocationTransaction = Parameters<Parameters<typeof db.transaction>[0]>[0];
+
+export async function allocateRabRevisionIdentity(
+ tx: RabAllocationTransaction, projectId: number, sourceRabId: number
+) {
+ const [source] = await tx.select().from(rabs)
+  .where(and(eq(rabs.id, sourceRabId), eq(rabs.projectId, projectId))).for('update');
+ if (!source) throw new Error('RAB source not found in Project');
+ const [family] = await tx.update(rabFamilies)
+  .set({ lastRevisionNumber: sql`greatest(${rabFamilies.lastRevisionNumber} + 1,
+   (select coalesce(max(revision_number),0)+1 from rabs where family_id=${source.familyId}))` })
+  .where(and(eq(rabFamilies.id, source.familyId), eq(rabFamilies.projectId, projectId)))
+  .returning();
+ if (!family) throw new Error('RAB family not found in Project');
+ const [project] = await tx.select({ projectNumber: projects.projectNumber }).from(projects).where(eq(projects.id, projectId));
+ return { familyId: family.id, revisionNumber: family.lastRevisionNumber,
+  supersedesRabId: source.id,
+  documentNumber: `${project.projectNumber}/RAB-${String(family.familyNumber).padStart(3,'0')}/R${String(family.lastRevisionNumber).padStart(2,'0')}` };
+}
+
+export async function createInitialRab(projectId: number, createdByUserId: string | null) {
+ return db.transaction(async (tx) => {
+  const [project] = await tx.select().from(projects).where(eq(projects.id, projectId)).for('update');
+  if (!project) return null;
+  const [counter] = await tx.insert(rabFamilyCounters).values({ projectId, lastNumber: 1 })
+   .onConflictDoUpdate({ target: rabFamilyCounters.projectId,
+    set: { lastNumber: sql`${rabFamilyCounters.lastNumber} + 1` } }).returning();
+  const [family] = await tx.insert(rabFamilies).values({ projectId, familyNumber: counter.lastNumber }).returning();
+  const [rab] = await tx.insert(rabs).values({ projectId, familyId: family.id, revisionNumber: 0,
+   documentNumber: `${project.projectNumber}/RAB-${String(family.familyNumber).padStart(3,'0')}/R00`, createdByUserId }).returning({ id: rabs.id });
+  return { id: rab.id, familyId: family.id, alreadyExists: false };
+ });
+}
+
+// Database default allocates PRE by Asia/Jakarta transaction calendar year.
+// Serialize the existing client-local project ordinal independently of the PRE year counter.
+export async function createCanonicalProject(
+ values: Omit<typeof projects.$inferInsert, 'id' | 'projectNumber' | 'clientProjectNumber' | 'createdAt' | 'updatedAt'>
+) {
+ return db.transaction(async (tx) => {
+  const [client] = await tx.select({ id: clients.id }).from(clients).where(eq(clients.id, values.clientId)).for('update');
+  if (!client) throw new Error('Client not found');
+  const [latest] = await tx.select({ number: projects.clientProjectNumber }).from(projects)
+   .where(eq(projects.clientId, values.clientId)).orderBy(desc(projects.clientProjectNumber)).limit(1);
+  const [project] = await tx.insert(projects).values({ ...values, clientProjectNumber: (latest?.number ?? 0)+1 }).returning();
+  return project;
+ });
 }

@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "projectYearlyReset": "PRE-2041-00001",
+  "existingPreReserved": true,
+  "legacyRoot": "PC-2020-00001/RAB-001/R00",
+  "twoFamilies": [
+    "PRE-2026-00003/RAB-001/R00",
+    "PRE-2026-00003/RAB-002/R00"
+  ],
+  "rollback": true,
+  "timezone": "Asia/Jakarta at transaction start; independent of session TimeZone",
+  "width": "Project hard limit 99999/year; family/revision zero padding is minimum width, not truncation"
+}
