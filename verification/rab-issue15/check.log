@@ -1,0 +1,8 @@
+
+> pc@0.0.1 check
+> svelte-kit sync && svelte-check --tsconfig ./tsconfig.json
+
+Loading svelte-check in workspace: /private/tmp/precious-issue15/work
+Getting Svelte diagnostics...
+
+svelte-check found 0 errors and 0 warnings

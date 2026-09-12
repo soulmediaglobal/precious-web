@@ -1,0 +1,287 @@
+{
+  "passed": true,
+  "allExistingColumnsEqual": true,
+  "tables": [
+    "projects",
+    "rabs",
+    "rab_sections",
+    "rab_groups",
+    "rab_subgroups",
+    "rab_items",
+    "rab_stages",
+    "rab_payment_terms"
+  ],
+  "rows": {
+    "projects": [
+      {
+        "row": {
+          "id": 1,
+          "status": "draft",
+          "location": null,
+          "client_id": 1,
+          "created_at": "2026-09-12T09:52:35.164963",
+          "updated_at": "2026-09-12T09:52:35.164963",
+          "description": null,
+          "pic_user_id": null,
+          "project_name": "Legacy",
+          "project_number": "PC-2025-00001",
+          "acquisition_type": null,
+          "transaction_title": null,
+          "created_by_user_id": null,
+          "client_project_number": 1
+        }
+      },
+      {
+        "row": {
+          "id": 2,
+          "status": "draft",
+          "location": null,
+          "client_id": 1,
+          "created_at": "2026-09-12T09:52:35.164963",
+          "updated_at": "2026-09-12T09:52:35.164963",
+          "description": null,
+          "pic_user_id": null,
+          "project_name": "Other",
+          "project_number": "PC-2026-00002",
+          "acquisition_type": null,
+          "transaction_title": null,
+          "created_by_user_id": null,
+          "client_project_number": 2
+        }
+      },
+      {
+        "row": {
+          "id": 3,
+          "status": "draft",
+          "location": null,
+          "client_id": 1,
+          "created_at": "2026-09-12T09:52:35.164963",
+          "updated_at": "2026-09-12T09:52:35.164963",
+          "description": null,
+          "pic_user_id": null,
+          "project_name": "Existing PRE",
+          "project_number": "PRE-2026-00041",
+          "acquisition_type": null,
+          "transaction_title": null,
+          "created_by_user_id": null,
+          "client_project_number": 3
+        }
+      }
+    ],
+    "rabs": [
+      {
+        "row": {
+          "id": 1,
+          "status": "superseded",
+          "greeting": null,
+          "subtotal": 0,
+          "tax_rate": 11,
+          "created_at": "2026-09-12T09:52:35.164963",
+          "offer_date": "2026-09-12",
+          "project_id": 1,
+          "tax_amount": 0,
+          "updated_at": "2026-09-12T09:52:35.164963",
+          "grand_total": 0,
+          "signatory_name": null,
+          "bank_account_id": null,
+          "document_number": "LEGACY/α/00",
+          "frozen_document": "{\"snapshotVersion\":1,\"documentNumber\":\"LEGACY/α/00\",\"bank\":\"A\"}",
+          "revision_number": 0,
+          "signatory_title": null,
+          "inherited_masters": "{\"retain\":\" exact bytes \"}",
+          "supersedes_rab_id": null,
+          "client_approved_at": null,
+          "created_by_user_id": null,
+          "internal_approved_at": null,
+          "client_approval_evidence": null,
+          "internal_approved_by_user_id": null
+        }
+      },
+      {
+        "row": {
+          "id": 2,
+          "status": "internal_review",
+          "greeting": null,
+          "subtotal": 0,
+          "tax_rate": 11,
+          "created_at": "2026-09-12T09:52:35.164963",
+          "offer_date": "2026-09-12",
+          "project_id": 1,
+          "tax_amount": 0,
+          "updated_at": "2026-09-12T09:52:35.164963",
+          "grand_total": 0,
+          "signatory_name": null,
+          "bank_account_id": null,
+          "document_number": "LEGACY/α/01",
+          "frozen_document": "{\"snapshotVersion\":1,\"documentNumber\":\"LEGACY/α/01\"}",
+          "revision_number": 1,
+          "signatory_title": null,
+          "inherited_masters": null,
+          "supersedes_rab_id": 1,
+          "client_approved_at": null,
+          "created_by_user_id": null,
+          "internal_approved_at": null,
+          "client_approval_evidence": null,
+          "internal_approved_by_user_id": null
+        }
+      },
+      {
+        "row": {
+          "id": 3,
+          "status": "draft",
+          "greeting": null,
+          "subtotal": 0,
+          "tax_rate": 11,
+          "created_at": "2026-09-12T09:52:35.164963",
+          "offer_date": "2026-09-12",
+          "project_id": 1,
+          "tax_amount": 0,
+          "updated_at": "2026-09-12T09:52:35.164963",
+          "grand_total": 0,
+          "signatory_name": null,
+          "bank_account_id": null,
+          "document_number": "UNLINKED-FOUR",
+          "frozen_document": null,
+          "revision_number": 4,
+          "signatory_title": null,
+          "inherited_masters": null,
+          "supersedes_rab_id": null,
+          "client_approved_at": null,
+          "created_by_user_id": null,
+          "internal_approved_at": null,
+          "client_approval_evidence": null,
+          "internal_approved_by_user_id": null
+        }
+      },
+      {
+        "row": {
+          "id": 4,
+          "status": "draft",
+          "greeting": null,
+          "subtotal": 0,
+          "tax_rate": 11,
+          "created_at": "2026-09-12T09:52:35.164963",
+          "offer_date": "2026-09-12",
+          "project_id": 2,
+          "tax_amount": 0,
+          "updated_at": "2026-09-12T09:52:35.164963",
+          "grand_total": 0,
+          "signatory_name": null,
+          "bank_account_id": null,
+          "document_number": "PC-ROOT-OTHER",
+          "frozen_document": null,
+          "revision_number": 0,
+          "signatory_title": null,
+          "inherited_masters": null,
+          "supersedes_rab_id": null,
+          "client_approved_at": null,
+          "created_by_user_id": null,
+          "internal_approved_at": null,
+          "client_approval_evidence": null,
+          "internal_approved_by_user_id": null
+        }
+      }
+    ],
+    "rab_sections": [
+      {
+        "row": {
+          "id": 1,
+          "name": "section",
+          "rab_id": 1,
+          "sort_order": 0
+        }
+      }
+    ],
+    "rab_groups": [
+      {
+        "row": {
+          "id": 1,
+          "name": "group",
+          "section_id": 1,
+          "sort_order": 0
+        }
+      }
+    ],
+    "rab_subgroups": [
+      {
+        "row": {
+          "id": 1,
+          "name": "subgroup",
+          "group_id": 1,
+          "sort_order": 0
+        }
+      }
+    ],
+    "rab_items": [
+      {
+        "row": {
+          "id": 1,
+          "unit": "m",
+          "notes": null,
+          "total": 0,
+          "volume": 0,
+          "weight": 0,
+          "group_id": 1,
+          "sort_order": 0,
+          "unit_price": 0,
+          "description": "item",
+          "subgroup_id": 1
+        }
+      }
+    ],
+    "rab_stages": [
+      {
+        "row": {
+          "id": 1,
+          "name": "stage",
+          "rab_id": 1,
+          "sort_order": 0,
+          "description": null
+        }
+      }
+    ],
+    "rab_payment_terms": [
+      {
+        "row": {
+          "id": 1,
+          "name": "term",
+          "amount": 0,
+          "rab_id": 1,
+          "stage_id": 1,
+          "sort_order": 0,
+          "payment_trigger": null
+        }
+      }
+    ]
+  },
+  "mapping": [
+    {
+      "id": 1,
+      "project_id": 1,
+      "family_id": 1,
+      "revision_number": 0,
+      "document_number": "LEGACY/α/00"
+    },
+    {
+      "id": 2,
+      "project_id": 1,
+      "family_id": 1,
+      "revision_number": 1,
+      "document_number": "LEGACY/α/01"
+    },
+    {
+      "id": 3,
+      "project_id": 1,
+      "family_id": 2,
+      "revision_number": 4,
+      "document_number": "UNLINKED-FOUR"
+    },
+    {
+      "id": 4,
+      "project_id": 2,
+      "family_id": 3,
+      "revision_number": 0,
+      "document_number": "PC-ROOT-OTHER"
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "workingTreeCopy": {
+    "npm run check": {
+      "exit": 0,
+      "errors": 0,
+      "warnings": 0
+    },
+    "npm run build": {
+      "exit": 0,
+      "adapter": "node"
+    }
+  },
+  "canonicalIndexCandidate": {
+    "npm run check": {
+      "exit": 0,
+      "errors": 0,
+      "warnings": 0
+    },
+    "npm run build": {
+      "exit": 0,
+      "adapter": "node"
+    }
+  },
+  "drizzle-kit check": {
+    "exit": 0
+  },
+  "environment": "isolated copies; dummy public Supabase environment, loopback test DB; no production env read",
+  "diffChecks": {
+    "git diff --check": {
+      "exit": 0
+    },
+    "git diff --cached --check": {
+      "exit": 0
+    }
+  },
+  "notes": [
+    "First isolated check lacked environment placeholders; resolved without source changes.",
+    "First build lacked cache-write permission; authorized rerun passed.",
+    "Additional canonical build temporarily blocked by usage-limit auto-review, resumed after Ray instructed continue."
+  ]
+}

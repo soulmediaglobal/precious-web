@@ -1,0 +1,229 @@
+
+> pc@0.0.1 build
+> vite build
+
+(node:96163) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+vite v7.3.1 building ssr environment for production...
+transforming...
+✓ 1417 modules transformed.
+rendering chunks...
+vite v7.3.1 building client environment for production...
+transforming...
+✓ 1691 modules transformed.
+rendering chunks...
+computing gzip size...
+.svelte-kit/output/client/_app/version.json                                   0.03 kB │ gzip:  0.05 kB
+.svelte-kit/output/client/.vite/manifest.json                                24.06 kB │ gzip:  2.39 kB
+.svelte-kit/output/client/_app/immutable/assets/9.Bz37GYqK.css                0.05 kB │ gzip:  0.07 kB
+.svelte-kit/output/client/_app/immutable/assets/3.CD54FDqW.css                0.06 kB │ gzip:  0.07 kB
+.svelte-kit/output/client/_app/immutable/assets/10.COmQVxwR.css               0.09 kB │ gzip:  0.11 kB
+.svelte-kit/output/client/_app/immutable/assets/12.D-CvdB3Z.css               0.09 kB │ gzip:  0.11 kB
+.svelte-kit/output/client/_app/immutable/assets/13.DXrv_nGC.css               0.09 kB │ gzip:  0.11 kB
+.svelte-kit/output/client/_app/immutable/assets/5.DQJddFFD.css                0.22 kB │ gzip:  0.13 kB
+.svelte-kit/output/client/_app/immutable/assets/33.uMdOPMnI.css               0.43 kB │ gzip:  0.24 kB
+.svelte-kit/output/client/_app/immutable/assets/23.DCEfpbu7.css               0.44 kB │ gzip:  0.24 kB
+.svelte-kit/output/client/_app/immutable/assets/29.DIkqIyxS.css               0.44 kB │ gzip:  0.24 kB
+.svelte-kit/output/client/_app/immutable/assets/22.B970s0Gk.css               0.57 kB │ gzip:  0.27 kB
+.svelte-kit/output/client/_app/immutable/assets/28.CLkq6-bd.css               0.57 kB │ gzip:  0.27 kB
+.svelte-kit/output/client/_app/immutable/assets/32.B-SDWwL9.css               0.58 kB │ gzip:  0.27 kB
+.svelte-kit/output/client/_app/immutable/assets/TeamForm.Dha90F7h.css         0.69 kB │ gzip:  0.29 kB
+.svelte-kit/output/client/_app/immutable/assets/6.BSTvHkCq.css                0.93 kB │ gzip:  0.42 kB
+.svelte-kit/output/client/_app/immutable/assets/24.xVWiq8jJ.css               1.02 kB │ gzip:  0.45 kB
+.svelte-kit/output/client/_app/immutable/assets/25.B5OmgdTB.css               1.02 kB │ gzip:  0.40 kB
+.svelte-kit/output/client/_app/immutable/assets/ClientForm.EAfgfCUM.css       2.18 kB │ gzip:  0.69 kB
+.svelte-kit/output/client/_app/immutable/assets/TeamForm.nnbz3uvu.css         2.46 kB │ gzip:  0.78 kB
+.svelte-kit/output/client/_app/immutable/assets/PortfolioForm.HS-EuKWM.css    2.48 kB │ gzip:  0.79 kB
+.svelte-kit/output/client/_app/immutable/assets/27.CF7NtCaA.css               2.58 kB │ gzip:  0.82 kB
+.svelte-kit/output/client/_app/immutable/assets/31.D1pMvI67.css               2.86 kB │ gzip:  0.87 kB
+.svelte-kit/output/client/_app/immutable/assets/21.FQbiYt45.css               3.27 kB │ gzip:  0.89 kB
+.svelte-kit/output/client/_app/immutable/assets/4.Co7aNhoK.css                4.71 kB │ gzip:  1.47 kB
+.svelte-kit/output/client/_app/immutable/assets/26.C3mBEmJj.css               4.94 kB │ gzip:  1.50 kB
+.svelte-kit/output/client/_app/immutable/assets/20.CetCWUaS.css               7.96 kB │ gzip:  1.78 kB
+.svelte-kit/output/client/_app/immutable/assets/layout.KiNhCvvk.css          65.34 kB │ gzip: 11.80 kB
+.svelte-kit/output/client/_app/immutable/chunks/DsnmJJEf.js                   0.07 kB │ gzip:  0.08 kB
+.svelte-kit/output/client/_app/immutable/entry/start.BR7rt16j.js              0.08 kB │ gzip:  0.09 kB
+.svelte-kit/output/client/_app/immutable/chunks/BzcQZF2I.js                   0.18 kB │ gzip:  0.15 kB
+.svelte-kit/output/client/_app/immutable/chunks/Bw-aBM4a.js                   0.19 kB │ gzip:  0.17 kB
+.svelte-kit/output/client/_app/immutable/nodes/0.DwjQei-x.js                  0.24 kB │ gzip:  0.18 kB
+.svelte-kit/output/client/_app/immutable/chunks/CfAGK0Eg.js                   0.25 kB │ gzip:  0.21 kB
+.svelte-kit/output/client/_app/immutable/chunks/fSrMJ4en.js                   0.28 kB │ gzip:  0.19 kB
+.svelte-kit/output/client/_app/immutable/chunks/Cl3vi6Oc.js                   0.37 kB │ gzip:  0.26 kB
+.svelte-kit/output/client/_app/immutable/chunks/DrZhf_QG.js                   0.38 kB │ gzip:  0.28 kB
+.svelte-kit/output/client/_app/immutable/chunks/CTSDPOtE.js                   0.40 kB │ gzip:  0.29 kB
+.svelte-kit/output/client/_app/immutable/chunks/DqNBHnAr.js                   0.44 kB │ gzip:  0.29 kB
+.svelte-kit/output/client/_app/immutable/chunks/Dkk1p9Ey.js                   0.50 kB │ gzip:  0.31 kB
+.svelte-kit/output/client/_app/immutable/nodes/30.DuER2OjK.js                 0.57 kB │ gzip:  0.37 kB
+.svelte-kit/output/client/_app/immutable/nodes/33.vkhpmdBT.js                 0.62 kB │ gzip:  0.39 kB
+.svelte-kit/output/client/_app/immutable/nodes/29.CBr66Q-f.js                 0.63 kB │ gzip:  0.39 kB
+.svelte-kit/output/client/_app/immutable/chunks/yy_LN_Zj.js                   0.64 kB │ gzip:  0.42 kB
+.svelte-kit/output/client/_app/immutable/nodes/18.ENVwy-4a.js                 0.68 kB │ gzip:  0.46 kB
+.svelte-kit/output/client/_app/immutable/nodes/23.BHxo6bcM.js                 0.69 kB │ gzip:  0.42 kB
+.svelte-kit/output/client/_app/immutable/nodes/32.BRfj3juK.js                 0.85 kB │ gzip:  0.49 kB
+.svelte-kit/output/client/_app/immutable/nodes/28.6J4cOf9F.js                 0.85 kB │ gzip:  0.49 kB
+.svelte-kit/output/client/_app/immutable/nodes/1.vEJ4xMXv.js                  0.90 kB │ gzip:  0.53 kB
+.svelte-kit/output/client/_app/immutable/nodes/22.GxsTaBN_.js                 0.91 kB │ gzip:  0.51 kB
+.svelte-kit/output/client/_app/immutable/nodes/17.CkGmqKvy.js                 0.92 kB │ gzip:  0.56 kB
+.svelte-kit/output/client/_app/immutable/nodes/15.p3ld2aZ3.js                 1.25 kB │ gzip:  0.69 kB
+.svelte-kit/output/client/_app/immutable/chunks/dqLZZkpT.js                   1.49 kB │ gzip:  0.67 kB
+.svelte-kit/output/client/_app/immutable/chunks/BCeR8mhL.js                   1.76 kB │ gzip:  0.87 kB
+.svelte-kit/output/client/_app/immutable/nodes/24.BW3eUgbB.js                 1.85 kB │ gzip:  0.96 kB
+.svelte-kit/output/client/_app/immutable/nodes/19.CWgWLPaf.js                 2.19 kB │ gzip:  1.04 kB
+.svelte-kit/output/client/_app/immutable/chunks/9nmNv5or.js                   2.22 kB │ gzip:  1.02 kB
+.svelte-kit/output/client/_app/immutable/nodes/31.C9I_uPuk.js                 3.14 kB │ gzip:  1.40 kB
+.svelte-kit/output/client/_app/immutable/nodes/7.KXzg0duG.js                  3.25 kB │ gzip:  1.66 kB
+.svelte-kit/output/client/_app/immutable/nodes/16.ICslcO_j.js                 3.48 kB │ gzip:  1.64 kB
+.svelte-kit/output/client/_app/immutable/nodes/26.B7uTAPun.js                 3.66 kB │ gzip:  1.50 kB
+.svelte-kit/output/client/_app/immutable/nodes/25.C_M_6kc1.js                 3.70 kB │ gzip:  1.49 kB
+.svelte-kit/output/client/_app/immutable/nodes/12.DTBdSMie.js                 3.73 kB │ gzip:  1.73 kB
+.svelte-kit/output/client/_app/immutable/nodes/27.Q6jDJGMK.js                 3.76 kB │ gzip:  1.58 kB
+.svelte-kit/output/client/_app/immutable/nodes/21.D2vLiUZR.js                 3.78 kB │ gzip:  1.49 kB
+.svelte-kit/output/client/_app/immutable/chunks/DTzWjAKK.js                   4.03 kB │ gzip:  1.92 kB
+.svelte-kit/output/client/_app/immutable/chunks/yCUutok1.js                   4.27 kB │ gzip:  2.00 kB
+.svelte-kit/output/client/_app/immutable/nodes/10.K_3HOMoN.js                 4.96 kB │ gzip:  2.05 kB
+.svelte-kit/output/client/_app/immutable/nodes/13.BrWe9wMr.js                 5.64 kB │ gzip:  2.23 kB
+.svelte-kit/output/client/_app/immutable/chunks/xevcfVck.js                   5.65 kB │ gzip:  1.70 kB
+.svelte-kit/output/client/_app/immutable/nodes/9.BTRs4VFK.js                  5.75 kB │ gzip:  2.40 kB
+.svelte-kit/output/client/_app/immutable/chunks/DCyzOp3U.js                   5.78 kB │ gzip:  2.41 kB
+.svelte-kit/output/client/_app/immutable/chunks/ehwWM02E.js                   6.33 kB │ gzip:  2.34 kB
+.svelte-kit/output/client/_app/immutable/chunks/B9q7eYNr.js                   6.48 kB │ gzip:  2.30 kB
+.svelte-kit/output/client/_app/immutable/nodes/2.CAwv-IFN.js                  6.88 kB │ gzip:  2.64 kB
+.svelte-kit/output/client/_app/immutable/chunks/DkBshGql.js                   7.16 kB │ gzip:  3.28 kB
+.svelte-kit/output/client/_app/immutable/chunks/Bv7DMumV.js                   7.56 kB │ gzip:  3.41 kB
+.svelte-kit/output/client/_app/immutable/chunks/tRot269f.js                   8.06 kB │ gzip:  2.80 kB
+.svelte-kit/output/client/_app/immutable/nodes/5.7wgxOnZK.js                  8.50 kB │ gzip:  2.94 kB
+.svelte-kit/output/client/_app/immutable/nodes/8.FtTHxhiB.js                  8.87 kB │ gzip:  3.39 kB
+.svelte-kit/output/client/_app/immutable/nodes/4.CLdFj9v4.js                 10.51 kB │ gzip:  4.12 kB
+.svelte-kit/output/client/_app/immutable/nodes/14.D9gW5rHb.js                10.73 kB │ gzip:  4.00 kB
+.svelte-kit/output/client/_app/immutable/nodes/11.DpW65WNy.js                11.42 kB │ gzip:  4.19 kB
+.svelte-kit/output/client/_app/immutable/nodes/6.DiNIzjXp.js                 12.10 kB │ gzip:  4.12 kB
+.svelte-kit/output/client/_app/immutable/entry/app.CNJcvKd4.js               12.30 kB │ gzip:  4.19 kB
+.svelte-kit/output/client/_app/immutable/nodes/20.DIT3YZFT.js                26.27 kB │ gzip:  3.90 kB
+.svelte-kit/output/client/_app/immutable/chunks/Brw8c_-x.js                  26.39 kB │ gzip: 10.31 kB
+.svelte-kit/output/client/_app/immutable/chunks/CxRLHRAG.js                  33.12 kB │ gzip: 12.80 kB
+.svelte-kit/output/client/_app/immutable/nodes/3.CK9i33g2.js                283.61 kB │ gzip: 68.63 kB
+✓ built in 24.66s
+.svelte-kit/output/server/.vite/manifest.json                                            26.74 kB
+.svelte-kit/output/server/_app/immutable/assets/_page.Bz37GYqK.css                        0.05 kB
+.svelte-kit/output/server/_app/immutable/assets/_layout.CD54FDqW.css                      0.06 kB
+.svelte-kit/output/server/_app/immutable/assets/_page.COmQVxwR.css                        0.09 kB
+.svelte-kit/output/server/_app/immutable/assets/_page.D-CvdB3Z.css                        0.09 kB
+.svelte-kit/output/server/_app/immutable/assets/_page.DXrv_nGC.css                        0.09 kB
+.svelte-kit/output/server/_app/immutable/assets/_page.DQJddFFD.css                        0.22 kB
+.svelte-kit/output/server/_app/immutable/assets/_page.uMdOPMnI.css                        0.43 kB
+.svelte-kit/output/server/_app/immutable/assets/_page.DCEfpbu7.css                        0.44 kB
+.svelte-kit/output/server/_app/immutable/assets/_page.DIkqIyxS.css                        0.44 kB
+.svelte-kit/output/server/_app/immutable/assets/_page.B970s0Gk.css                        0.57 kB
+.svelte-kit/output/server/_app/immutable/assets/_page.CLkq6-bd.css                        0.57 kB
+.svelte-kit/output/server/_app/immutable/assets/_page.B-SDWwL9.css                        0.58 kB
+.svelte-kit/output/server/_app/immutable/assets/TeamForm.Dha90F7h.css                     0.69 kB
+.svelte-kit/output/server/_app/immutable/assets/_page.BSTvHkCq.css                        0.93 kB
+.svelte-kit/output/server/_app/immutable/assets/_page.xVWiq8jJ.css                        1.02 kB
+.svelte-kit/output/server/_app/immutable/assets/_page.B5OmgdTB.css                        1.02 kB
+.svelte-kit/output/server/_app/immutable/assets/ClientForm.EAfgfCUM.css                   2.18 kB
+.svelte-kit/output/server/_app/immutable/assets/TeamForm.nnbz3uvu.css                     2.46 kB
+.svelte-kit/output/server/_app/immutable/assets/PortfolioForm.HS-EuKWM.css                2.48 kB
+.svelte-kit/output/server/_app/immutable/assets/_page.CF7NtCaA.css                        2.58 kB
+.svelte-kit/output/server/_app/immutable/assets/_page.D1pMvI67.css                        2.86 kB
+.svelte-kit/output/server/_app/immutable/assets/_page.FQbiYt45.css                        3.27 kB
+.svelte-kit/output/server/_app/immutable/assets/_layout.Bkq2wPK4.css                      4.67 kB
+.svelte-kit/output/server/_app/immutable/assets/_page.C3mBEmJj.css                        4.94 kB
+.svelte-kit/output/server/_app/immutable/assets/_page.CetCWUaS.css                        7.96 kB
+.svelte-kit/output/server/_app/immutable/assets/layout.BlmD7DPz.css                      65.31 kB
+.svelte-kit/output/server/chunks/false.js                                                 0.04 kB
+.svelte-kit/output/server/entries/pages/admin/(app)/_page.server.ts.js                    0.12 kB
+.svelte-kit/output/server/entries/pages/admin-v2/_layout.server.ts.js                     0.12 kB
+.svelte-kit/output/server/entries/pages/admin/(app)/_layout.server.ts.js                  0.16 kB
+.svelte-kit/output/server/entries/endpoints/admin/logout/_server.ts.js                    0.18 kB
+.svelte-kit/output/server/entries/pages/_layout.svelte.js                                 0.21 kB
+.svelte-kit/output/server/entries/pages/(marketing)/_layout.server.ts.js                  0.26 kB
+.svelte-kit/output/server/entries/pages/admin-v2/contact/_page.server.ts.js               0.27 kB
+.svelte-kit/output/server/entries/endpoints/admin-v2/logout/_server.ts.js                 0.30 kB
+.svelte-kit/output/server/entries/fallbacks/error.svelte.js                               0.35 kB
+.svelte-kit/output/server/chunks/index2.js                                                0.37 kB
+.svelte-kit/output/server/entries/pages/(marketing)/about/_page.server.ts.js              0.39 kB
+.svelte-kit/output/server/chunks/index3.js                                                0.40 kB
+.svelte-kit/output/server/internal.js                                                     0.41 kB
+.svelte-kit/output/server/chunks/state.svelte.js                                          0.45 kB
+.svelte-kit/output/server/chunks/private.js                                               0.47 kB
+.svelte-kit/output/server/entries/pages/admin-v2/projects/_page.svelte.js                 0.51 kB
+.svelte-kit/output/server/chunks/client.js                                                0.56 kB
+.svelte-kit/output/server/entries/pages/(marketing)/portofolio/_page.server.ts.js         0.57 kB
+.svelte-kit/output/server/entries/pages/admin-v2/team/_page.server.ts.js                  0.62 kB
+.svelte-kit/output/server/chunks/environment.js                                           0.62 kB
+.svelte-kit/output/server/entries/pages/(marketing)/expertise/_page.server.ts.js          0.66 kB
+.svelte-kit/output/server/entries/pages/admin-v2/clients/_page.server.ts.js               0.70 kB
+.svelte-kit/output/server/entries/pages/(marketing)/expertise/_id_/_page.server.ts.js     0.71 kB
+.svelte-kit/output/server/entries/pages/admin-v2/team/new/_page.svelte.js                 0.72 kB
+.svelte-kit/output/server/entries/pages/admin/(app)/team/_page.server.ts.js               0.72 kB
+.svelte-kit/output/server/entries/pages/admin-v2/portfolio/new/_page.svelte.js            0.74 kB
+.svelte-kit/output/server/entries/pages/(marketing)/contact/_page.server.ts.js            0.78 kB
+.svelte-kit/output/server/entries/pages/admin/(app)/team/new/_page.svelte.js              0.79 kB
+.svelte-kit/output/server/entries/pages/admin/login/_page.server.ts.js                    0.80 kB
+.svelte-kit/output/server/entries/pages/admin-v2/clients/new/_page.svelte.js              0.85 kB
+.svelte-kit/output/server/entries/pages/admin-v2/portfolio/new/_page.server.ts.js         0.90 kB
+.svelte-kit/output/server/entries/pages/admin-v2/team/new/_page.server.ts.js              0.92 kB
+.svelte-kit/output/server/entries/pages/admin-v2/team/_id_/_page.svelte.js                0.92 kB
+.svelte-kit/output/server/entries/pages/admin-v2/portfolio/_page.server.ts.js             0.93 kB
+.svelte-kit/output/server/entries/pages/admin-v2/portfolio/_id_/_page.svelte.js           0.95 kB
+.svelte-kit/output/server/entries/pages/admin/(app)/team/_id_/_page.svelte.js             1.00 kB
+.svelte-kit/output/server/entries/pages/admin-v2/clients/_id_/_page.svelte.js             1.00 kB
+.svelte-kit/output/server/entries/pages/admin/(app)/team/new/_page.server.ts.js           1.00 kB
+.svelte-kit/output/server/entries/pages/(marketing)/portofolio/_id_/_page.server.ts.js    1.03 kB
+.svelte-kit/output/server/entries/pages/admin-v2/login/_page.server.ts.js                 1.03 kB
+.svelte-kit/output/server/chunks/utils.js                                                 1.15 kB
+.svelte-kit/output/server/entries/pages/admin-v2/clients/new/_page.server.ts.js           1.19 kB
+.svelte-kit/output/server/entries/pages/admin/(app)/_page.svelte.js                       1.25 kB
+.svelte-kit/output/server/entries/pages/admin-v2/clients/_id_/_page.server.ts.js          1.36 kB
+.svelte-kit/output/server/chunks/client-cms.js                                            1.40 kB
+.svelte-kit/output/server/entries/pages/admin-v2/team/_id_/_page.server.ts.js             1.41 kB
+.svelte-kit/output/server/chunks/index4.js                                                1.44 kB
+.svelte-kit/output/server/entries/hooks.server.js                                         1.50 kB
+.svelte-kit/output/server/entries/pages/admin-v2/portfolio/_id_/_page.server.ts.js        1.55 kB
+.svelte-kit/output/server/entries/pages/admin/(app)/team/_id_/_page.server.ts.js          1.67 kB
+.svelte-kit/output/server/entries/pages/admin-v2/contact/_id_/_page.server.ts.js          1.72 kB
+.svelte-kit/output/server/chunks/contact-cms.js                                           2.12 kB
+.svelte-kit/output/server/entries/pages/admin-v2/contact/_page.svelte.js                  2.16 kB
+.svelte-kit/output/server/entries/pages/admin/login/_page.svelte.js                       2.30 kB
+.svelte-kit/output/server/chunks/team-cms.js                                              2.59 kB
+.svelte-kit/output/server/entries/pages/(marketing)/contact/_page.svelte.js               3.28 kB
+.svelte-kit/output/server/entries/pages/admin-v2/team/_page.svelte.js                     3.47 kB
+.svelte-kit/output/server/entries/pages/admin-v2/login/_page.svelte.js                    3.51 kB
+.svelte-kit/output/server/entries/pages/(marketing)/portofolio/_page.svelte.js            3.63 kB
+.svelte-kit/output/server/entries/pages/admin-v2/clients/_page.svelte.js                  3.64 kB
+.svelte-kit/output/server/chunks/portfolio-cms.js                                         3.70 kB
+.svelte-kit/output/server/entries/pages/admin/(app)/team/_page.svelte.js                  3.72 kB
+.svelte-kit/output/server/chunks/internal.js                                              3.99 kB
+.svelte-kit/output/server/entries/pages/admin-v2/portfolio/_page.svelte.js                4.02 kB
+.svelte-kit/output/server/entries/pages/admin-v2/contact/_id_/_page.svelte.js             4.54 kB
+.svelte-kit/output/server/entries/pages/(marketing)/expertise/_id_/_page.svelte.js        4.72 kB
+.svelte-kit/output/server/chunks/exports.js                                               5.59 kB
+.svelte-kit/output/server/entries/pages/(marketing)/portofolio/_id_/_page.svelte.js       5.76 kB
+.svelte-kit/output/server/entries/pages/(marketing)/expertise/_page.svelte.js             5.77 kB
+.svelte-kit/output/server/chunks/ClientForm.js                                            6.48 kB
+.svelte-kit/output/server/entries/pages/(marketing)/_layout.svelte.js                     6.55 kB
+.svelte-kit/output/server/chunks/TeamForm.js                                              6.83 kB
+.svelte-kit/output/server/chunks/queries.js                                               7.09 kB
+.svelte-kit/output/server/chunks/TeamForm2.js                                             7.16 kB
+.svelte-kit/output/server/chunks/PortfolioForm.js                                         7.28 kB
+.svelte-kit/output/server/entries/pages/(marketing)/_page.svelte.js                       8.00 kB
+.svelte-kit/output/server/chunks/Reach.js                                                 8.14 kB
+.svelte-kit/output/server/entries/pages/admin-v2/_layout.svelte.js                       10.34 kB
+.svelte-kit/output/server/entries/pages/(marketing)/cookies-policy/_page.svelte.js       12.69 kB
+.svelte-kit/output/server/entries/pages/(marketing)/about/_page.svelte.js                13.41 kB
+.svelte-kit/output/server/entries/pages/(marketing)/privacy-policy/_page.svelte.js       15.54 kB
+.svelte-kit/output/server/chunks/index5.js                                               16.06 kB
+.svelte-kit/output/server/entries/pages/(marketing)/legal-terms/_page.svelte.js          16.74 kB
+.svelte-kit/output/server/remote-entry.js                                                19.02 kB
+.svelte-kit/output/server/entries/pages/admin-v2/_page.svelte.js                         26.23 kB
+.svelte-kit/output/server/chunks/shared.js                                               27.07 kB
+.svelte-kit/output/server/chunks/index.js                                                40.87 kB
+.svelte-kit/output/server/chunks/root.js                                                 82.25 kB
+.svelte-kit/output/server/index.js                                                      125.79 kB
+.svelte-kit/output/server/entries/pages/admin/(app)/_layout.svelte.js                   253.89 kB
+✓ built in 32.14s
+
+Run npm run preview to preview your production build locally.
+
+> Using @sveltejs/adapter-node
+  ✔ done
