@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "readCount": 3,
+  "allRabColumnsByteEquivalent": true,
+  "statuses": [
+    "superseded",
+    "client_approved"
+  ],
+  "frozenDocumentUnchanged": true,
+  "sourceRelationPreserved": true
+}

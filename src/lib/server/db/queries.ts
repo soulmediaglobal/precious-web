@@ -256,3 +256,27 @@ export async function createCanonicalProject(
   return project;
  });
 }
+
+// Phase 1 document navigation: explicit family ownership, no document-string inference.
+export async function getRabWorkspaceProjects() {
+  return db.select({ id: projects.id, projectNumber: projects.projectNumber,
+    projectName: projects.projectName, location: projects.location }).from(projects)
+    .orderBy(desc(projects.createdAt), desc(projects.id));
+}
+
+export async function getProjectRabWorkspace(projectId: number) {
+  const [project] = await db.select({ id: projects.id, projectNumber: projects.projectNumber,
+    projectName: projects.projectName, location: projects.location }).from(projects)
+    .where(eq(projects.id, projectId));
+  if (!project) return null;
+  const families = await db.select().from(rabFamilies)
+    .where(eq(rabFamilies.projectId, projectId)).orderBy(desc(rabFamilies.familyNumber));
+  const revisions = await db.select({ id: rabs.id, familyId: rabs.familyId,
+    documentNumber: rabs.documentNumber, revisionNumber: rabs.revisionNumber,
+    status: rabs.status, grandTotal: rabs.grandTotal, createdAt: rabs.createdAt,
+    updatedAt: rabs.updatedAt, supersedesRabId: rabs.supersedesRabId }).from(rabs)
+    .innerJoin(rabFamilies, and(eq(rabs.familyId, rabFamilies.id), eq(rabs.projectId, rabFamilies.projectId)))
+    .where(eq(rabFamilies.projectId, projectId)).orderBy(desc(rabs.revisionNumber), desc(rabs.id));
+  return { project, families: families.map(family => ({ ...family,
+    revisions: revisions.filter(revision => revision.familyId === family.id) })) };
+}

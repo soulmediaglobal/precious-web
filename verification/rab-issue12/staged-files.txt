@@ -1,0 +1,15 @@
+src/lib/server/db/queries.ts
+src/routes/admin-v2/projects/+page.server.ts
+src/routes/admin-v2/projects/+page.svelte
+src/routes/admin-v2/projects/[projectId]/rab/+page.server.ts
+src/routes/admin-v2/projects/[projectId]/rab/+page.svelte
+verification/rab-issue12/README.md
+verification/rab-issue12/checks.json
+verification/rab-issue12/data-flow-tests.json
+verification/rab-issue12/final-state.json
+verification/rab-issue12/historical-read.json
+verification/rab-issue12/implementation-summary.json
+verification/rab-issue12/preservation.json
+verification/rab-issue12/route-tests.json
+verification/rab-issue12/staged-files.txt
+verification/rab-issue12/verify.ts
