@@ -1,0 +1,21 @@
+{
+  "issue": 12,
+  "baseline": "canonical v2.3.0 / merged Issue15",
+  "routes": [
+    "/admin-v2/projects",
+    "/admin-v2/projects/[projectId]/rab",
+    "/admin-v2/projects/[projectId]/rab?rab=<revision-row-id>#document"
+  ],
+  "queriesAdded": [
+    "getRabWorkspaceProjects",
+    "getProjectRabWorkspace"
+  ],
+  "primitivesReusedUnchanged": [
+    "createInitialRab"
+  ],
+  "schemaChanges": false,
+  "grouping": "family FK + Project FK; revisions descending",
+  "ui": "Option3 dark document workspace; project context, nested history, selected summary, source link, stored total, Create RAB, Open RAB foundation, empty/loading/error states",
+  "lifecycle": "8 granular status labels preserved; unknown status shown verbatim",
+  "outOfScopeFeaturesAdded": false
+}

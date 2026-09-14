@@ -1,0 +1,34 @@
+{
+  "passed": true,
+  "results": [
+    {
+      "path": "/admin-v2/projects",
+      "status": 200
+    },
+    {
+      "path": "/admin-v2/projects/1/rab",
+      "status": 200
+    },
+    {
+      "path": "/admin-v2/projects/2/rab?rab=1",
+      "status": 404
+    },
+    {
+      "path": "/admin-v2/projects/0/rab",
+      "status": 404
+    },
+    {
+      "path": "/admin-v2/projects/1/rab?rab=no",
+      "status": 404
+    },
+    {
+      "path": "/admin-v2/projects/99999/rab",
+      "status": 404
+    }
+  ],
+  "emptyState": true,
+  "missingProjectCreate": 404,
+  "browserCreate": "Family003/R00 created and selected",
+  "historyStillUnchanged": true,
+  "auth": "local in-memory fixture; production hooks unchanged"
+}

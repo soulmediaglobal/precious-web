@@ -256,3 +256,223 @@ export async function createCanonicalProject(
   return project;
  });
 }
+
+// Phase 1 document navigation: explicit family ownership, no document-string inference.
+export async function getRabWorkspaceProjects() {
+  return db.select({ id: projects.id, projectNumber: projects.projectNumber,
+    projectName: projects.projectName, location: projects.location }).from(projects)
+    .orderBy(desc(projects.createdAt), desc(projects.id));
+}
+
+export async function getProjectRabWorkspace(projectId: number) {
+  const [project] = await db.select({ id: projects.id, projectNumber: projects.projectNumber,
+    projectName: projects.projectName, location: projects.location }).from(projects)
+    .where(eq(projects.id, projectId));
+  if (!project) return null;
+  const families = await db.select().from(rabFamilies)
+    .where(eq(rabFamilies.projectId, projectId)).orderBy(desc(rabFamilies.familyNumber));
+  const revisions = await db.select({ id: rabs.id, familyId: rabs.familyId,
+    documentNumber: rabs.documentNumber, revisionNumber: rabs.revisionNumber,
+    status: rabs.status, grandTotal: rabs.grandTotal, createdAt: rabs.createdAt,
+    updatedAt: rabs.updatedAt, supersedesRabId: rabs.supersedesRabId }).from(rabs)
+    .innerJoin(rabFamilies, and(eq(rabs.familyId, rabFamilies.id), eq(rabs.projectId, rabFamilies.projectId)))
+    .where(eq(rabFamilies.projectId, projectId)).orderBy(desc(rabs.revisionNumber), desc(rabs.id));
+  return { project, families: families.map(family => ({ ...family,
+    revisions: revisions.filter(revision => revision.familyId === family.id) })) };
+}
+
+// RAB Builder: each mutation holds the document lock through ownership checks and totals.
+import { rabSections, rabGroups, rabSubgroups, rabItems } from './schema';
+import { BuilderInputError, sumMoney, type BuilderMutation } from '$lib/rab-builder/values';
+
+async function getBuilderRows(tx: RabAllocationTransaction, rabId: number) {
+	const sections = await tx
+		.select()
+		.from(rabSections)
+		.where(eq(rabSections.rabId, rabId))
+		.orderBy(asc(rabSections.sortOrder), asc(rabSections.id));
+	const groups = await tx
+		.select({ row: rabGroups })
+		.from(rabGroups)
+		.innerJoin(rabSections, eq(rabGroups.sectionId, rabSections.id))
+		.where(eq(rabSections.rabId, rabId))
+		.orderBy(asc(rabGroups.sortOrder), asc(rabGroups.id));
+	const subgroups = await tx
+		.select({ row: rabSubgroups })
+		.from(rabSubgroups)
+		.innerJoin(rabGroups, eq(rabSubgroups.groupId, rabGroups.id))
+		.innerJoin(rabSections, eq(rabGroups.sectionId, rabSections.id))
+		.where(eq(rabSections.rabId, rabId))
+		.orderBy(asc(rabSubgroups.sortOrder), asc(rabSubgroups.id));
+	const items = await tx
+		.select({
+			row: rabItems,
+			materialTotal: sql<
+				string | null
+			>`round(${rabItems.volume} * ${rabItems.materialUnitPrice}, 2)::text`,
+			jasaTotal: sql<string | null>`round(${rabItems.volume} * ${rabItems.jasaUnitPrice}, 2)::text`
+		})
+		.from(rabItems)
+		.innerJoin(rabGroups, eq(rabItems.groupId, rabGroups.id))
+		.innerJoin(rabSections, eq(rabGroups.sectionId, rabSections.id))
+		.where(eq(rabSections.rabId, rabId))
+		.orderBy(asc(rabItems.sortOrder), asc(rabItems.id));
+	return {
+		sections,
+		groups: groups.map((r) => r.row),
+		subgroups: subgroups.map((r) => r.row),
+		items: items.map(({ row, ...totals }) => ({ ...row, ...totals }))
+	};
+}
+
+export async function getRabBuilder(projectId: number, rabId: number) {
+	return db.transaction(
+		async (tx) => {
+			const [entry] = await tx
+				.select({
+					rab: rabs,
+					project: {
+						id: projects.id,
+						projectNumber: projects.projectNumber,
+						projectName: projects.projectName,
+						location: projects.location,
+						clientName: clients.companyName
+					}
+				})
+				.from(rabs)
+				.innerJoin(projects, eq(rabs.projectId, projects.id))
+				.leftJoin(clients, eq(projects.clientId, clients.id))
+				.where(and(eq(rabs.id, rabId), eq(rabs.projectId, projectId)));
+			if (!entry) return null;
+			const rows = await getBuilderRows(tx, rabId);
+			return {
+				...entry,
+				sections: rows.sections.map((section) => {
+					const groups = rows.groups
+						.filter((group) => group.sectionId === section.id)
+						.map((group) => {
+							const items = rows.items.filter((item) => item.groupId === group.id);
+							return {
+								...group,
+								subtotal: sumMoney(items.map((item) => item.total)),
+								items: items.filter((item) => item.subgroupId === null),
+								subgroups: rows.subgroups
+									.filter((subgroup) => subgroup.groupId === group.id)
+									.map((subgroup) => {
+										const children = items.filter((item) => item.subgroupId === subgroup.id);
+										return {
+											...subgroup,
+											items: children,
+											subtotal: sumMoney(children.map((item) => item.total))
+										};
+									})
+							};
+						});
+					return { ...section, groups, subtotal: sumMoney(groups.map((group) => group.subtotal)) };
+				})
+			};
+		},
+		{ isolationLevel: 'repeatable read', accessMode: 'read only' }
+	);
+}
+
+async function refreshBuilderTotals(tx: RabAllocationTransaction, rabId: number) {
+	// Legacy item totals remain unchanged until explicitly edited. New/edited items already
+	// have exact rounded component totals; aggregate those persisted totals for all levels.
+	await tx.execute(sql`with amount as (
+    select coalesce(sum(i.total), 0) as subtotal from rab_items i
+    join rab_groups g on g.id = i.group_id join rab_sections s on s.id = g.section_id
+    where s.rab_id = ${rabId}
+  ) update rabs r set subtotal = a.subtotal,
+    tax_amount = round(a.subtotal * r.tax_rate / 100, 2),
+    grand_total = a.subtotal + round(a.subtotal * r.tax_rate / 100, 2), updated_at = now()
+    from amount a where r.id = ${rabId}`);
+	await tx.execute(sql`update rab_items i set weight = case when r.subtotal = 0 then 0
+    else round(i.total / r.subtotal * 100, 6) end
+    from rab_groups g, rab_sections s, rabs r
+    where i.group_id = g.id and g.section_id = s.id and s.rab_id = r.id and r.id = ${rabId}`);
+}
+
+export async function mutateRabBuilder(projectId: number, rabId: number, input: BuilderMutation) {
+	return db.transaction(async (tx) => {
+		const [rab] = await tx
+			.select({ status: rabs.status })
+			.from(rabs)
+			.where(and(eq(rabs.id, rabId), eq(rabs.projectId, projectId)))
+			.for('update');
+		if (!rab) return { status: 'missing' as const };
+		if (rab.status !== 'draft') return { status: 'locked' as const };
+		const rows = await getBuilderRows(tx, rabId);
+		const { kind, id, parentId, subgroupId } = input;
+		const owned =
+			kind === 'section'
+				? rows.sections
+				: kind === 'group'
+					? rows.groups
+					: kind === 'subgroup'
+						? rows.subgroups
+						: rows.items;
+		if (id && !owned.some((row) => row.id === id))
+			throw new BuilderInputError('Baris tidak ditemukan dalam RAB ini.');
+		if (kind === 'group' && !rows.sections.some((row) => row.id === parentId))
+			throw new BuilderInputError('Area tidak ditemukan.');
+		if ((kind === 'subgroup' || kind === 'item') && !rows.groups.some((row) => row.id === parentId))
+			throw new BuilderInputError('Kelompok tidak ditemukan.');
+		if (
+			kind === 'item' &&
+			subgroupId !== null &&
+			!rows.subgroups.some((row) => row.id === subgroupId && row.groupId === parentId)
+		)
+			throw new BuilderInputError('Subkelompok bukan bagian dari kelompok ini.');
+		// Hierarchy parents cannot be silently changed by tampered edit requests.
+		if (
+			id &&
+			((kind === 'group' && !rows.groups.some((r) => r.id === id && r.sectionId === parentId)) ||
+				(kind === 'subgroup' && !rows.subgroups.some((r) => r.id === id && r.groupId === parentId)))
+		)
+			throw new BuilderInputError('Induk baris tidak cocok.');
+		if (input.operation === 'delete') {
+			const table =
+				kind === 'section'
+					? rabSections
+					: kind === 'group'
+						? rabGroups
+						: kind === 'subgroup'
+							? rabSubgroups
+							: rabItems;
+			await tx.delete(table).where(eq(table.id, id!));
+		} else if ('description' in input) {
+			const unitPrice = sql`(${input.materialUnitPrice}::numeric + ${input.jasaUnitPrice}::numeric)`;
+			const total = sql`(round(${input.volume}::numeric * ${input.materialUnitPrice}::numeric, 2) + round(${input.volume}::numeric * ${input.jasaUnitPrice}::numeric, 2))`;
+			const values = {
+				groupId: parentId!,
+				subgroupId,
+				description: input.description,
+				unit: input.unit,
+				volume: input.volume,
+				materialUnitPrice: input.materialUnitPrice,
+				jasaUnitPrice: input.jasaUnitPrice,
+				unitPrice,
+				total,
+				sortOrder: input.sortOrder,
+				notes: input.notes || null
+			};
+			if (id) await tx.update(rabItems).set(values).where(eq(rabItems.id, id));
+			else await tx.insert(rabItems).values(values);
+		} else {
+			const values = { name: input.name, sortOrder: input.sortOrder };
+			if (kind === 'section') {
+				if (id) await tx.update(rabSections).set(values).where(eq(rabSections.id, id));
+				else await tx.insert(rabSections).values({ ...values, rabId });
+			} else if (kind === 'group') {
+				if (id) await tx.update(rabGroups).set(values).where(eq(rabGroups.id, id));
+				else await tx.insert(rabGroups).values({ ...values, sectionId: parentId! });
+			} else {
+				if (id) await tx.update(rabSubgroups).set(values).where(eq(rabSubgroups.id, id));
+				else await tx.insert(rabSubgroups).values({ ...values, groupId: parentId! });
+			}
+		}
+		await refreshBuilderTotals(tx, rabId);
+		return { status: 'saved' as const };
+	});
+}

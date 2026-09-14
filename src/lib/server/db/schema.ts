@@ -347,6 +347,9 @@ export const rabItems = pgTable(
 		description: text('description').notNull(),
 		unit: text('unit').notNull(),
 		volume: numeric('volume', { precision: 14, scale: 4 }).notNull().default('0'),
+		// Null means a legacy combined price has not been split by an admin yet.
+		materialUnitPrice: numeric('material_unit_price', { precision: 18, scale: 2 }),
+		jasaUnitPrice: numeric('jasa_unit_price', { precision: 18, scale: 2 }),
 		unitPrice: numeric('unit_price', { precision: 18, scale: 2 }).notNull().default('0'),
 		total: numeric('total', { precision: 18, scale: 2 }).notNull().default('0'),
 		weight: numeric('weight', { precision: 9, scale: 6 }).notNull().default('0'),

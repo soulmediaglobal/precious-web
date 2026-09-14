@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "postgres": 18,
+  "migrations": "0000–0013",
+  "storage": "minimal local stubs; no live access",
+  "twoFamiliesWithR00": true,
+  "legacyPCRoot": true,
+  "explicitFamilyFK": true,
+  "unparseableHistoricalNumber": true,
+  "revisionOrder": "descending",
+  "missingProject": true,
+  "projectIsolation": true
+}

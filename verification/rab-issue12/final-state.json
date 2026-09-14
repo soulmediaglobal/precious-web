@@ -1,0 +1,23 @@
+{
+  "pr16": {
+    "state": "MERGED",
+    "mergeSha": "fdb2bda808ed4be3d7546b827e335b65a5c95acd"
+  },
+  "issue15": "CLOSED",
+  "originMainContainsMerge": true,
+  "issue12StructuralBlockerRemoved": true,
+  "originalBranch": "15-define-and-implement-canonical-rab-family-identity-revision-integrity-and-pre-numbering-compatibility",
+  "originalHead": "f92a8feae016c7f2ee060f7612cc71fcb180f74e",
+  "originalLocalMain": "fcc6f23792453c5784498428887dae7433089eb0",
+  "worktree": "/tmp/precious-issue12",
+  "branch": "issue12-rab-workspace",
+  "head": "fdb2bda808ed4be3d7546b827e335b65a5c95acd",
+  "stop": "selectively staged; no commit/push/PR/deploy",
+  "stagedFileCount": 15,
+  "liveDBUntouched": true,
+  "blockers": [],
+  "limitations": [
+    "Real Supabase authentication not retested; local UI fixture used.",
+    "Temporary worktree under /tmp; retain for review until commit."
+  ]
+}

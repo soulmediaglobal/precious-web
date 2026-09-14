@@ -1,0 +1,27 @@
+{
+  "npm run check": {
+    "exitCode": 0,
+    "errors": 0,
+    "warnings": 0
+  },
+  "npm run build": {
+    "exitCode": 0,
+    "adapter": "node"
+  },
+  "npx --no-install drizzle-kit check": {
+    "exitCode": 0
+  },
+  "git diff --check": {
+    "exitCode": 0
+  },
+  "browser": {
+    "status": "passed",
+    "desktop": "1280x720",
+    "mobile": "390x844",
+    "horizontalOverflow": false,
+    "createSelectOpenHistory": true,
+    "auth": "isolated in-memory test fixture; real Supabase login not exercised; hooks unchanged",
+    "screenshots": "visually inspected in tool, not saved"
+  },
+  "liveDatabaseAccess": false
+}
