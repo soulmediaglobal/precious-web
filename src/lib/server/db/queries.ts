@@ -476,3 +476,20 @@ export async function mutateRabBuilder(projectId: number, rabId: number, input: 
 		return { status: 'saved' as const };
 	});
 }
+
+export async function getDashboardCounts() {
+	const [[clientCount], [projectCount], [activeProjectCount], [portfolioCount]] = await Promise.all(
+		[
+			db.select({ value: count() }).from(clients),
+			db.select({ value: count() }).from(projects),
+			db.select({ value: count() }).from(projects).where(eq(projects.status, 'active')),
+			db.select({ value: count() }).from(portfolio)
+		]
+	);
+	return {
+		clients: clientCount.value,
+		projects: projectCount.value,
+		activeProjects: activeProjectCount.value,
+		portfolio: portfolioCount.value
+	};
+}
