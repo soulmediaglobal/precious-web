@@ -122,12 +122,11 @@
 					</dd>
 				</div>
 			</dl>
-			<a class="open" href={`?rab=${rab.id}#document`}>Open RAB →</a>
+			<a class="open" href={`/admin-v2/projects/${data.project.id}/rab/${rab.id}`}>Open RAB →</a>
 			<section id="document" class="foundation">
 				<h3>Ringkasan dokumen</h3>
 				<p>
-					Identitas dan riwayat RAB tersedia di workspace ini. Editor rincian pekerjaan belum
-					tersedia.
+					Buka RAB untuk melihat rincian pekerjaan dan total. Dokumen Draft dapat diedit di Builder.
 				</p>
 			</section>
 		{:else}<div class="empty">
