@@ -30,7 +30,7 @@
 
 <svelte:head><title>RAB · {data.project.projectNumber}</title></svelte:head>
 <nav aria-label="Breadcrumb">
-	<a href="/admin-v2/projects">Projects</a> / {data.project.projectNumber} / RAB
+	<a href="/admin-v2/projects">Projects</a> / <a href={`/admin-v2/projects/${data.project.id}`}>{data.project.projectNumber}</a> / RAB
 </nav>
 <header>
 	<div>
