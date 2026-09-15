@@ -11,6 +11,18 @@
 	let confirmingDelete = $state(false);
 	let editorKey = $state(0);
 	let editable = $derived(data.rab.status === 'draft');
+	let hasLegacyItems = $derived(
+		data.sections.some((section) =>
+			section.groups.some((group) =>
+				[...group.items, ...group.subgroups.flatMap((subgroup) => subgroup.items)].some(
+					(item) =>
+						item.materialUnitPrice === null &&
+						item.jasaUnitPrice === null &&
+						item.unitPrice != null
+				)
+			)
+		)
+	);
 	const names: Record<string, string> = {
 		section: 'Area',
 		group: 'Kelompok',
@@ -284,8 +296,6 @@
 		<tr class="item-row"
 			><td class="description"
 				><strong>{item.description}</strong>{#if item.notes}<small>{item.notes}</small
-					>{/if}{#if item.materialUnitPrice === null}<small class="legacy"
-						>Harga lama gabungan: {money(item.unitPrice)} / satuan · belum dipisah</small
 					>{/if}</td
 			>
 			<td>{item.unit}</td><td class="num">{item.volume.replace(/\.?0+$/, '')}</td>
@@ -307,6 +317,11 @@
 			>
 		</tr>
 	{/snippet}
+	{#if hasLegacyItems}
+		<p class="legacy-notice">
+			Beberapa item lama masih menggunakan harga satuan gabungan. Edit item untuk memisahkan harga material dan jasa.
+		</p>
+	{/if}
 	<!-- svelte-ignore a11y_no_noninteractive_tabindex (keyboard users need to scroll the table) -->
 	<div
 		class="sheet"
@@ -569,6 +584,14 @@
 		margin-bottom: 1rem;
 		border-left: 3px solid #8098f9;
 		font-size: 0.85rem;
+	}
+	.legacy-notice {
+		background: #1d2939;
+		color: #d0d5dd;
+		padding: 0.65rem 0.85rem;
+		margin-bottom: 0.75rem;
+		border-radius: 6px;
+		font-size: 0.8rem;
 	}
 	.notice.error {
 		color: #fda29b;
