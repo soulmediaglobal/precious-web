@@ -1,6 +1,6 @@
 # Precious CMS — Changelog
 
-Terakhir diperbarui: 2026-09-12T09:33:24+07:00 (Asia/Jakarta).
+Terakhir diperbarui: 2026-09-15T14:36:04+07:00 (Asia/Jakarta).
 
 Versi dokumentasi: **2.3.0** (SemVer dokumentasi, terpisah dari versi rilis CMS).
 
@@ -15,6 +15,34 @@ Nurey **bukan gate untuk detail implementasi minor/lokal**: spacing, typo, respo
 ## Riwayat
 
 Entry terbaru di atas, gunakan timestamp dengan zona waktu dan bukti verifikasi. Jangan mengarang versi atau histori rilis. Gunakan SemVer terpisah untuk dokumentasi dan rilis CMS; revisi dokumentasi bukan rilis aplikasi. Versi dokumentasi 1.0.0 memulai penomoran eksplisit; baseline sebelumnya tetap tanpa versi, dan versi rilis CMS tidak diubah atau diasumsikan.
+
+### Unreleased — Rekonsiliasi implementasi merged setelah Dokumentasi 2.3.0
+
+Timestamp: 2026-09-15T14:36:04+07:00 (Asia/Jakarta).
+
+Range Git yang direkonsiliasi: `8809bea4d42c59eee52322c29e75608e1ae305cc..3455e0fc21f2ccdf7ba189b1dc78eb1e030d79f1` pada `origin/main` (16 commit). Bagian ini tidak menetapkan versi aplikasi atau versi dokumentasi baru.
+
+#### RAB dan Projects
+
+- **Issue #15 / PR #16** (`fdb2bda`): menambahkan identitas canonical RAB Family, integrity revision/source berbasis FK, uniqueness per Project/Family, alokasi nomor Project `PRE-YYYY-XXXXX` yang atomic dan reset tahunan Asia/Jakarta, serta kompatibilitas immutable untuk Project `PC-...` historis. Migration `0013_rab_family_identity.sql` dan bukti pengujian disposable PostgreSQL ikut masuk ke repo.
+- **Issue #12 foundation** (`2d01482`): menambahkan Project-centric RAB workspace untuk list Project, grouping Family → Revision melalui relasi eksplisit, membuka revision terpilih, dan membuat Family/R00 awal melalui primitive canonical. Scope foundation tidak mencakup Tahapan, Termin, Invoice, atau BAST.
+- **PR #17** (`710353c`, implementasi `b3d26f6`; refinement `f875607`): menambahkan RAB Builder MVP untuk hierarchy Area/Kelompok/Subkelompok/Item, split harga material/jasa, kalkulasi subtotal/PPN/total/bobot yang persisted dan transactional, Draft-only mutation guards, serta preview PDF draft berbasis browser print. Migration `0014_rab_builder_prices.sql`, focused DB tests, dan dokumentasi pengujiannya ikut masuk; styling preview kemudian dirapikan tanpa perubahan schema tambahan.
+- **PR #19** (`a2fb485`): menyelesaikan Projects Admin v2 MVP berupa list/filter Projects, KPI ringkas, Project detail, dan entry flow menuju workspace serta Builder RAB.
+- **PR #20** (`ebfbed3`): menyederhanakan notice harga legacy di Builder agar record lama tetap jelas sebagai combined price sampai material/jasa di-split dan disimpan eksplisit.
+
+#### Admin CMS
+
+- **PR #18** (`0f8125c`): mengganti dashboard sample/static dengan KPI nyata untuk Projects, Clients, RAB, Portfolio, Team, dan Contact Inbox menggunakan query layer existing.
+- **Issue #21 / PR #22** (`b3edc89`, implementasi `0ed99e6`): mempromosikan Admin v2 menjadi CMS canonical di `/admin`, memindahkan seluruh route/component modern, memperbarui auth guard, login/logout, navigation, breadcrumb, dan internal links, serta menghapus tree aktif Admin v1 dan `/admin-v2`. Modul Clients, Contact Inbox, Portfolio CMS, Team, Projects, RAB Builder, dan PDF Preview dipertahankan pada route canonical; `/admin-v2` kini 404.
+
+#### Website publik
+
+- **Issue #23 / PR #24** (`3455e0f`, implementasi `7644733`): redesign `/portofolio` menjadi showcase editorial berbasis data Portfolio existing. Hero, copy, parallax, dan gold mask lama dipertahankan; grid uniform diganti pola dinamis 5/7 lalu 7/5, ditambah filter kategori client-side, featured project dinamis, link detail existing, dan CTA image-backed “Let’s Build What’s Next.” Tidak ada perubahan DB, schema, migration, atau live data pada milestone ini.
+
+#### Data dan operasi
+
+- Migration **0013** dan **0014** dilaporkan telah diterapkan berurutan ke live database dan diverifikasi berhasil sebelum smoke test final Admin canonical. Ini adalah catatan rollout/operasi berdasarkan konfirmasi Ray di riwayat pekerjaan, terpisah dari evidence test disposable yang committed di repo; tidak ada credential atau nilai sensitif dicatat di sini.
+- Rekonsiliasi changelog ini hanya mengubah `doc_changelog.md`. Tidak menjalankan migration, menulis live data, deploy, atau mengubah code aplikasi. Portfolio CMS, Contact Inbox, branded Admin login, Team, dan Clients telah merged sebelum commit changelog terakhir `8809bea`, sehingga tidak dicatat ulang sebagai milestone baru dalam range ini; semuanya tetap tercermin sebagai modul yang dipertahankan oleh cutover PR #22.
 
 ### Dokumentasi 2.3.0 — Issue #12 BLOCKED, RAB family/revision dan legacy numbering compatibility
 
