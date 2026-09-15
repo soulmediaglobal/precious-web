@@ -45,7 +45,7 @@ Nurey **bukan gate untuk detail implementasi minor/lokal**: spacing, typo, respo
 
 - Pertahankan SvelteKit 2, Svelte 5 runes (`$state`, `$derived`, `$props`), Tailwind CSS 4, Supabase PostgreSQL, Drizzle + `postgres-js`, Supabase Auth + `@supabase/ssr`, serta `@sveltejs/adapter-node`. Perubahan stack harus dibahas terlebih dahulu.
 - Query baru melalui `src/lib/server/db/queries.ts`, bukan Drizzle langsung di `+page.server.ts`.
-- Pertahankan route groups existing (baseline v1; routing baru v2 terpisah dan path/naming masih pending): `src/routes/(marketing)/` untuk publik (Header, Footer, `layout.css`); `admin/login/` tanpa sidebar; `admin/logout/` sebagai POST sign-out; `admin/(app)/` untuk shell admin (Sidebar/Navbar).
+- Pertahankan route groups existing: `src/routes/(marketing)/` untuk publik (Header, Footer, `layout.css`); `admin/login/` tanpa sidebar; `admin/logout/` sebagai POST sign-out; dan tree canonical `admin/` untuk shell serta modul CMS.
 - Root `src/routes/+layout.svelte` sengaja kosong dari layout publik; jangan menaruh Header/Footer/CSS publik yang bocor ke admin.
 - Pertahankan proteksi `/admin/*` kecuali `/admin/login` melalui `event.locals.getUser()` di `hooks.server.ts`; Supabase client per request di `event.locals.supabase`.
 - Server load memetakan camelCase Drizzle (misalnya `projectName`) ke snake_case template lama (`project_name`) untuk menjaga kompatibilitas.

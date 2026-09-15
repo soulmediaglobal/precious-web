@@ -284,7 +284,7 @@ await mutate({
 });
 await client`update rabs set status='submitted' where id=${other.id}`;
 console.log(
-	`PASS decimal rounding. Preview Draft /admin-v2/projects/${project.id}/rab/${rab.id}; read-only /admin-v2/projects/${project.id}/rab/${other.id}`
+	`PASS decimal rounding. Preview Draft /admin/projects/${project.id}/rab/${rab.id}; read-only /admin/projects/${project.id}/rab/${other.id}`
 );
 await db.$client.end();
 await client.end();
