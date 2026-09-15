@@ -75,8 +75,9 @@
 <div class="builder">
 	<nav aria-label="Breadcrumb">
 		<a href="/admin-v2/projects">Projects</a> /
+		<a href={`/admin-v2/projects/${data.project.id}`}>{data.project.projectNumber}</a> /
 		<a href={`/admin-v2/projects/${data.project.id}/rab?rab=${data.rab.id}`}
-			>{data.project.projectNumber} / RAB</a
+			>RAB</a
 		> / Builder
 	</nav>
 	<header>

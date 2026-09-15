@@ -493,3 +493,19 @@ export async function getDashboardCounts() {
 		portfolio: portfolioCount.value
 	};
 }
+
+// Projects v2: canonical project identity and client ownership.
+export async function getAdminProjects() {
+  return db.select({ id: projects.id, projectNumber: projects.projectNumber,
+    projectName: projects.projectName, status: projects.status, clientId: projects.clientId,
+    clientName: clients.companyName, location: projects.location, createdAt: projects.createdAt })
+    .from(projects).innerJoin(clients, eq(projects.clientId, clients.id))
+    .orderBy(desc(projects.createdAt), desc(projects.id));
+}
+
+export async function getAdminProjectDetail(projectId: number) {
+  const [row] = await db.select({ project: projects, clientName: clients.companyName })
+    .from(projects).innerJoin(clients, eq(projects.clientId, clients.id))
+    .where(eq(projects.id, projectId));
+  return row ?? null;
+}
