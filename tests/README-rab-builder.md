@@ -1,7 +1,7 @@
 # RAB Builder MVP
 
 Branch `rab-builder-mvp`, based on Issue #12 commit `2d01482`.
-Route: `/admin-v2/projects/[projectId]/rab/[rabId]`, linked from workspace **Open RAB**.
+Route: `/admin/projects/[projectId]/rab/[rabId]`, linked from workspace **Open RAB**.
 
 ## Schema and calculation
 
@@ -52,9 +52,9 @@ runner; committed application auth is unchanged. Restart: `node /tmp/rab-builder
 - `src/lib/server/db/schema.ts`
 - `src/lib/server/db/queries.ts`
 - `src/lib/rab-builder/values.ts`
-- `src/routes/admin-v2/projects/[projectId]/rab/+page.svelte`
-- `src/routes/admin-v2/projects/[projectId]/rab/[rabId]/+page.server.ts`
-- `src/routes/admin-v2/projects/[projectId]/rab/[rabId]/+page.svelte`
+- `src/routes/admin/projects/[projectId]/rab/+page.svelte`
+- `src/routes/admin/projects/[projectId]/rab/[rabId]/+page.server.ts`
+- `src/routes/admin/projects/[projectId]/rab/[rabId]/+page.svelte`
 - `drizzle/0014_rab_builder_prices.sql`
 - `drizzle/meta/0014_snapshot.json`
 - `drizzle/meta/_journal.json`
@@ -68,7 +68,7 @@ validation errors, legacy pricing, locked view, desktop and 390px mobile sanity.
 
 ## Draft PDF preview
 
-Route: `/admin-v2/projects/[projectId]/rab/[rabId]/preview`.
+Route: `/admin/projects/[projectId]/rab/[rabId]/preview`.
 Builder header opens Preview PDF in a new tab; Print / Save PDF uses browser printing.
 The root-layout reset removes the admin shell. A4 portrait, repeated table headers,
 row break protection, hidden print controls and a repeated print DRAFT watermark.
