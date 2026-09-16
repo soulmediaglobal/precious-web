@@ -7,10 +7,29 @@
 	type Item = PageData['sections'][number]['groups'][number]['items'][number];
 	type Editor = Record<string, string>;
 	let editor = $state<Editor | null>(null);
+	let commercialEditor = $state<Editor | null>(null);
 	let saving = $state(false);
 	let confirmingDelete = $state(false);
 	let editorKey = $state(0);
 	let editable = $derived(data.rab.status === 'draft');
+	const scaledPercentage = (value: string | null) => {
+		if (value === null) return 0n;
+		const [whole, fraction = ''] = value.split('.');
+		return BigInt(whole) * 10000n + BigInt(fraction.padEnd(4, '0').slice(0, 4));
+	};
+	let allocated = $derived(
+		data.paymentTerms.reduce((sum, term) => sum + scaledPercentage(term.percentage), 0n)
+	);
+	let remaining = $derived(1000000n - allocated);
+	let legacyTermCount = $derived(data.paymentTerms.filter((term) => term.percentage === null).length);
+	const percentageText = (value: bigint) => {
+		const negative = value < 0n;
+		const absolute = negative ? -value : value;
+		const fraction = String(absolute % 10000n)
+			.padStart(4, '0')
+			.replace(/0+$/, '');
+		return `${negative ? '-' : ''}${absolute / 10000n}${fraction ? `.${fraction}` : ''}%`;
+	};
 	let hasLegacyItems = $derived(
 		data.sections.some((section) =>
 			section.groups.some((group) =>
@@ -31,7 +50,8 @@
 	};
 	$effect(() => {
 		if (form && 'values' in form && form.values) {
-			editor = form.values;
+			if (form.values.commercialKind) commercialEditor = form.values;
+			else editor = form.values;
 		}
 	});
 	function openEditor(
@@ -60,6 +80,23 @@
 				?.scrollIntoView({ behavior: 'smooth', block: 'start' })
 		);
 	}
+	function openCommercialEditor(kind: 'stage' | 'paymentTerm', row?: object, sortOrder = 0) {
+		commercialEditor = {
+			commercialKind: kind,
+			sortOrder: String(sortOrder),
+			...Object.fromEntries(
+				Object.entries(row ?? {}).map(([key, value]) => [key, value == null ? '' : String(value)])
+			)
+		};
+		editor = null;
+		confirmingDelete = false;
+		editorKey++;
+		requestAnimationFrame(() =>
+			document
+				.getElementById('commercial-editor')
+				?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+		);
+	}
 	const nextOrder = (rows: { sortOrder: number }[]) =>
 		Math.min(2147483647, Math.max(-1, ...rows.map((row) => row.sortOrder)) + 1);
 	const submit: SubmitFunction = ({ cancel, formData }) => {
@@ -75,7 +112,10 @@
 		return async ({ result, update }) => {
 			try {
 				await update({ reset: false });
-				if (result.type === 'success') editor = null;
+				if (result.type === 'success') {
+					editor = null;
+					commercialEditor = null;
+				}
 			} finally {
 				saving = false;
 			}
@@ -464,6 +504,189 @@
 			</tbody>
 		</table>
 	</div>
+
+	<section class="commercial" aria-labelledby="stages-title">
+		<div class="toolbar">
+			<div>
+				<h2 id="stages-title">Tahapan</h2>
+				<p class="muted">Tahapan pelaksanaan untuk revisi RAB ini.</p>
+			</div>
+			{#if editable}<button
+					disabled={saving}
+					onclick={() => openCommercialEditor('stage', undefined, nextOrder(data.stages))}
+					>+ Tahapan</button
+				>{/if}
+		</div>
+		<div class="cards">
+			{#each data.stages as stage (stage.id)}
+				<article>
+					<div>
+						<strong>{stage.name}</strong>{#if stage.description}<p>
+								{stage.description}
+							</p>{/if}<small>Urutan {stage.sortOrder}</small>
+					</div>
+					{#if editable}<button
+							class="text-button"
+							disabled={saving}
+							onclick={() => openCommercialEditor('stage', stage)}>Edit</button
+						>{/if}
+				</article>
+			{:else}<p class="empty-card">Belum ada Tahapan.</p>{/each}
+		</div>
+	</section>
+
+	<section class="commercial" aria-labelledby="terms-title">
+		<div class="toolbar">
+			<div>
+				<h2 id="terms-title">Termin pembayaran</h2>
+				<p class="muted">Nominal dihitung dari Grand Total RAB oleh database.</p>
+			</div>
+			{#if editable}<button
+					disabled={saving}
+					onclick={() =>
+						openCommercialEditor('paymentTerm', undefined, nextOrder(data.paymentTerms))}
+					>+ Termin</button
+				>{/if}
+		</div>
+		<div class:over={allocated > 1000000n} class="allocation" role="status">
+			<span>Dialokasikan <strong>{percentageText(allocated)}</strong></span>
+			<span
+				>{remaining >= 0n ? 'Sisa' : 'Kelebihan'}
+				<strong>{percentageText(remaining >= 0n ? remaining : -remaining)}</strong></span
+			>
+			{#if allocated > 1000000n}<strong>Alokasi melebihi 100%. Periksa kembali Termin.</strong>{/if}
+			{#if legacyTermCount > 0}<span class="legacy"
+				>{legacyTermCount} Termin legacy nominal tidak termasuk total alokasi persentase.</span
+			>{/if}
+		</div>
+		<div class="cards terms">
+			{#each data.paymentTerms as term (term.id)}
+				<article>
+					<div>
+						<strong>{term.name}</strong>
+						<p class="term-value">
+							{term.percentage === null
+								? 'Legacy / belum dikonversi'
+								: `${term.percentage.replace(/\.?0+$/, '')}%`} · {money(term.amount)}
+						</p>
+						{#if term.percentage === null}<p class="legacy"
+								>Legacy nominal — belum dikonversi ke persentase</p
+							>{/if}
+						<p>{data.stages.find((stage) => stage.id === term.stageId)?.name ?? 'Tanpa Tahapan'}</p>
+						{#if term.paymentTrigger}<p>{term.paymentTrigger}</p>{/if}<small
+							>Urutan {term.sortOrder}</small
+						>
+					</div>
+					{#if editable}<button
+							class="text-button"
+							disabled={saving}
+							onclick={() => openCommercialEditor('paymentTerm', term)}>Edit</button
+						>{/if}
+				</article>
+			{:else}<p class="empty-card">Belum ada Termin.</p>{/each}
+		</div>
+	</section>
+
+	{#if commercialEditor && editable}
+		{#key editorKey}
+			<section id="commercial-editor" class="editor" aria-label="Editor Tahapan dan Termin">
+				<h2>
+					{commercialEditor.id ? 'Edit' : 'Tambah'}
+					{commercialEditor.commercialKind === 'stage' ? 'Tahapan' : 'Termin'}
+				</h2>
+				<form method="POST" action="?/commercial" use:enhance={submit}>
+					<input type="hidden" name="commercialKind" value={commercialEditor.commercialKind} />
+					<input type="hidden" name="id" value={commercialEditor.id ?? ''} />
+					<fieldset disabled={saving}>
+						<div class="fields">
+							<label class="grow"
+								>Nama<input
+									name="name"
+									value={commercialEditor.name ?? ''}
+									maxlength="250"
+									required
+								/></label
+							>
+							<label
+								>Urutan<input
+									name="sortOrder"
+									type="number"
+									min="0"
+									max="2147483647"
+									step="1"
+									value={commercialEditor.sortOrder}
+									required
+								/></label
+							>
+							{#if commercialEditor.commercialKind === 'stage'}
+								<label class="wide"
+									>Deskripsi<textarea
+										name="description"
+										rows="3"
+										maxlength="5000"
+										value={commercialEditor.description ?? ''}
+									></textarea></label
+								>
+							{:else}
+								<label
+									>Persentase (%)<input
+										name="percentage"
+										type="number"
+										min="0"
+										max="100"
+										step="0.0001"
+										value={commercialEditor.percentage ?? ''}
+										required
+									/></label
+								>
+								<label class="grow"
+									>Tahapan<select name="stageId" value={commercialEditor.stageId ?? ''}
+										><option value="">Tanpa Tahapan</option>{#each data.stages as stage}<option
+												value={String(stage.id)}>{stage.name}</option
+											>{/each}</select
+									></label
+								>
+								<label class="wide"
+									>Kondisi pembayaran / catatan<textarea
+										name="paymentTrigger"
+										rows="3"
+										maxlength="5000"
+										value={commercialEditor.paymentTrigger ?? ''}
+									></textarea></label
+								>
+							{/if}
+						</div>
+						<div class="form-actions">
+							<button type="submit" name="operation" value="save"
+								>{saving ? 'Menyimpan…' : 'Simpan'}</button
+							>
+							<button class="secondary" type="button" onclick={() => (commercialEditor = null)}
+								>Batal</button
+							>
+							{#if commercialEditor.id}
+								{#if confirmingDelete}<span class="legacy">Yakin hapus data ini?</span><button
+										class="danger"
+										type="submit"
+										name="operation"
+										value="delete"
+										formnovalidate>Ya, hapus</button
+									><button
+										class="secondary"
+										type="button"
+										onclick={() => (confirmingDelete = false)}>Jangan hapus</button
+									>
+								{:else}<button
+										class="danger"
+										type="button"
+										onclick={() => (confirmingDelete = true)}>Hapus</button
+									>{/if}
+							{/if}
+						</div>
+					</fieldset>
+				</form>
+			</section>
+		{/key}
+	{/if}
 	<footer>
 		<p class="muted">
 			Bobot = total item ÷ subtotal sebelum PPN × 100%.<br />Total material dan jasa dibulatkan 2
@@ -714,6 +937,55 @@
 	.empty-row {
 		color: #98a2b3;
 		padding: 1.25rem;
+	}
+	.commercial {
+		margin-top: 2rem;
+	}
+	.cards {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+		gap: 0.75rem;
+	}
+	.cards article,
+	.empty-card {
+		display: flex;
+		justify-content: space-between;
+		gap: 1rem;
+		padding: 1rem;
+		border: 1px solid #344054;
+		border-radius: 8px;
+		background: #101828;
+	}
+	.cards article p {
+		margin-top: 0.35rem;
+		color: #d0d5dd;
+		white-space: pre-wrap;
+	}
+	.cards article small {
+		display: block;
+		margin-top: 0.5rem;
+	}
+	.term-value {
+		color: #a4bcfd !important;
+		font-variant-numeric: tabular-nums;
+	}
+	.empty-card {
+		color: #98a2b3;
+	}
+	.allocation {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem 1.5rem;
+		padding: 0.8rem 1rem;
+		margin-bottom: 0.8rem;
+		border-left: 3px solid #8098f9;
+		background: #1d2939;
+		font-size: 0.85rem;
+	}
+	.allocation.over {
+		color: #fda29b;
+		border-color: #f97066;
+		background: #3b2025;
 	}
 	.legacy {
 		color: #fec84b;

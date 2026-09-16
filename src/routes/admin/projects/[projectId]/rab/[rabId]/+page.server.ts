@@ -1,6 +1,11 @@
 import { error, fail } from '@sveltejs/kit';
-import { getRabBuilder, mutateRabBuilder } from '$lib/server/db/queries';
-import { BuilderInputError, parseBuilderForm, positiveId } from '$lib/rab-builder/values';
+import { getRabBuilder, mutateRabBuilder, mutateRabCommercial } from '$lib/server/db/queries';
+import {
+	BuilderInputError,
+	parseBuilderForm,
+	parseCommercialForm,
+	positiveId
+} from '$lib/rab-builder/values';
 import type { Actions, PageServerLoad } from './$types';
 
 function routeId(value: string) {
@@ -51,6 +56,40 @@ export const actions: Actions = {
 			console.error('RAB Builder save failed', { projectId, rabId, code });
 			return fail(500, {
 				message: 'Belum berhasil disimpan. Muat ulang RAB sebelum mencoba kembali.',
+				values
+			});
+		}
+	},
+	commercial: async ({ params, request, locals }) => {
+		if (!(await locals.getUser())) error(401, 'Silakan login kembali.');
+		const projectId = routeId(params.projectId),
+			rabId = routeId(params.rabId);
+		const form = await request.formData();
+		const values = Object.fromEntries(
+			[...form.entries()].map(([key, value]) => [key, String(value)])
+		);
+		try {
+			const input = parseCommercialForm(form);
+			const result = await mutateRabCommercial(projectId, rabId, input);
+			if (result.status === 'missing')
+				return fail(404, { message: 'RAB tidak ditemukan.', values });
+			if (result.status === 'locked')
+				return fail(409, { message: 'RAB terkunci. Hanya Draft yang dapat diedit.', values });
+			return {
+				success: true,
+				message:
+					input.operation === 'delete'
+						? 'Data Tahapan/Termin dihapus.'
+						: 'Data Tahapan/Termin tersimpan.'
+			};
+		} catch (cause) {
+			if (cause instanceof BuilderInputError) return fail(400, { message: cause.message, values });
+			const code =
+				(cause as { cause?: { code?: string }; code?: string })?.cause?.code ??
+				(cause as { code?: string })?.code;
+			console.error('RAB commercial save failed', { projectId, rabId, code });
+			return fail(500, {
+				message: 'Tahapan/Termin belum berhasil disimpan. Muat ulang RAB sebelum mencoba kembali.',
 				values
 			});
 		}
