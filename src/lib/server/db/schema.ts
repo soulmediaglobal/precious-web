@@ -384,9 +384,9 @@ export const rabPaymentTerms = pgTable(
 			.notNull()
 			.references(() => rabs.id, { onDelete: 'cascade' }),
 		stageId: integer('stage_id')
-			.notNull()
 			.references(() => rabStages.id, { onDelete: 'restrict' }),
 		name: text('name').notNull(),
+		percentage: numeric('percentage', { precision: 7, scale: 4 }),
 		amount: numeric('amount', { precision: 18, scale: 2 }).notNull().default('0'),
 		paymentTrigger: text('payment_trigger'),
 		sortOrder: integer('sort_order').notNull().default(0)

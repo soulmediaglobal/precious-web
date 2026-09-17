@@ -282,8 +282,20 @@ export async function getProjectRabWorkspace(projectId: number) {
 }
 
 // RAB Builder: each mutation holds the document lock through ownership checks and totals.
-import { rabSections, rabGroups, rabSubgroups, rabItems } from './schema';
-import { BuilderInputError, sumMoney, type BuilderMutation } from '$lib/rab-builder/values';
+import {
+	rabSections,
+	rabGroups,
+	rabSubgroups,
+	rabItems,
+	rabStages,
+	rabPaymentTerms
+} from './schema';
+import {
+	BuilderInputError,
+	sumMoney,
+	type BuilderMutation,
+	type CommercialMutation
+} from '$lib/rab-builder/values';
 
 async function getBuilderRows(tx: RabAllocationTransaction, rabId: number) {
 	const sections = await tx
@@ -345,8 +357,20 @@ export async function getRabBuilder(projectId: number, rabId: number) {
 				.where(and(eq(rabs.id, rabId), eq(rabs.projectId, projectId)));
 			if (!entry) return null;
 			const rows = await getBuilderRows(tx, rabId);
+			const stages = await tx
+				.select()
+				.from(rabStages)
+				.where(eq(rabStages.rabId, rabId))
+				.orderBy(asc(rabStages.sortOrder), asc(rabStages.id));
+			const paymentTerms = await tx
+				.select()
+				.from(rabPaymentTerms)
+				.where(eq(rabPaymentTerms.rabId, rabId))
+				.orderBy(asc(rabPaymentTerms.sortOrder), asc(rabPaymentTerms.id));
 			return {
 				...entry,
+				stages,
+				paymentTerms,
 				sections: rows.sections.map((section) => {
 					const groups = rows.groups
 						.filter((group) => group.sectionId === section.id)
@@ -391,6 +415,81 @@ async function refreshBuilderTotals(tx: RabAllocationTransaction, rabId: number)
     else round(i.total / r.subtotal * 100, 6) end
     from rab_groups g, rab_sections s, rabs r
     where i.group_id = g.id and g.section_id = s.id and s.rab_id = r.id and r.id = ${rabId}`);
+	await tx.execute(sql`update rab_payment_terms pt
+		set amount = round(r.grand_total * pt.percentage / 100, 2)
+		from rabs r
+		where pt.rab_id = r.id and r.id = ${rabId} and pt.percentage is not null`);
+}
+
+export async function mutateRabCommercial(
+	projectId: number,
+	rabId: number,
+	input: CommercialMutation
+) {
+	return db.transaction(async (tx) => {
+		const [rab] = await tx
+			.select({ status: rabs.status, grandTotal: rabs.grandTotal })
+			.from(rabs)
+			.where(and(eq(rabs.id, rabId), eq(rabs.projectId, projectId)))
+			.for('update');
+		if (!rab) return { status: 'missing' as const };
+		if (rab.status !== 'draft') return { status: 'locked' as const };
+
+		const stages = await tx.select().from(rabStages).where(eq(rabStages.rabId, rabId));
+		const terms = await tx.select().from(rabPaymentTerms).where(eq(rabPaymentTerms.rabId, rabId));
+		const owned = input.kind === 'stage' ? stages : terms;
+		if (input.id && !owned.some((row) => row.id === input.id))
+			throw new BuilderInputError('Data Tahapan/Termin tidak ditemukan dalam RAB ini.');
+
+		if (input.operation === 'delete') {
+			if (input.kind === 'stage') {
+				if (terms.some((term) => term.stageId === input.id))
+					throw new BuilderInputError(
+						'Tahapan masih digunakan oleh Termin. Lepaskan relasi Termin terlebih dahulu.'
+					);
+				await tx
+					.delete(rabStages)
+					.where(and(eq(rabStages.id, input.id!), eq(rabStages.rabId, rabId)));
+			} else {
+				await tx
+					.delete(rabPaymentTerms)
+					.where(and(eq(rabPaymentTerms.id, input.id!), eq(rabPaymentTerms.rabId, rabId)));
+			}
+			return { status: 'saved' as const };
+		}
+
+		if (input.kind === 'stage') {
+			const values = {
+				name: input.name,
+				description: input.description || null,
+				sortOrder: input.sortOrder
+			};
+			if (input.id)
+				await tx
+					.update(rabStages)
+					.set(values)
+					.where(and(eq(rabStages.id, input.id), eq(rabStages.rabId, rabId)));
+			else await tx.insert(rabStages).values({ ...values, rabId });
+		} else {
+			if (input.stageId !== null && !stages.some((stage) => stage.id === input.stageId))
+				throw new BuilderInputError('Tahapan tidak ditemukan dalam RAB ini.');
+			const values = {
+				name: input.name,
+				percentage: input.percentage,
+				amount: sql`round(${rab.grandTotal}::numeric * ${input.percentage}::numeric / 100, 2)`,
+				stageId: input.stageId,
+				paymentTrigger: input.paymentTrigger || null,
+				sortOrder: input.sortOrder
+			};
+			if (input.id)
+				await tx
+					.update(rabPaymentTerms)
+					.set(values)
+					.where(and(eq(rabPaymentTerms.id, input.id), eq(rabPaymentTerms.rabId, rabId)));
+			else await tx.insert(rabPaymentTerms).values({ ...values, rabId });
+		}
+		return { status: 'saved' as const };
+	});
 }
 
 export async function mutateRabBuilder(projectId: number, rabId: number, input: BuilderMutation) {

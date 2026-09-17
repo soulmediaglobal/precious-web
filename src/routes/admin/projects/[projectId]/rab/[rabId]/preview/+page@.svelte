@@ -65,6 +65,38 @@
 			</tbody>
 		</table>
 		<dl class="totals"><div><dt>Subtotal sebelum PPN</dt><dd>{money(data.rab.subtotal)}</dd></div><div><dt>PPN {number(data.rab.taxRate)}%</dt><dd>{money(data.rab.taxAmount)}</dd></div><div class="grand"><dt>Grand total</dt><dd>{money(data.rab.grandTotal)}</dd></div></dl>
+		{#if data.stages.length}
+			<section class="commercial">
+				<h2>Tahapan Pelaksanaan</h2>
+				{#each data.stages as stage}<article>
+						<strong>{stage.name}</strong>{#if stage.description}<p>{stage.description}</p>{/if}
+					</article>{/each}
+			</section>
+		{/if}
+		{#if data.paymentTerms.length}
+			<section class="commercial">
+				<h2>Termin Pembayaran</h2>
+				<table class="terms-table">
+					<thead
+						><tr
+							><th>Termin</th><th>Tahapan</th><th class="num">Persentase</th><th class="num"
+								>Nominal</th
+							></tr
+						></thead
+					><tbody>
+						{#each data.paymentTerms as term}<tr
+								><td
+									><strong>{term.name}</strong>{#if term.paymentTrigger}<small
+											>{term.paymentTrigger}</small
+										>{/if}</td
+								><td>{data.stages.find((stage) => stage.id === term.stageId)?.name ?? '—'}</td><td
+									class="num">{term.percentage === null ? 'Legacy / —' : `${number(term.percentage)}%`}</td
+								><td class="num">{money(term.amount)}</td></tr
+							>{/each}
+					</tbody>
+				</table>
+			</section>
+		{/if}
 		{#if data.rab.signatoryName}<div class="signatory"><p>Disiapkan oleh,</p><strong>{data.rab.signatoryName}</strong>{#if data.rab.signatoryTitle}<p>{data.rab.signatoryTitle}</p>{/if}</div>{/if}
 		<footer>Precious Contractor <span>DRAFT · Untuk peninjauan</span></footer>
 	</main>
@@ -91,6 +123,30 @@
 	thead th:nth-child(2), thead th:nth-child(3), tbody td:nth-child(2):not(.num) { text-align: center; } .num { text-align: right; font-variant-numeric: tabular-nums; } small { display: block; font-size: 8px; color: #586470; margin-top: 4px; white-space: pre-wrap; }
 	.area { background: #dce6ed; font-weight: bold; } .group { background: #eef2f5; font-weight: bold; } .subgroup th { padding-left: 15px; } .subgroup { color: #42576a; }
 	.totals { width: 60%; margin: 22px 0 24px auto; font-size: 12px; break-inside: avoid; } .totals div { justify-content: space-between; padding: 5px 0; } .totals dd { text-align: right; } .grand { border-top: 2px solid #204d70; font-weight: bold; font-size: 14px; } .signatory { break-inside: avoid; margin: 24px 0; } .signatory strong { display: block; margin-top: 24px; }
+	.commercial {
+		margin: 22px 0;
+	}
+	.commercial h2 {
+		font-size: 14px;
+		border-bottom: 2px solid #204d70;
+		padding-bottom: 5px;
+		margin-bottom: 8px;
+	}
+	.commercial article {
+		padding: 7px 0;
+		border-bottom: 1px solid #d7dde3;
+		break-inside: avoid;
+	}
+	.commercial article p {
+		margin-top: 3px;
+		white-space: pre-wrap;
+	}
+	.terms-table {
+		break-inside: auto;
+	}
+	.terms-table thead th {
+		background: #204d70;
+	}
 	footer { border-top: 1px solid #d7dde3; padding-top: 12px; margin-top: 30px; color: #526170; font-size: 10px; display: flex; justify-content: space-between; }
 	@media screen and (max-width: 820px) { .preview { overflow-x: auto; } nav { min-width: 320px; flex-wrap: wrap; } nav p { flex-basis: 100%; order: 3; } }
 	@page { size: A4 portrait; margin: 12mm; }
