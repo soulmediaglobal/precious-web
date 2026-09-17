@@ -257,6 +257,11 @@ export async function createCanonicalProject(
  });
 }
 
+export async function getProjectFormClients() {
+ return db.select({ id: clients.id, companyName: clients.companyName }).from(clients)
+  .orderBy(asc(clients.companyName), asc(clients.id));
+}
+
 // Phase 1 document navigation: explicit family ownership, no document-string inference.
 export async function getRabWorkspaceProjects() {
   return db.select({ id: projects.id, projectNumber: projects.projectNumber,
