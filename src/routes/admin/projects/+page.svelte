@@ -33,8 +33,13 @@
 <div class="projects-page">
 	<header>
 		<nav aria-label="Breadcrumb"><a href="/admin">Home</a> / Projects</nav>
-		<h1>Projects</h1>
-		<p>Manage your projects and open their RAB workspace.</p>
+		<div class="title-row">
+			<div>
+				<h1>Projects</h1>
+				<p>Manage your projects and open their RAB workspace.</p>
+			</div>
+			<a class="new-project" href="/admin/projects/new">+ New Project</a>
+		</div>
 	</header>
 	<section class="metrics" aria-label="Project totals">
 		<article><span>Total Projects</span><strong>{data.projects.length}</strong></article>
@@ -147,6 +152,24 @@
 		margin-top: 8px;
 		font-size: 14px;
 	}
+	.title-row {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 20px;
+	}
+	.new-project {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		min-height: 44px;
+		padding: 10px 18px;
+		border-radius: 8px;
+		background: #465fff;
+		color: white;
+		white-space: nowrap;
+	}
+	.new-project:hover { background: #3641f5; color: white; }
 	.metrics {
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -280,6 +303,7 @@
 		outline-offset: 3px;
 	}
 	@media (max-width: 640px) {
+		.title-row { align-items: stretch; flex-direction: column; }
 		.filters {
 			padding: 16px;
 			display: grid;
