@@ -2,6 +2,7 @@ import { createHash } from 'node:crypto';
 import { db } from './index';
 import { cmsUsers, companyBankAccounts } from './schema';
 import { approvalPermissions } from '$lib/rab-builder/approval';
+import { canManageCmsRole, type CmsRole } from '$lib/server/cms-user-access';
 import { portfolio, portfolioImages, expertise, expertiseImages, team, settings, clients, projects, rabs } from './schema';
 import { eq, asc, desc, ilike, or, count, and, sql } from 'drizzle-orm';
 
@@ -478,6 +479,31 @@ export async function getRabBuilder(projectId: number, rabId: number) {
 
 export async function getAllCmsUsers() {
 	return db.select().from(cmsUsers).orderBy(desc(cmsUsers.createdAt));
+}
+
+export async function createCmsUserMembership(
+	actorUserId: string,
+	userId: string,
+	role: CmsRole
+) {
+	return db.transaction(async (tx) => {
+		const [actor] = await tx
+			.select()
+			.from(cmsUsers)
+			.where(eq(cmsUsers.userId, actorUserId))
+			.for('share');
+
+		if (!actor?.isActive || !canManageCmsRole(actor, role)) {
+			return { status: 'forbidden' as const };
+		}
+
+		const [membership] = await tx
+			.insert(cmsUsers)
+			.values({ userId, role, isActive: true })
+			.returning();
+
+		return { status: 'ok' as const, membership };
+	});
 }
 
 export async function getCmsUser(userId: string) {

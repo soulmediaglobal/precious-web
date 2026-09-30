@@ -8,7 +8,7 @@ import { getAllCmsUsers } from '$lib/server/db/queries';
 import { createSupabaseAdminClient } from '$lib/server/supabase-admin';
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ locals }) => {
+export const load: PageServerLoad = async ({ locals, url }) => {
 	const actor = locals.cmsUser;
 
 	if (!canAccessUserManagement(actor)) {
@@ -66,6 +66,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 
 	return {
 		actorRole: actor!.role,
-		users
+		users,
+		created: url.searchParams.get('created') === '1'
 	};
 };

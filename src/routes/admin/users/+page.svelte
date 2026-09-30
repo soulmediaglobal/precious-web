@@ -34,6 +34,10 @@
 		<a class="button primary" href="/admin/users/new">Add user</a>
 	</header>
 
+	{#if data.created}
+		<div class="notice" role="status">User berhasil dibuat.</div>
+	{/if}
+
 	<section class="users-panel" aria-label="CMS users">
 		{#if data.users.length}
 			<div class="table-wrap">
@@ -114,6 +118,12 @@
 		margin: 8px 0 0;
 		font-size: 14px;
 		color: var(--ta-muted);
+	}
+	.notice {
+		padding: 14px 16px;
+		border: 1px solid rgb(18 183 106 / 30%);
+		border-radius: 8px;
+		color: #6ce9a6;
 	}
 	.users-panel {
 		border: 1px solid var(--ta-border);
