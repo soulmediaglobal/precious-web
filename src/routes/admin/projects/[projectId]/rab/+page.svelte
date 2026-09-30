@@ -126,7 +126,7 @@
 			<section id="document" class="foundation">
 				<h3>Ringkasan dokumen</h3>
 				<p>
-					Buka RAB untuk melihat rincian pekerjaan dan total. Dokumen Draft dapat diedit di Builder.
+					Buka RAB untuk melihat rincian, Request Approval, atau Approve sesuai role lo. Hanya Draft yang dapat diedit; Review internal dan Disetujui internal read-only. Approval internal bukan persetujuan klien.
 				</p>
 			</section>
 		{:else}<div class="empty">

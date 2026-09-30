@@ -1,4 +1,7 @@
+import { createHash } from 'node:crypto';
 import { db } from './index';
+import { cmsUsers, companyBankAccounts } from './schema';
+import { approvalPermissions } from '$lib/rab-builder/approval';
 import { portfolio, portfolioImages, expertise, expertiseImages, team, settings, clients, projects, rabs } from './schema';
 import { eq, asc, desc, ilike, or, count, and, sql } from 'drizzle-orm';
 
@@ -342,66 +345,216 @@ async function getBuilderRows(tx: RabAllocationTransaction, rabId: number) {
 	};
 }
 
+async function readRabBuilder(tx: RabAllocationTransaction, projectId: number, rabId: number) {
+	const [entry] = await tx
+		.select({
+			rab: rabs,
+			project: {
+				id: projects.id,
+				projectNumber: projects.projectNumber,
+				projectName: projects.projectName,
+				location: projects.location,
+				clientName: clients.companyName
+			}
+		})
+		.from(rabs)
+		.innerJoin(projects, eq(rabs.projectId, projects.id))
+		.leftJoin(clients, eq(projects.clientId, clients.id))
+		.where(and(eq(rabs.id, rabId), eq(rabs.projectId, projectId)));
+	if (!entry) return null;
+	const rows = await getBuilderRows(tx, rabId);
+	const stages = await tx
+		.select()
+		.from(rabStages)
+		.where(eq(rabStages.rabId, rabId))
+		.orderBy(asc(rabStages.sortOrder), asc(rabStages.id));
+	const paymentTerms = await tx
+		.select()
+		.from(rabPaymentTerms)
+		.where(eq(rabPaymentTerms.rabId, rabId))
+		.orderBy(asc(rabPaymentTerms.sortOrder), asc(rabPaymentTerms.id));
+	return {
+		...entry,
+		stages,
+		paymentTerms,
+		sections: rows.sections.map((section) => {
+			const groups = rows.groups
+				.filter((group) => group.sectionId === section.id)
+				.map((group) => {
+					const items = rows.items.filter((item) => item.groupId === group.id);
+					return {
+						...group,
+						subtotal: sumMoney(items.map((item) => item.total)),
+						items: items.filter((item) => item.subgroupId === null),
+						subgroups: rows.subgroups
+							.filter((subgroup) => subgroup.groupId === group.id)
+							.map((subgroup) => {
+								const children = items.filter((item) => item.subgroupId === subgroup.id);
+								return {
+									...subgroup,
+									items: children,
+									subtotal: sumMoney(children.map((item) => item.total))
+								};
+							})
+					};
+				});
+			return { ...section, groups, subtotal: sumMoney(groups.map((group) => group.subtotal)) };
+		})
+	};
+}
+
+type RabDocument = NonNullable<Awaited<ReturnType<typeof readRabBuilder>>>;
+const snapshotFormat = 'precious-rab-internal-v1';
+const digest = (payload: string) => createHash('sha256').update(payload).digest('hex');
+
+// Decode only snapshots written by this workflow. Unknown/legacy formats never use live masters.
+function decodeApprovalSnapshot(rab: typeof rabs.$inferSelect): RabDocument | null {
+	try {
+		if (!rab.frozenDocument) return null;
+		const snapshot = JSON.parse(rab.frozenDocument);
+		if (
+			snapshot.format !== snapshotFormat ||
+			typeof snapshot.payload !== 'string' ||
+			snapshot.sha256 !== digest(snapshot.payload)
+		)
+			return null;
+		const document: RabDocument = JSON.parse(snapshot.payload, (key, value) =>
+			key.endsWith('At') && typeof value === 'string' ? new Date(value) : value
+		);
+		if (
+			document.rab.id !== rab.id ||
+			document.rab.projectId !== rab.projectId ||
+			document.rab.familyId !== rab.familyId ||
+			document.project.id !== rab.projectId ||
+			!Array.isArray(document.sections) ||
+			!Array.isArray(document.stages) ||
+			!Array.isArray(document.paymentTerms)
+		)
+			return null;
+		// Lifecycle metadata is live; document content always comes from the frozen payload.
+		document.rab = {
+			...document.rab,
+			status: rab.status,
+			internalApprovalRequestedByUserId: rab.internalApprovalRequestedByUserId,
+			internalApprovalRequestedAt: rab.internalApprovalRequestedAt,
+			internalApprovedByUserId: rab.internalApprovedByUserId,
+			internalApprovedAt: rab.internalApprovedAt,
+			updatedAt: rab.updatedAt,
+			frozenDocument: rab.frozenDocument
+		};
+		return document;
+	} catch {
+		return null;
+	}
+}
+
 export async function getRabBuilder(projectId: number, rabId: number) {
 	return db.transaction(
 		async (tx) => {
-			const [entry] = await tx
-				.select({
-					rab: rabs,
-					project: {
-						id: projects.id,
-						projectNumber: projects.projectNumber,
-						projectName: projects.projectName,
-						location: projects.location,
-						clientName: clients.companyName
-					}
-				})
+			const [rab] = await tx
+				.select()
 				.from(rabs)
-				.innerJoin(projects, eq(rabs.projectId, projects.id))
-				.leftJoin(clients, eq(projects.clientId, clients.id))
 				.where(and(eq(rabs.id, rabId), eq(rabs.projectId, projectId)));
-			if (!entry) return null;
-			const rows = await getBuilderRows(tx, rabId);
-			const stages = await tx
-				.select()
-				.from(rabStages)
-				.where(eq(rabStages.rabId, rabId))
-				.orderBy(asc(rabStages.sortOrder), asc(rabStages.id));
-			const paymentTerms = await tx
-				.select()
-				.from(rabPaymentTerms)
-				.where(eq(rabPaymentTerms.rabId, rabId))
-				.orderBy(asc(rabPaymentTerms.sortOrder), asc(rabPaymentTerms.id));
-			return {
-				...entry,
-				stages,
-				paymentTerms,
-				sections: rows.sections.map((section) => {
-					const groups = rows.groups
-						.filter((group) => group.sectionId === section.id)
-						.map((group) => {
-							const items = rows.items.filter((item) => item.groupId === group.id);
-							return {
-								...group,
-								subtotal: sumMoney(items.map((item) => item.total)),
-								items: items.filter((item) => item.subgroupId === null),
-								subgroups: rows.subgroups
-									.filter((subgroup) => subgroup.groupId === group.id)
-									.map((subgroup) => {
-										const children = items.filter((item) => item.subgroupId === subgroup.id);
-										return {
-											...subgroup,
-											items: children,
-											subtotal: sumMoney(children.map((item) => item.total))
-										};
-									})
-							};
-						});
-					return { ...section, groups, subtotal: sumMoney(groups.map((group) => group.subtotal)) };
-				})
-			};
+			if (!rab) return null;
+			if (rab.frozenDocument) {
+				const document = decodeApprovalSnapshot(rab);
+				if (document)
+					return {
+						...document,
+						previewAvailable: ['internal_review', 'internal_approved'].includes(rab.status)
+					};
+			}
+			const document = await readRabBuilder(tx, projectId, rabId);
+			return document
+				? {
+						...document,
+						previewAvailable: rab.status === 'draft' && !rab.frozenDocument && !rab.inheritedMasters
+					}
+				: null;
 		},
 		{ isolationLevel: 'repeatable read', accessMode: 'read only' }
+	);
+}
+
+export async function getCmsUser(userId: string) {
+	const [user] = await db.select().from(cmsUsers).where(eq(cmsUsers.userId, userId));
+	return user ?? null;
+}
+
+export async function transitionRabApproval(
+	projectId: number,
+	rabId: number,
+	userId: string,
+	operation: 'request' | 'approve'
+) {
+	return db.transaction(
+		async (tx) => {
+			// Shared membership lock prevents role revocation racing the transition.
+			const [actor] = await tx
+				.select()
+				.from(cmsUsers)
+				.where(eq(cmsUsers.userId, userId))
+				.for('share');
+			if (!actor?.isActive) return { status: 'forbidden' as const };
+			// Same row lock as Builder/Tahapan/Termin: no edits can slip past submission.
+			const [rab] = await tx
+				.select()
+				.from(rabs)
+				.where(and(eq(rabs.id, rabId), eq(rabs.projectId, projectId)))
+				.for('update');
+			if (!rab) return { status: 'missing' as const };
+			const permissions = approvalPermissions(actor, rab);
+			if (!(operation === 'request' ? permissions.canRequest : permissions.canApprove))
+				return { status: 'forbidden' as const };
+			let frozenDocument = rab.frozenDocument;
+			if (rab.status === 'draft') {
+				// Do not reinterpret older inherited/frozen representations with current masters.
+				if (frozenDocument || rab.inheritedMasters) return { status: 'historical' as const };
+				const document = await readRabBuilder(tx, projectId, rabId);
+				if (!document) return { status: 'missing' as const };
+				const [project] = await tx.select().from(projects).where(eq(projects.id, projectId));
+				const [client] = await tx.select().from(clients).where(eq(clients.id, project.clientId));
+				const bank = rab.bankAccountId
+					? (
+							await tx
+								.select()
+								.from(companyBankAccounts)
+								.where(eq(companyBankAccounts.id, rab.bankAccountId))
+						)[0]
+					: null;
+				const payload = JSON.stringify(document);
+				frozenDocument = JSON.stringify({
+					format: snapshotFormat,
+					payload,
+					sha256: digest(payload),
+					project: { ...project, client: client ?? null },
+					bank: bank ?? null
+				});
+			} else if (!decodeApprovalSnapshot(rab)) return { status: 'historical' as const };
+			const now = new Date();
+			await tx
+				.update(rabs)
+				.set(
+					operation === 'request'
+						? {
+								status: 'internal_review',
+								internalApprovalRequestedByUserId: userId,
+								internalApprovalRequestedAt: now,
+								frozenDocument,
+								updatedAt: now
+							}
+						: {
+								status: 'internal_approved',
+								internalApprovedByUserId: userId,
+								internalApprovedAt: now,
+								frozenDocument,
+								updatedAt: now
+							}
+				)
+				.where(eq(rabs.id, rabId));
+			return { status: 'ok' as const };
+		},
+		{ isolationLevel: 'repeatable read' }
 	);
 }
 
@@ -433,12 +586,12 @@ export async function mutateRabCommercial(
 ) {
 	return db.transaction(async (tx) => {
 		const [rab] = await tx
-			.select({ status: rabs.status, grandTotal: rabs.grandTotal })
+			.select({ status: rabs.status, grandTotal: rabs.grandTotal, frozenDocument: rabs.frozenDocument })
 			.from(rabs)
 			.where(and(eq(rabs.id, rabId), eq(rabs.projectId, projectId)))
 			.for('update');
 		if (!rab) return { status: 'missing' as const };
-		if (rab.status !== 'draft') return { status: 'locked' as const };
+		if (rab.status !== 'draft' || rab.frozenDocument) return { status: 'locked' as const };
 
 		const stages = await tx.select().from(rabStages).where(eq(rabStages.rabId, rabId));
 		const terms = await tx.select().from(rabPaymentTerms).where(eq(rabPaymentTerms.rabId, rabId));
@@ -500,12 +653,12 @@ export async function mutateRabCommercial(
 export async function mutateRabBuilder(projectId: number, rabId: number, input: BuilderMutation) {
 	return db.transaction(async (tx) => {
 		const [rab] = await tx
-			.select({ status: rabs.status })
+			.select({ status: rabs.status, frozenDocument: rabs.frozenDocument })
 			.from(rabs)
 			.where(and(eq(rabs.id, rabId), eq(rabs.projectId, projectId)))
 			.for('update');
 		if (!rab) return { status: 'missing' as const };
-		if (rab.status !== 'draft') return { status: 'locked' as const };
+		if (rab.status !== 'draft' || rab.frozenDocument) return { status: 'locked' as const };
 		const rows = await getBuilderRows(tx, rabId);
 		const { kind, id, parentId, subgroupId } = input;
 		const owned =

@@ -120,6 +120,20 @@
       "when": 1789473956620,
       "tag": "0016_rab_legacy_payment_term_compatibility",
       "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "7",
+      "when": 1789706389997,
+      "tag": "0017_rab_internal_approval",
+      "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "7",
+      "when": 1789710362746,
+      "tag": "0018_rab_api_hardening",
+      "breakpoints": true
     }
   ]
 }

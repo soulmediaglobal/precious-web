@@ -11,9 +11,9 @@ export const load: PageServerLoad = async ({ params, setHeaders }) => {
 	} catch { error(404, 'Identitas tidak valid.'); }
 	const builder = await getRabBuilder(projectId, rabId);
 	if (!builder) error(404, 'RAB tidak ditemukan dalam Project ini.');
-	// Historical snapshot decoding is not implemented in this branch. Never substitute live masters.
-	if (builder.rab.status !== 'draft' || builder.rab.frozenDocument)
-		error(409, 'Preview dokumen historis belum tersedia. Preview PDF saat ini khusus Draft.');
+	// Unknown historical snapshots remain blocked; never substitute live masters.
+	if (!builder.previewAvailable)
+		error(409, 'Format snapshot dokumen historis belum didukung untuk preview.');
 	setHeaders({ 'cache-control': 'private, no-store' });
 	return builder;
 };
