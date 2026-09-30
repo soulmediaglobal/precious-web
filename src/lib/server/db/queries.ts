@@ -476,6 +476,10 @@ export async function getRabBuilder(projectId: number, rabId: number) {
 	);
 }
 
+export async function getAllCmsUsers() {
+	return db.select().from(cmsUsers).orderBy(desc(cmsUsers.createdAt));
+}
+
 export async function getCmsUser(userId: string) {
 	const [user] = await db.select().from(cmsUsers).where(eq(cmsUsers.userId, userId));
 	return user ?? null;

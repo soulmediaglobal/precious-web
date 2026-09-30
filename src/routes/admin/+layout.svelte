@@ -4,7 +4,7 @@
   import { icons } from './icons';
   import './shell.css';
 
-  let { children } = $props();
+  let { children, data } = $props();
   let isLogin = $derived(page.url.pathname === '/admin/login');
   let isTeam = $derived(
     /^\/admin\/team(?:\/|$)/.test(page.url.pathname)
@@ -13,7 +13,9 @@
   let isProjects = $derived(/^\/admin\/projects(?:\/|$)/.test(page.url.pathname));
   let isPortfolio = $derived(/^\/admin\/portfolio(?:\/|$)/.test(page.url.pathname));
   let isContact = $derived(/^\/admin\/contact(?:\/|$)/.test(page.url.pathname));
-  let selected = $derived(isContact ? 'Contact Inbox' : isPortfolio ? 'Portfolio' : isTeam ? 'Team' : isClients ? 'Clients' : isProjects ? 'Projects' : 'Dashboard');
+  let isUsers = $derived(/^\/admin\/users(?:\/|$)/.test(page.url.pathname));
+  let canManageUsers = $derived(data.cmsUser?.role === 'admin' || data.cmsUser?.role === 'director');
+  let selected = $derived(isUsers ? 'Users' : isContact ? 'Contact Inbox' : isPortfolio ? 'Portfolio' : isTeam ? 'Team' : isClients ? 'Clients' : isProjects ? 'Projects' : 'Dashboard');
   let mobile = $state(false);
   let open = $state(false);
   let collapsed = $state(false);
@@ -31,7 +33,8 @@
       items: [
         { label: 'Contact Inbox', icon: 'clients', href: '/admin/contact' },
         { label: 'Clients', icon: 'clients', href: '/admin/clients' },
-        { label: 'Projects', icon: 'projects', href: '/admin/projects' }
+        { label: 'Projects', icon: 'projects', href: '/admin/projects' },
+        { label: 'Users', icon: 'team', href: '/admin/users' }
       ]
     },
     {
@@ -129,6 +132,7 @@
             </h2>
             <ul>
               {#each group.items as item}
+                {#if item.href !== '/admin/users' || canManageUsers}
                 <li>
                   <a
                     class="ta-menu-item"
@@ -144,6 +148,7 @@
                     <span class="ta-label">{item.label}</span>
                   </a>
                 </li>
+                {/if}
               {/each}
             </ul>
           </section>
