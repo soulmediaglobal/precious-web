@@ -32,7 +32,13 @@ CREATE TABLE storage.objects(id uuid, bucket_id text); ALTER TABLE storage.objec
 const migrationsFolder = mkdtempSync(join(tmpdir(), 'rab-approval-migrations-'));
 cpSync('drizzle', migrationsFolder, { recursive: true });
 const compatibility = join(migrationsFolder, '0016_rab_legacy_payment_term_compatibility.sql');
-writeFileSync(compatibility, readFileSync(compatibility, 'utf8').split('--> statement-breakpoint').slice(1).join('--> statement-breakpoint'));
+writeFileSync(
+	compatibility,
+	readFileSync(compatibility, 'utf8')
+		.split('--> statement-breakpoint')
+		.slice(1)
+		.join('--> statement-breakpoint')
+);
 await migrate(drizzle(client), { migrationsFolder });
 const {
 	getRabBuilder,
@@ -46,8 +52,11 @@ const staff = '00000000-0000-4000-8000-000000000001';
 const director = '00000000-0000-4000-8000-000000000002';
 const inactive = '00000000-0000-4000-8000-000000000003';
 const absent = '00000000-0000-4000-8000-000000000004';
-await client`insert into cms_users(user_id,role,is_active) values (${staff},'staff',true), (${director},'director',true), (${inactive},'director',false)`;
-await assert.rejects(client`insert into cms_users(user_id,role) values (${absent},'admin')`);
+const manager = '00000000-0000-4000-8000-000000000005';
+const admin = '00000000-0000-4000-8000-000000000006';
+const invalidRole = '00000000-0000-4000-8000-000000000007';
+await client`insert into cms_users(user_id,role,is_active) values (${staff},'staff',true), (${manager},'manager',true), (${director},'director',true), (${admin},'admin',true), (${inactive},'director',false)`;
+await assert.rejects(client`insert into cms_users(user_id,role) values (${invalidRole},'owner')`);
 const [customer] =
 	await client`insert into clients(company_name) values ('Original client') returning id`;
 const [project] =
@@ -76,10 +85,12 @@ const stage = parseCommercialForm(
 );
 assert.equal((await get()).rab.status, 'draft');
 assert.equal((await get()).previewAvailable, true);
-for (const actor of [absent, inactive, staff])
+for (const actor of [absent, inactive, staff, manager])
 	assert.equal((await transition(actor, 'approve')).status, 'forbidden');
-assert.equal((await transition(director, 'request')).status, 'forbidden');
+for (const actor of [director, admin])
+	assert.equal((await transition(actor, 'request')).status, 'forbidden');
 assert.equal((await transition(director, 'approve')).status, 'forbidden');
+assert.equal((await transition(admin, 'approve')).status, 'forbidden');
 assert.equal(
 	(await transitionRabApproval(project.id + 999, rabId, director, 'approve')).status,
 	'missing'
@@ -125,6 +136,13 @@ const selfApproved = await get(own);
 assert.equal(selfApproved.rab.createdByUserId, selfApproved.rab.internalApprovedByUserId);
 assert.equal(selfApproved.rab.internalApprovalRequestedByUserId, null);
 assert.equal(selfApproved.rab.internalApprovalRequestedAt, null);
+
+const managerReview = await create(manager);
+assert.equal((await transition(manager, 'request', managerReview)).status, 'ok');
+assert.equal((await transition(admin, 'approve', managerReview)).status, 'ok');
+
+const adminOwn = await create(admin);
+assert.equal((await transition(admin, 'approve', adminOwn)).status, 'ok');
 const unknown = await create(null);
 assert.equal((await transition(director, 'approve', unknown)).status, 'forbidden');
 for (const historical of [null, '{"old":"snapshot"}', '{broken']) {

@@ -187,11 +187,11 @@ export const rabFamilyCounters = pgTable('rab_family_counters', {
 // Supabase Auth UUID is the logical identity; roles are managed server-side only.
 export const cmsUsers = pgTable('cms_users', {
  userId: uuid('user_id').primaryKey(),
- role: text('role').$type<'staff' | 'director'>().notNull(),
+ role: text('role').$type<'admin' | 'director' | 'manager' | 'staff'>().notNull(),
  isActive: boolean('is_active').notNull().default(true),
  createdAt: timestamp('created_at').defaultNow().notNull(),
  updatedAt: timestamp('updated_at').defaultNow().notNull()
-}, (t) => [check('cms_users_role_valid', sql`${t.role} in ('staff', 'director')`)]).enableRLS();
+}, (t) => [check('cms_users_role_valid', sql`${t.role} in ('admin', 'director', 'manager', 'staff')`)]).enableRLS();
 
 export const rabs = pgTable(
 	'rabs',

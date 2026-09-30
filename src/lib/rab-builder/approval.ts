@@ -1,12 +1,15 @@
 type Actor = { userId: string; role: string; isActive: boolean } | null;
 type ApprovalRab = { status: string; createdByUserId: string | null };
 
+const requestRoles = new Set(['manager', 'staff']);
+const approvalRoles = new Set(['admin', 'director']);
+
 export function approvalPermissions(actor: Actor, rab: ApprovalRab) {
 	return {
-		canRequest: Boolean(actor?.isActive && actor.role === 'staff' && rab.status === 'draft'),
+		canRequest: Boolean(actor?.isActive && requestRoles.has(actor.role) && rab.status === 'draft'),
 		canApprove: Boolean(
 			actor?.isActive &&
-			actor.role === 'director' &&
+			approvalRoles.has(actor.role) &&
 			(rab.status === 'internal_review' ||
 				(rab.status === 'draft' && rab.createdByUserId === actor.userId))
 		)

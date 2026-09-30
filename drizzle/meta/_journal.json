@@ -134,6 +134,13 @@
       "when": 1789710362746,
       "tag": "0018_rab_api_hardening",
       "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "7",
+      "when": 1790774709146,
+      "tag": "0019_cms_user_roles",
+      "breakpoints": true
     }
   ]
 }

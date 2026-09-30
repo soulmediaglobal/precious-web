@@ -1,9 +1,10 @@
 <script lang="ts">
   import { enhance } from '$app/forms';
   import type { PageProps } from './$types';
-  let { form }: PageProps = $props();
+  let { data, form }: PageProps = $props();
   let pending = $state(false);
   let showPassword = $state(false);
+  let errorMessage = $derived(form?.error ?? data.error);
 </script>
 
 <main class="precious-login">
@@ -31,12 +32,12 @@
         pending = true;
         return async ({ update }) => { try { await update(); } finally { pending = false; } };
       }}>
-        {#if form?.error}<div id="login-error" class="error" role="alert">{form.error}</div>{/if}
+        {#if errorMessage}<div id="login-error" class="error" role="alert">{errorMessage}</div>{/if}
         <label for="email">Email <span aria-hidden="true">*</span></label>
-        <input id="email" name="email" type="email" autocomplete="username" placeholder="Enter your email" required aria-describedby={form?.error ? 'login-error' : undefined} />
+        <input id="email" name="email" type="email" autocomplete="username" placeholder="Enter your email" required aria-describedby={errorMessage ? 'login-error' : undefined} />
         <label for="password">Password <span aria-hidden="true">*</span></label>
         <div class="password">
-          <input id="password" name="password" type={showPassword ? 'text' : 'password'} autocomplete="current-password" placeholder="Enter your password" required aria-describedby={form?.error ? 'login-error' : undefined} />
+          <input id="password" name="password" type={showPassword ? 'text' : 'password'} autocomplete="current-password" placeholder="Enter your password" required aria-describedby={errorMessage ? 'login-error' : undefined} />
           <button type="button" class="reveal" aria-label={showPassword ? 'Hide password' : 'Show password'} aria-controls="password" aria-pressed={showPassword} onclick={() => showPassword = !showPassword}>{showPassword ? 'Hide' : 'Show'}</button>
         </div>
         <button class="submit" type="submit" disabled={pending}><span>{pending ? 'Signing in…' : 'Sign In'}</span><span aria-hidden="true">↗</span></button>

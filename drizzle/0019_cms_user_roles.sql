@@ -1,0 +1,2 @@
+ALTER TABLE "cms_users" DROP CONSTRAINT "cms_users_role_valid";--> statement-breakpoint
+ALTER TABLE "cms_users" ADD CONSTRAINT "cms_users_role_valid" CHECK ("cms_users"."role" in ('admin', 'director', 'manager', 'staff'));
