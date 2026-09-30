@@ -2,7 +2,7 @@
 	import type { PageProps } from './$types';
 
 	let { data, form }: PageProps = $props();
-	let locked = $derived(data.isSelf || data.user.deletionPending);
+	let accessLocked = $derived(data.isSelf || data.user.deletionPending);
 
 	const roleLabels: Record<string, string> = {
 		admin: 'Admin',
@@ -44,16 +44,47 @@
 			Proses hapus belum selesai. Akses CMS dinonaktifkan; gunakan Retry deletion untuk melanjutkan.
 		</div>
 	{:else if data.saved}
-		<div class="notice success" role="status">Akses user berhasil diperbarui.</div>
+		<div class="notice success" role="status">Profil dan akses user berhasil diperbarui.</div>
 	{/if}
 
 	<form method="POST">
+		<label for="name">Nama</label>
+		<input
+			id="name"
+			name="name"
+			type="text"
+			autocomplete="name"
+			maxlength="120"
+			value={form?.values?.name ?? data.user.name}
+			disabled={data.user.deletionPending}
+			required
+		/>
+
+		<label for="position">Posisi / jabatan</label>
+		<input
+			id="position"
+			name="position"
+			type="text"
+			autocomplete="organization-title"
+			maxlength="160"
+			value={form?.values?.position ?? data.user.position}
+			disabled={data.user.deletionPending}
+			required
+		/>
+		<p class="help">Jabatan pekerjaan, terpisah dari role akses CMS.</p>
+
+		<label for="email">Email</label>
+		<input id="email" type="email" value={data.user.email} disabled />
+		<p class="help">Email login ditampilkan sebagai referensi.</p>
+
 		{#if data.isSelf}
-			<p class="help">Role dan status akun sendiri dilindungi agar akses lo tetap tersedia.</p>
+			<p class="help">Lo boleh mengedit profil sendiri. Role dan status akun tetap dilindungi.</p>
+			<input type="hidden" name="role" value={data.user.role} />
+			<input type="hidden" name="isActive" value={String(data.user.isActive)} />
 		{/if}
 
 		<label for="role">Role</label>
-		<select id="role" name="role" disabled={locked} required>
+		<select id="role" name="role" disabled={accessLocked} required>
 			{#each data.assignableRoles as role}
 				<option value={role} selected={data.user.role === role}>
 					{roleLabels[role]}
@@ -62,7 +93,7 @@
 		</select>
 
 		<label for="isActive">CMS access</label>
-		<select id="isActive" name="isActive" disabled={locked} required>
+		<select id="isActive" name="isActive" disabled={accessLocked} required>
 			<option value="true" selected={data.user.isActive}>Active</option>
 			<option value="false" selected={!data.user.isActive}>Inactive</option>
 		</select>
@@ -72,7 +103,7 @@
 
 		<div class="actions">
 			<a class="button" href="/admin/users">Back to users</a>
-			{#if !locked}
+			{#if !data.user.deletionPending}
 				<button class="button primary" type="submit">Save changes</button>
 			{/if}
 		</div>
@@ -145,6 +176,7 @@
 		font-size: 14px;
 		font-weight: 500;
 	}
+	input:not([type='checkbox']):not([type='hidden']),
 	select {
 		width: 100%;
 		min-height: 46px;
@@ -155,6 +187,7 @@
 		color: var(--ta-text);
 		font: inherit;
 	}
+	input:disabled,
 	select:disabled {
 		opacity: 0.6;
 	}

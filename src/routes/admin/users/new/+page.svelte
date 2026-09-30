@@ -27,6 +27,29 @@
 	{/if}
 
 	<form method="POST">
+		<label for="name">Nama</label>
+		<input
+			id="name"
+			name="name"
+			type="text"
+			autocomplete="name"
+			maxlength="120"
+			value={form?.values?.name ?? ''}
+			required
+		/>
+
+		<label for="position">Posisi / jabatan</label>
+		<input
+			id="position"
+			name="position"
+			type="text"
+			autocomplete="organization-title"
+			maxlength="160"
+			value={form?.values?.position ?? ''}
+			required
+		/>
+		<p class="help">Jabatan pekerjaan, terpisah dari role akses CMS.</p>
+
 		<label for="email">Email</label>
 		<input
 			id="email"

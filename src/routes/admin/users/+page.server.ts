@@ -1,9 +1,6 @@
 import { error } from '@sveltejs/kit';
-import {
-	canAccessUserManagement,
-	canManageCmsRole,
-	type CmsRole
-} from '$lib/server/cms-user-access';
+import type { User } from '@supabase/supabase-js';
+import { canAccessUserManagement, canManageCmsRole } from '$lib/server/cms-user-access';
 import { getAllCmsUsers } from '$lib/server/db/queries';
 import { createSupabaseAdminClient } from '$lib/server/supabase-admin';
 import type { PageServerLoad } from './$types';
@@ -17,33 +14,44 @@ export const load: PageServerLoad = async ({ locals, url }) => {
 
 	const memberships = await getAllCmsUsers();
 	const membershipById = new Map(memberships.map((membership) => [membership.userId, membership]));
-	const supabaseAdmin = createSupabaseAdminClient();
+	const admin = createSupabaseAdminClient();
+	const authUsers: User[] = [];
 
-	const { data, error: authError } = await supabaseAdmin.auth.admin.listUsers({
-		page: 1,
-		perPage: 1000
-	});
+	for (let page = 1; ; page++) {
+		const { data, error: authError } = await admin.auth.admin.listUsers({
+			page,
+			perPage: 200
+		});
 
-	if (authError) {
-		console.error('Unable to list Supabase Auth users', authError);
-		throw error(503, 'Daftar user belum bisa dimuat.');
+		if (authError) {
+			console.error('CMS user directory failed', {
+				status: authError.status,
+				code: authError.code
+			});
+			throw error(503, 'Daftar user belum bisa dimuat.');
+		}
+
+		authUsers.push(...data.users);
+		if (data.users.length < 200) break;
 	}
 
-	const authIds = new Set(data.users.map((user) => user.id));
+	const authIds = new Set(authUsers.map((user) => user.id));
 
-	const users = data.users.map((user) => {
+	const users = authUsers.map((user) => {
 		const membership = membershipById.get(user.id) ?? null;
-		const role = membership?.role ?? null;
 
 		return {
 			id: user.id,
+			name: membership?.name ?? '',
+			position: membership?.position ?? '',
 			email: user.email ?? 'Email tidak tersedia',
-			role,
+			role: membership?.role ?? null,
 			isActive: membership?.isActive ?? false,
+			deletionPending: Boolean(membership?.deletionStartedAt),
 			createdAt: user.created_at,
 			lastSignInAt: user.last_sign_in_at ?? null,
 			hasMembership: Boolean(membership),
-			canManage: role ? canManageCmsRole(actor, role as CmsRole) : true
+			canManage: membership ? canManageCmsRole(actor, membership.role) : false
 		};
 	});
 
@@ -52,21 +60,25 @@ export const load: PageServerLoad = async ({ locals, url }) => {
 
 		users.push({
 			id: membership.userId,
+			name: membership.name ?? '',
+			position: membership.position ?? '',
 			email: 'Auth user tidak ditemukan',
 			role: membership.role,
 			isActive: membership.isActive,
+			deletionPending: Boolean(membership.deletionStartedAt),
 			createdAt: membership.createdAt.toISOString(),
 			lastSignInAt: null,
 			hasMembership: true,
-			canManage: canManageCmsRole(actor, membership.role)
+			canManage: Boolean(membership.deletionStartedAt) && canManageCmsRole(actor, membership.role)
 		});
 	}
 
-	users.sort((a, b) => a.email.localeCompare(b.email));
+	users.sort((a, b) => (a.name || a.email).localeCompare(b.name || b.email));
 
 	return {
 		actorRole: actor!.role,
 		users,
-		created: url.searchParams.get('created') === '1'
+		created: url.searchParams.get('created') === '1',
+		deleted: url.searchParams.get('deleted') === '1'
 	};
 };

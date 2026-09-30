@@ -12,7 +12,8 @@
 
 	const date = new Intl.DateTimeFormat('id-ID', {
 		dateStyle: 'medium',
-		timeStyle: 'short'
+		timeStyle: 'short',
+		timeZone: 'Asia/Jakarta'
 	});
 
 	function formatDate(value: string | null) {
@@ -29,13 +30,15 @@
 		<div>
 			<p class="breadcrumb"><a href="/admin">Home</a> / Users</p>
 			<h1>User Management</h1>
-			<p class="intro">Kelola akses admin, director, manager, dan staff ke Precious CMS.</p>
+			<p class="intro">Kelola identitas dan akses user ke Precious CMS.</p>
 		</div>
 		<a class="button primary" href="/admin/users/new">Add user</a>
 	</header>
 
 	{#if data.created}
 		<div class="notice" role="status">User berhasil dibuat.</div>
+	{:else if data.deleted}
+		<div class="notice" role="status">User berhasil dihapus.</div>
 	{/if}
 
 	<section class="users-panel" aria-label="CMS users">
@@ -44,6 +47,8 @@
 				<table>
 					<thead>
 						<tr>
+							<th>Nama</th>
+							<th>Posisi</th>
 							<th>Email</th>
 							<th>Role</th>
 							<th>Status</th>
@@ -54,22 +59,34 @@
 					<tbody>
 						{#each data.users as user (user.id)}
 							<tr>
+								<td><strong>{user.name || 'Belum diisi'}</strong></td>
+								<td>{user.position || 'Belum diisi'}</td>
 								<td>
-									<strong>{user.email}</strong>
-									{#if !user.hasMembership}<small>Belum memiliki akses CMS</small>{/if}
+									{user.email}
+									{#if !user.hasMembership}
+										<small>Belum memiliki akses CMS</small>
+									{/if}
 								</td>
 								<td>{user.role ? roleLabels[user.role] : 'No access'}</td>
 								<td>
-									<span class:active={user.isActive} class="status">
-										{user.isActive ? 'Active' : 'Inactive'}
+									<span class="status" class:active={user.isActive && !user.deletionPending}>
+										{user.deletionPending
+											? 'Deletion pending'
+											: user.isActive
+												? 'Active'
+												: 'Inactive'}
 									</span>
 								</td>
 								<td>{formatDate(user.lastSignInAt)}</td>
 								<td class="actions">
 									{#if user.canManage}
-										<a class="button" href={`/admin/users/${user.id}`}>Manage</a>
+										<a class="button" href={`/admin/users/${user.id}`}>
+											{user.deletionPending ? 'Retry deletion' : 'Manage'}
+										</a>
 									{:else}
-										<span class="protected">Protected</span>
+										<span class="protected"
+											>{user.hasMembership ? 'Protected' : 'No CMS access'}</span
+										>
 									{/if}
 								</td>
 							</tr>
@@ -156,7 +173,6 @@
 		border-bottom: 0;
 	}
 	td strong {
-		display: block;
 		color: #f2f4f7;
 		font-weight: 500;
 	}

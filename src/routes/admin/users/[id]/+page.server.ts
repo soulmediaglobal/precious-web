@@ -54,6 +54,8 @@ export const load: PageServerLoad = async ({ locals, params, url }) => {
 	return {
 		user: {
 			id: target.userId,
+			name: target.name ?? '',
+			position: target.position ?? '',
 			email: data.user?.email ?? 'Akun Auth sudah dihapus',
 			role: target.role,
 			isActive: target.isActive,
@@ -76,15 +78,32 @@ export const actions: Actions = {
 		}
 
 		const formData = await request.formData();
+		const name = String(formData.get('name') ?? '').trim();
+		const position = String(formData.get('position') ?? '').trim();
 		const requestedRole = formData.get('role');
 		const requestedStatus = formData.get('isActive');
+		const values = { name, position };
+
+		if (!name || name.length > 120) {
+			return fail(400, {
+				message: 'Nama wajib diisi, maksimal 120 karakter.',
+				values
+			});
+		}
+
+		if (!position || position.length > 160) {
+			return fail(400, {
+				message: 'Posisi wajib diisi, maksimal 160 karakter.',
+				values
+			});
+		}
 
 		if (
 			typeof requestedRole !== 'string' ||
 			!cmsRoles.includes(requestedRole as CmsRole) ||
 			(requestedStatus !== 'true' && requestedStatus !== 'false')
 		) {
-			return fail(400, { message: 'Role atau status tidak valid.' });
+			return fail(400, { message: 'Role atau status tidak valid.', values });
 		}
 
 		const role = requestedRole as CmsRole;
@@ -97,25 +116,32 @@ export const actions: Actions = {
 			actor!.userId,
 			params.id,
 			role,
-			requestedStatus === 'true'
+			requestedStatus === 'true',
+			{ name, position }
 		);
 
 		switch (result.status) {
 			case 'deleting':
 				return fail(409, {
-					message: 'Akun sedang dalam proses hapus. Role dan status tidak bisa diubah.'
+					message: 'Akun sedang dalam proses hapus. Profil dan akses tidak bisa diubah.',
+					values
 				});
 			case 'forbidden':
-				return fail(403, { message: 'Hak akses tidak mengizinkan perubahan ini.' });
+				return fail(403, {
+					message: 'Hak akses tidak mengizinkan perubahan ini.',
+					values
+				});
 			case 'missing':
-				return fail(404, { message: 'Membership CMS tidak ditemukan.' });
+				return fail(404, { message: 'Membership CMS tidak ditemukan.', values });
 			case 'self':
 				return fail(409, {
-					message: 'Lo tidak bisa mengganti role atau menonaktifkan akun sendiri.'
+					message: 'Lo tidak bisa mengganti role atau menonaktifkan akun sendiri.',
+					values
 				});
 			case 'last_admin':
 				return fail(409, {
-					message: 'Minimal satu admin aktif harus tetap tersedia.'
+					message: 'Minimal satu admin aktif harus tetap tersedia.',
+					values
 				});
 			case 'ok':
 				throw redirect(303, `/admin/users/${params.id}?saved=1`);

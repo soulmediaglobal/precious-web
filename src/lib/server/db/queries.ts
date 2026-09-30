@@ -484,7 +484,8 @@ export async function getAllCmsUsers() {
 export async function createCmsUserMembership(
 	actorUserId: string,
 	userId: string,
-	role: CmsRole
+	role: CmsRole,
+	profile?: { name: string; position: string }
 ) {
 	return db.transaction(async (tx) => {
 		const [actor] = await tx
@@ -499,7 +500,13 @@ export async function createCmsUserMembership(
 
 		const [membership] = await tx
 			.insert(cmsUsers)
-			.values({ userId, role, isActive: true })
+			.values({
+				userId,
+				role,
+				isActive: true,
+				name: profile?.name ?? null,
+				position: profile?.position ?? null
+			})
 			.returning();
 
 		return { status: 'ok' as const, membership };
@@ -512,7 +519,8 @@ export async function updateCmsUserMembership(
 	actorUserId: string,
 	targetUserId: string,
 	role: CmsRole,
-	isActive: boolean
+	isActive: boolean,
+	profile?: { name: string; position: string }
 ) {
 	return db.transaction(async (tx) => {
 		await tx.execute(sql`select pg_advisory_xact_lock(${cmsUserMutationLock})`);
@@ -557,7 +565,12 @@ export async function updateCmsUserMembership(
 
 		const [membership] = await tx
 			.update(cmsUsers)
-			.set({ role, isActive, updatedAt: new Date() })
+			.set({
+				role,
+				isActive,
+				updatedAt: new Date(),
+				...(profile ? { name: profile.name, position: profile.position } : {})
+			})
 			.where(eq(cmsUsers.userId, targetUserId))
 			.returning();
 
