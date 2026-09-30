@@ -1,11 +1,18 @@
 import { error, fail } from '@sveltejs/kit';
-import { getRabBuilder, mutateRabBuilder, mutateRabCommercial } from '$lib/server/db/queries';
+import {
+	getRabBuilder,
+	mutateRabBuilder,
+	mutateRabCommercial,
+	getCmsUser,
+	transitionRabApproval
+} from '$lib/server/db/queries';
 import {
 	BuilderInputError,
 	parseBuilderForm,
 	parseCommercialForm,
 	positiveId
 } from '$lib/rab-builder/values';
+import { approvalPermissions } from '$lib/rab-builder/approval';
 import type { Actions, PageServerLoad } from './$types';
 
 function routeId(value: string) {
@@ -15,12 +22,49 @@ function routeId(value: string) {
 		error(404, 'Identitas tidak valid.');
 	}
 }
-export const load: PageServerLoad = async ({ params }) => {
+export const load: PageServerLoad = async ({ params, locals }) => {
 	const builder = await getRabBuilder(routeId(params.projectId), routeId(params.rabId));
 	if (!builder) error(404, 'RAB tidak ditemukan dalam Project ini.');
-	return builder;
+	const user = await locals.getUser();
+	const actor = user ? await getCmsUser(user.id) : null;
+	return { ...builder, approval: approvalPermissions(actor, builder.rab) };
 };
+const approvalAction =
+	(operation: 'request' | 'approve'): NonNullable<Actions[string]> =>
+	async ({ params, locals }) => {
+		const user = await locals.getUser();
+		if (!user) error(401, 'Silakan login kembali.');
+		const projectId = routeId(params.projectId),
+			rabId = routeId(params.rabId);
+		try {
+			const result = await transitionRabApproval(projectId, rabId, user.id, operation);
+			if (result.status === 'missing') return fail(404, { message: 'RAB tidak ditemukan.' });
+			if (result.status === 'forbidden')
+				return fail(403, {
+					message: 'Role aktif atau status RAB tidak mengizinkan tindakan ini. Muat ulang RAB.'
+				});
+			if (result.status === 'historical')
+				return fail(409, {
+					message: 'Format snapshot historis belum didukung. Dokumen tetap dipertahankan.'
+				});
+			return {
+				success: true,
+				message:
+					operation === 'request'
+						? 'Approval diminta. RAB sekarang read-only.'
+						: 'RAB disetujui internal. Ini bukan persetujuan klien.'
+			};
+		} catch {
+			return fail(409, {
+				message:
+					'Approval belum tersimpan. Muat ulang untuk memeriksa status terbaru sebelum mencoba kembali.'
+			});
+		}
+	};
+
 export const actions: Actions = {
+	requestApproval: approvalAction('request'),
+	approve: approvalAction('approve'),
 	save: async ({ params, request, locals }) => {
 		if (!(await locals.getUser())) error(401, 'Silakan login kembali.');
 		const projectId = routeId(params.projectId),

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+ import { approvalLabels } from '$lib/rab-builder/approval';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { money, type BuilderKind } from '$lib/rab-builder/values';
 	import type { PageData, ActionData } from './$types';
@@ -11,7 +12,7 @@
 	let saving = $state(false);
 	let confirmingDelete = $state(false);
 	let editorKey = $state(0);
-	let editable = $derived(data.rab.status === 'draft');
+	let editable = $derived(data.rab.status === 'draft' && !data.rab.frozenDocument);
 	const scaledPercentage = (value: string | null) => {
 		if (value === null) return 0n;
 		const [whole, fraction = ''] = value.split('.');
@@ -141,10 +142,18 @@
 			</p>
 		</div>
 		<span class:locked={!editable} class="badge"
-			>{editable ? 'Draft · Dapat diedit' : `${data.rab.status} · Read-only`}</span
+			>{editable ? 'Draft · Dapat diedit' : `${approvalLabels[data.rab.status] ?? data.rab.status} · Read-only`}</span
 		>
-		{#if editable}<a class="preview-link" href={`/admin/projects/${data.project.id}/rab/${data.rab.id}/preview`} target="_blank" rel="noopener">Preview PDF ↗</a>{/if}
+		{#if data.previewAvailable}<a class="preview-link" href={`/admin/projects/${data.project.id}/rab/${data.rab.id}/preview`} target="_blank" rel="noopener">Preview PDF ↗</a>{/if}
 	</header>
+ {#if data.approval.canRequest || data.approval.canApprove}
+  <form method="POST" action={data.approval.canRequest ? '?/requestApproval' : '?/approve'} use:enhance={submit}>
+   <p class="notice">{data.approval.canRequest ? 'Request Approval akan mengunci RAB beserta Tahapan/Termin. Pastikan semua perubahan sudah tersimpan.' : 'Approval internal akan mengunci RAB dan menghapus indikator DRAFT. Ini bukan persetujuan klien.'}</p>
+   <button type="submit" disabled={saving}>{saving ? 'Memproses…' : data.approval.canRequest ? 'Request Approval' : 'Approve'}</button>
+  </form>
+ {/if}
+ {#if data.rab.internalApprovalRequestedAt}<p class="notice">Diminta oleh {data.rab.internalApprovalRequestedByUserId} · {new Date(data.rab.internalApprovalRequestedAt).toLocaleString('id-ID', { timeZone: 'Asia/Jakarta' })} WIB</p>{/if}
+ {#if data.rab.internalApprovedAt}<p class="notice">Disetujui internal oleh {data.rab.internalApprovedByUserId} · {new Date(data.rab.internalApprovedAt).toLocaleString('id-ID', { timeZone: 'Asia/Jakarta' })} WIB{data.rab.createdByUserId === data.rab.internalApprovedByUserId ? ' · Self-approval Director' : ''}</p>{/if}
 	{#if !editable}<p class="notice">
 			RAB terkunci / read-only. Hanya dokumen berstatus Draft yang dapat diubah.
 		</p>{/if}

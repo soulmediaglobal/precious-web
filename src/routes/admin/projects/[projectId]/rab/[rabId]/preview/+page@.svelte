@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { approvalLabels } from '$lib/rab-builder/approval';
 	import { paginatePreview } from '$lib/rab-builder/preview-pagination';
 	import '$lib/rab-builder/preview.css';
 	import { cents, money } from '$lib/rab-builder/values';
@@ -88,7 +89,7 @@
 					<h1>Rencana Anggaran Biaya</h1>
 					<p>{data.rab.documentNumber}</p>
 				</div>
-				<div class="draft">DRAFT · Belum diterbitkan / disetujui</div>
+				{#if data.rab.status !== 'internal_approved'}<div class="draft">DRAFT · Belum diterbitkan / disetujui</div>{/if}
 				<section class="metadata" aria-label="Identitas dokumen">
 					<dl>
 						<div>
@@ -119,7 +120,7 @@
 						</div>
 						<div>
 							<dt>Status</dt>
-							<dd>DRAFT</dd>
+							<dd>{approvalLabels[data.rab.status] ?? data.rab.status}</dd>
 						</div>
 					</dl>
 				</section>
@@ -263,7 +264,7 @@
 			</div>
 		</div>
 		<footer>
-			<span>Precious Contractor · DRAFT · Untuk peninjauan</span><span data-page-number></span>
+			<span>Precious Contractor · {data.rab.status === 'internal_approved' ? 'Disetujui internal' : 'DRAFT · Untuk peninjauan'}</span><span data-page-number></span>
 		</footer>
 	</div>
 </div>

@@ -108,12 +108,12 @@
 				</div>
 			{/if}
 			<div class="border-b border-white/12 py-14">
-				<p class="eyebrow">MANAGEMENT</p>
-				<div class="grid gap-12 md:grid-cols-2">
+				<p class="eyebrow">MANAGER</p>
+				<div class="flex flex-wrap justify-center gap-x-8 gap-y-12">
 					{#each management as person}
-						<article class="grid grid-cols-[.78fr_1.22fr] items-end gap-6">
-							<img src={person.image} srcset={teamSrcset(person.image)} sizes="(min-width: 768px) 20vw, 40vw" loading="lazy" decoding="async" alt={person.name} class="aspect-[4/5] w-full object-cover" />
-							<div class="flex h-full flex-col justify-end pb-2"><h3 class="person-name">{person.name}</h3><p class="mt-3 text-sm text-[#d4a321]">{person.title}</p><div class="mt-auto flex flex-wrap justify-end gap-2 pt-8">{#if person.email ?? email}<a class="chip small" href="mailto:{person.email ?? email}">✉ Email</a>{/if}<a class="chip small" href={person.linkedin ?? linkedin} target="_blank" rel="noreferrer"><b>in</b> LinkedIn</a></div></div>
+						<article class="w-full max-w-[25rem] sm:w-[calc(50%_-_1rem)] lg:w-[calc(33.333%_-_1.34rem)]">
+							<img src={person.image} srcset={teamSrcset(person.image)} sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" loading="lazy" decoding="async" alt={person.name} class="aspect-[4/5] w-full object-cover" />
+							<div class="mt-5 flex min-h-32 flex-col"><h3 class="person-name">{person.name}</h3><p class="mt-2 text-sm text-[#d4a321]">{person.title}</p><div class="mt-auto flex flex-wrap justify-end gap-2 pt-5">{#if person.email ?? email}<a class="chip small" href="mailto:{person.email ?? email}">✉ Email</a>{/if}<a class="chip small" href={person.linkedin ?? linkedin} target="_blank" rel="noreferrer"><b>in</b> LinkedIn</a></div></div>
 						</article>
 					{/each}
 				</div>

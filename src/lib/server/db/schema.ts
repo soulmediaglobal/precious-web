@@ -184,6 +184,15 @@ export const rabFamilyCounters = pgTable('rab_family_counters', {
  lastNumber: integer('last_number').notNull().default(0)
 }, (t) => [check('rab_family_counter_nonnegative', sql`${t.lastNumber} >= 0`)]);
 
+// Supabase Auth UUID is the logical identity; roles are managed server-side only.
+export const cmsUsers = pgTable('cms_users', {
+ userId: uuid('user_id').primaryKey(),
+ role: text('role').$type<'staff' | 'director'>().notNull(),
+ isActive: boolean('is_active').notNull().default(true),
+ createdAt: timestamp('created_at').defaultNow().notNull(),
+ updatedAt: timestamp('updated_at').defaultNow().notNull()
+}, (t) => [check('cms_users_role_valid', sql`${t.role} in ('staff', 'director')`)]).enableRLS();
+
 export const rabs = pgTable(
 	'rabs',
 	{
@@ -204,6 +213,8 @@ export const rabs = pgTable(
 		taxAmount: numeric('tax_amount', { precision: 18, scale: 2 }).notNull().default('0'),
 		grandTotal: numeric('grand_total', { precision: 18, scale: 2 }).notNull().default('0'),
 		createdByUserId: uuid('created_by_user_id'),
+		internalApprovalRequestedByUserId: uuid('internal_approval_requested_by_user_id'),
+		internalApprovalRequestedAt: timestamp('internal_approval_requested_at'),
 		internalApprovedByUserId: uuid('internal_approved_by_user_id'),
 		internalApprovedAt: timestamp('internal_approved_at'),
 		clientApprovedAt: timestamp('client_approved_at'),
