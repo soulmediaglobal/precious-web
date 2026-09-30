@@ -1,42 +1,30 @@
-# sv
+# Precious Contractor
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+Website publik dan CMS internal Precious Contractor.
 
-## Creating a project
+## Stack
 
-If you're seeing this, you've probably already done this step. Congrats!
+- SvelteKit 2 dan Svelte 5
+- Tailwind CSS 4
+- Supabase Auth, PostgreSQL, dan Storage
+- Drizzle ORM
+- Node.js adapter
 
-```sh
-# create a new project
-npx sv create my-app
-```
+## Requirements
 
-To recreate this project with the same configuration:
+- Node.js 22.12.0 atau lebih baru
+- npm
+- Environment variables sesuai `.env.example`
 
-```sh
-# recreate this project
-npx sv@0.13.0 create --template minimal --types ts --add prettier eslint tailwindcss="plugins:typography,forms" sveltekit-adapter="adapter:cloudflare+cfTarget:pages" --install npm pc
-```
+Jangan commit file `.env` atau credentials ke repository.
 
-## Developing
+## Commands
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+- Install dependencies: `npm ci`
+- Development server: `npm run dev`
+- Type and Svelte check: `npm run check`
+- Production build: `npm run build`
+- Preview build: `npm run preview`
+- Production server: `npm start`
 
-```sh
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```sh
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+Production output dibuat di folder `build/` oleh `@sveltejs/adapter-node`.

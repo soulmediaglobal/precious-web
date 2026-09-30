@@ -4,7 +4,6 @@ node_modules
 .output
 .vercel
 .netlify
-.wrangler
 /.svelte-kit
 /build
 
@@ -21,5 +20,3 @@ Thumbs.db
 # Vite
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
-# Cloudflare Types
-/worker-configuration.d.ts
