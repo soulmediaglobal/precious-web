@@ -506,6 +506,113 @@ export async function createCmsUserMembership(
 	});
 }
 
+const cmsUserMutationLock = 773401;
+
+export async function updateCmsUserMembership(
+	actorUserId: string,
+	targetUserId: string,
+	role: CmsRole,
+	isActive: boolean
+) {
+	return db.transaction(async (tx) => {
+		await tx.execute(sql`select pg_advisory_xact_lock(${cmsUserMutationLock})`);
+
+		const [actor] = await tx
+			.select()
+			.from(cmsUsers)
+			.where(eq(cmsUsers.userId, actorUserId))
+			.for('update');
+		const [target] = await tx
+			.select()
+			.from(cmsUsers)
+			.where(eq(cmsUsers.userId, targetUserId))
+			.for('update');
+
+		if (!actor?.isActive) return { status: 'forbidden' as const };
+		if (!target) return { status: 'missing' as const };
+		if (!canManageCmsRole(actor, target.role) || !canManageCmsRole(actor, role)) {
+			return { status: 'forbidden' as const };
+		}
+
+		if (
+			actorUserId === targetUserId &&
+			(role !== target.role || !isActive)
+		) {
+			return { status: 'self' as const };
+		}
+
+		if (target.role === 'admin' && target.isActive && (role !== 'admin' || !isActive)) {
+			const [{ activeAdminCount }] = await tx
+				.select({ activeAdminCount: count() })
+				.from(cmsUsers)
+				.where(and(eq(cmsUsers.role, 'admin'), eq(cmsUsers.isActive, true)));
+
+			if (activeAdminCount <= 1) {
+				return { status: 'last_admin' as const };
+			}
+		}
+
+		const [membership] = await tx
+			.update(cmsUsers)
+			.set({ role, isActive, updatedAt: new Date() })
+			.where(eq(cmsUsers.userId, targetUserId))
+			.returning();
+
+		return { status: 'ok' as const, membership };
+	});
+}
+
+export async function prepareCmsUserDeletion(
+	actorUserId: string,
+	targetUserId: string
+) {
+	return db.transaction(async (tx) => {
+		await tx.execute(sql`select pg_advisory_xact_lock(${cmsUserMutationLock})`);
+
+		const [actor] = await tx
+			.select()
+			.from(cmsUsers)
+			.where(eq(cmsUsers.userId, actorUserId))
+			.for('update');
+		const [target] = await tx
+			.select()
+			.from(cmsUsers)
+			.where(eq(cmsUsers.userId, targetUserId))
+			.for('update');
+
+		if (!actor?.isActive) return { status: 'forbidden' as const };
+		if (!target) return { status: 'missing' as const };
+		if (!canManageCmsRole(actor, target.role)) {
+			return { status: 'forbidden' as const };
+		}
+		if (actorUserId === targetUserId) {
+			return { status: 'self' as const };
+		}
+
+		if (target.role === 'admin' && target.isActive) {
+			const [{ activeAdminCount }] = await tx
+				.select({ activeAdminCount: count() })
+				.from(cmsUsers)
+				.where(and(eq(cmsUsers.role, 'admin'), eq(cmsUsers.isActive, true)));
+
+			if (activeAdminCount <= 1) {
+				return { status: 'last_admin' as const };
+			}
+		}
+
+		await tx
+			.update(cmsUsers)
+			.set({ isActive: false, updatedAt: new Date() })
+			.where(eq(cmsUsers.userId, targetUserId));
+
+		return { status: 'ok' as const };
+	});
+}
+
+export async function deleteCmsUserMembership(userId: string) {
+	return db.delete(cmsUsers).where(eq(cmsUsers.userId, userId)).returning();
+}
+
 export async function getCmsUser(userId: string) {
 	const [user] = await db.select().from(cmsUsers).where(eq(cmsUsers.userId, userId));
 	return user ?? null;
