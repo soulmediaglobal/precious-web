@@ -2,6 +2,7 @@ import { createHash } from 'node:crypto';
 import { db } from './index';
 import { cmsUsers, companyBankAccounts } from './schema';
 import { approvalPermissions } from '$lib/rab-builder/approval';
+import { canManageCmsRole, type CmsRole } from '$lib/server/cms-user-access';
 import { portfolio, portfolioImages, expertise, expertiseImages, team, settings, clients, projects, rabs } from './schema';
 import { eq, asc, desc, ilike, or, count, and, sql } from 'drizzle-orm';
 
@@ -474,6 +475,171 @@ export async function getRabBuilder(projectId: number, rabId: number) {
 		},
 		{ isolationLevel: 'repeatable read', accessMode: 'read only' }
 	);
+}
+
+export async function getAllCmsUsers() {
+	return db.select().from(cmsUsers).orderBy(desc(cmsUsers.createdAt));
+}
+
+export async function createCmsUserMembership(
+	actorUserId: string,
+	userId: string,
+	role: CmsRole,
+	profile?: { name: string; position: string }
+) {
+	return db.transaction(async (tx) => {
+		const [actor] = await tx
+			.select()
+			.from(cmsUsers)
+			.where(eq(cmsUsers.userId, actorUserId))
+			.for('share');
+
+		if (!actor?.isActive || !canManageCmsRole(actor, role)) {
+			return { status: 'forbidden' as const };
+		}
+
+		const [membership] = await tx
+			.insert(cmsUsers)
+			.values({
+				userId,
+				role,
+				isActive: true,
+				name: profile?.name ?? null,
+				position: profile?.position ?? null
+			})
+			.returning();
+
+		return { status: 'ok' as const, membership };
+	});
+}
+
+const cmsUserMutationLock = 773401;
+
+export async function updateCmsUserMembership(
+	actorUserId: string,
+	targetUserId: string,
+	role: CmsRole,
+	isActive: boolean,
+	profile?: { name: string; position: string }
+) {
+	return db.transaction(async (tx) => {
+		await tx.execute(sql`select pg_advisory_xact_lock(${cmsUserMutationLock})`);
+
+		const [actor] = await tx
+			.select()
+			.from(cmsUsers)
+			.where(eq(cmsUsers.userId, actorUserId))
+			.for('update');
+		const [target] = await tx
+			.select()
+			.from(cmsUsers)
+			.where(eq(cmsUsers.userId, targetUserId))
+			.for('update');
+
+		if (!actor?.isActive) return { status: 'forbidden' as const };
+		if (!target) return { status: 'missing' as const };
+		if (!canManageCmsRole(actor, target.role) || !canManageCmsRole(actor, role)) {
+			return { status: 'forbidden' as const };
+		}
+		if (target.deletionStartedAt) {
+			return { status: 'deleting' as const };
+		}
+
+		if (
+			actorUserId === targetUserId &&
+			(role !== target.role || !isActive)
+		) {
+			return { status: 'self' as const };
+		}
+
+		if (target.role === 'admin' && target.isActive && (role !== 'admin' || !isActive)) {
+			const [{ activeAdminCount }] = await tx
+				.select({ activeAdminCount: count() })
+				.from(cmsUsers)
+				.where(and(eq(cmsUsers.role, 'admin'), eq(cmsUsers.isActive, true)));
+
+			if (activeAdminCount <= 1) {
+				return { status: 'last_admin' as const };
+			}
+		}
+
+		const [membership] = await tx
+			.update(cmsUsers)
+			.set({
+				role,
+				isActive,
+				updatedAt: new Date(),
+				...(profile ? { name: profile.name, position: profile.position } : {})
+			})
+			.where(eq(cmsUsers.userId, targetUserId))
+			.returning();
+
+		return { status: 'ok' as const, membership };
+	});
+}
+
+export async function prepareCmsUserDeletion(
+	actorUserId: string,
+	targetUserId: string
+) {
+	return db.transaction(async (tx) => {
+		await tx.execute(sql`select pg_advisory_xact_lock(${cmsUserMutationLock})`);
+
+		const [actor] = await tx
+			.select()
+			.from(cmsUsers)
+			.where(eq(cmsUsers.userId, actorUserId))
+			.for('update');
+		const [target] = await tx
+			.select()
+			.from(cmsUsers)
+			.where(eq(cmsUsers.userId, targetUserId))
+			.for('update');
+
+		if (!actor?.isActive) return { status: 'forbidden' as const };
+		if (!target) return { status: 'missing' as const };
+		if (!canManageCmsRole(actor, target.role)) {
+			return { status: 'forbidden' as const };
+		}
+		if (actorUserId === targetUserId) {
+			return { status: 'self' as const };
+		}
+
+		if (target.role === 'admin' && target.isActive) {
+			const [{ activeAdminCount }] = await tx
+				.select({ activeAdminCount: count() })
+				.from(cmsUsers)
+				.where(and(eq(cmsUsers.role, 'admin'), eq(cmsUsers.isActive, true)));
+
+			if (activeAdminCount <= 1) {
+				return { status: 'last_admin' as const };
+			}
+		}
+
+		await tx
+			.update(cmsUsers)
+			.set({
+				isActive: false,
+				deletionStartedAt: target.deletionStartedAt ?? new Date(),
+				updatedAt: new Date()
+			})
+			.where(eq(cmsUsers.userId, targetUserId));
+
+		return { status: 'ok' as const };
+	});
+}
+
+export async function deleteCmsUserMembership(userId: string) {
+	return db.transaction(async (tx) => {
+		await tx.execute(sql`select pg_advisory_xact_lock(${cmsUserMutationLock})`);
+		return tx.delete(cmsUsers).where(
+			and(
+				eq(cmsUsers.userId, userId),
+				eq(cmsUsers.isActive, false),
+				sql`${cmsUsers.deletionStartedAt} is not null`
+			)
+		).returning();
+	});
 }
 
 export async function getCmsUser(userId: string) {

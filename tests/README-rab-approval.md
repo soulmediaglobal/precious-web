@@ -130,3 +130,73 @@ approval, notification, Invoice or BAST actions are added.
 - `drizzle/meta/_journal.json`
 - `tests/rab-approval.test.ts`
 - `tests/README-rab-approval.md`
+
+## Current update — Issue #34, 2026-10-01
+
+This section supersedes the older role and rollout assumptions above.
+The original Issue #32 verification remains a historical record.
+
+### Current authorization
+
+- Active Admin and Director can approve internal review, or their own Draft.
+- Active Manager and Staff can request approval for a Draft.
+- Approval of another user's Draft remains denied.
+- CMS login and protected admin routes require active CMS membership.
+- Admin manages all four roles; Director cannot manage Admin accounts.
+- Self role changes, self deactivation and self deletion are blocked.
+- Self name/position editing is allowed.
+- User mutations recheck authorization server-side.
+- Concurrent mutations are serialized to preserve active Admin access.
+- Pending deletion disables CMS access and blocks profile/role reactivation.
+  Failed deletion can be retried.
+
+### User management and migrations
+
+User creation includes name, position, email, initial password and CMS role.
+Position is a job title, separate from the access role.
+Passwords are never returned in user lists or profile loads.
+
+Applied migrations in the configured Supabase database:
+
+- 0019_cms_user_roles: four CMS roles.
+- 0020_cms_user_deletion_state: retryable deletion marker.
+- 0021_cms_user_profile: name and position.
+
+Supabase Admin operations require server-only SUPABASE_SECRET_KEY.
+Never commit its value or expose it to browser code.
+
+### Verification
+
+- npm run check: PASS, 0 errors / 0 warnings.
+- npm run build: PASS, adapter-node.
+- tests/cms-user-access.test.ts: PASS.
+- tests/rab-approval.test.ts: PASS on disposable local PostgreSQL,
+  database rab_builder_test_issue34_roles_v2.
+- tests/cms-user-transactions.test.ts: PASS on disposable local PostgreSQL,
+  database rab_builder_test_issue34_cms_users.
+- Browser QA reported successful: user creation, profile display/edit,
+  active login, inactive login rejection, role-based user-management access,
+  duplicate-account rejection and deletion of a disposable account.
+
+The transaction test covers role restrictions, profile persistence,
+self protection, pending-deletion retry, guarded membership cleanup,
+and concurrent cross-deletion by two Admins leaving one active Admin.
+
+Transaction tests use synthetic database identities, not real Supabase Auth.
+They do not automatically verify external Auth deletion failures or creation
+rollback network failures. The original 0016 production-data fingerprint
+remains excluded only in temporary test migration copies.
+
+### Local test commands
+
+Start the disposable local PostgreSQL server first.
+Each integration test requires its own fresh, empty database on port 55414,
+named rab_builder_test or rab_builder_test_SUFFIX. Do not use Supabase.
+
+    npx tsx tests/cms-user-access.test.ts
+    RAB_BUILDER_TEST_URL='postgres://mymac@127.0.0.1:55414/rab_builder_test_NEW_APPROVAL_SUFFIX' npx tsx tests/rab-approval.test.ts
+    RAB_BUILDER_TEST_URL='postgres://mymac@127.0.0.1:55414/rab_builder_test_NEW_CMS_SUFFIX' npx tsx tests/cms-user-transactions.test.ts
+
+The database names above are placeholders; create fresh databases before running.
+The disposable PostgreSQL server was stopped after verification.
+Hostinger deployment has not been performed.

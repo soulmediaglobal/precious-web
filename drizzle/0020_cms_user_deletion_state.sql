@@ -1,0 +1,1 @@
+ALTER TABLE "cms_users" ADD COLUMN "deletion_started_at" timestamp;
