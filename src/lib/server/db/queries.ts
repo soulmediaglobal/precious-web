@@ -533,6 +533,9 @@ export async function updateCmsUserMembership(
 		if (!canManageCmsRole(actor, target.role) || !canManageCmsRole(actor, role)) {
 			return { status: 'forbidden' as const };
 		}
+		if (target.deletionStartedAt) {
+			return { status: 'deleting' as const };
+		}
 
 		if (
 			actorUserId === targetUserId &&
@@ -602,7 +605,11 @@ export async function prepareCmsUserDeletion(
 
 		await tx
 			.update(cmsUsers)
-			.set({ isActive: false, updatedAt: new Date() })
+			.set({
+				isActive: false,
+				deletionStartedAt: target.deletionStartedAt ?? new Date(),
+				updatedAt: new Date()
+			})
 			.where(eq(cmsUsers.userId, targetUserId));
 
 		return { status: 'ok' as const };
@@ -610,7 +617,16 @@ export async function prepareCmsUserDeletion(
 }
 
 export async function deleteCmsUserMembership(userId: string) {
-	return db.delete(cmsUsers).where(eq(cmsUsers.userId, userId)).returning();
+	return db.transaction(async (tx) => {
+		await tx.execute(sql`select pg_advisory_xact_lock(${cmsUserMutationLock})`);
+		return tx.delete(cmsUsers).where(
+			and(
+				eq(cmsUsers.userId, userId),
+				eq(cmsUsers.isActive, false),
+				sql`${cmsUsers.deletionStartedAt} is not null`
+			)
+		).returning();
+	});
 }
 
 export async function getCmsUser(userId: string) {

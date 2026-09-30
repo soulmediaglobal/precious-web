@@ -189,6 +189,7 @@ export const cmsUsers = pgTable('cms_users', {
  userId: uuid('user_id').primaryKey(),
  role: text('role').$type<'admin' | 'director' | 'manager' | 'staff'>().notNull(),
  isActive: boolean('is_active').notNull().default(true),
+ deletionStartedAt: timestamp('deletion_started_at'),
  createdAt: timestamp('created_at').defaultNow().notNull(),
  updatedAt: timestamp('updated_at').defaultNow().notNull()
 }, (t) => [check('cms_users_role_valid', sql`${t.role} in ('admin', 'director', 'manager', 'staff')`)]).enableRLS();
