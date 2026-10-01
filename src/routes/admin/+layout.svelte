@@ -33,13 +33,16 @@
       items: [
         { label: 'Contact Inbox', icon: 'clients', href: '/admin/contact' },
         { label: 'Clients', icon: 'clients', href: '/admin/clients' },
-        { label: 'Projects', icon: 'projects', href: '/admin/projects' },
-        { label: 'Users', icon: 'team', href: '/admin/users' }
+        { label: 'Projects', icon: 'projects', href: '/admin/projects' }
       ]
     },
     {
       title: 'Content',
       items: [{ label: 'Portfolio', icon: 'projects', href: '/admin/portfolio' }, { label: 'Team', icon: 'team', href: '/admin/team' }]
+    },
+    {
+      title: 'Administator',
+      items: [{ label: 'Users', icon: 'team', href: '/admin/users' }]
     }
   ] as const;
 
@@ -124,7 +127,7 @@
       </div>
 
       <nav>
-        {#each groups as group}
+        {#each groups.filter((group) => group.title !== 'Administator' || canManageUsers) as group}
           <section class="ta-nav-group" aria-label={group.title}>
             <h2>
               <span class="ta-label">{group.title}</span>
