@@ -488,7 +488,8 @@ export async function createCmsUserMembership(
 	actorUserId: string,
 	userId: string,
 	role: CmsRole,
-	profile?: { name: string; position: string }
+	profile?: { name: string; position: string },
+	correlationId: string = randomUUID()
 ) {
 	return db.transaction(async (tx) => {
 		const [actor] = await tx
@@ -511,6 +512,18 @@ export async function createCmsUserMembership(
 				position: profile?.position ?? null
 			})
 			.returning();
+
+		await insertCmsActivityLog({
+			actor: {
+				userId: actor.userId,
+				name: actor.name,
+				role: actor.role
+			},
+			action: 'user.created',
+			outcome: 'success',
+			entityId: userId,
+			correlationId
+		}, tx);
 
 		return { status: 'ok' as const, membership };
 	});

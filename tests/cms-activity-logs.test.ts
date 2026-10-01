@@ -309,6 +309,74 @@ try {
 				'ALTER TABLE cms_activity_logs DROP CONSTRAINT issue37_test_reject_access'
 			);
 		}
+
+		const { createCmsUserMembership } = await import('../src/lib/server/db/queries');
+		const createdId = '00000000-0000-4000-8000-000000000043';
+		const creationCorrelation = '00000000-0000-4000-8000-000000000044';
+		assert.equal(
+			(
+				await createCmsUserMembership(
+					adminId,
+					createdId,
+					'staff',
+					{
+						name: 'Created User',
+						position: 'Synthetic Position'
+					},
+					creationCorrelation
+				)
+			).status,
+			'ok'
+		);
+		const creationEvents = await client`
+			select * from cms_activity_logs where correlation_id = ${creationCorrelation}
+		`;
+		assert.equal(creationEvents.length, 1);
+		assert.equal(creationEvents[0].action, 'user.created');
+		assert.equal(creationEvents[0].outcome, 'success');
+		assert.equal(creationEvents[0].entity_id, createdId);
+		assert.equal(creationEvents[0].actor_user_id, adminId);
+
+		const rejectedId = '00000000-0000-4000-8000-000000000045';
+		const rejectedCorrelation = '00000000-0000-4000-8000-000000000046';
+		await client.unsafe(`
+			ALTER TABLE cms_activity_logs
+			ADD CONSTRAINT issue37_test_reject_creation
+			CHECK (action <> 'user.created') NOT VALID
+		`);
+		try {
+			await assert.rejects(
+				createCmsUserMembership(
+					adminId,
+					rejectedId,
+					'staff',
+					{
+						name: 'Must Not Persist',
+						position: 'Synthetic Position'
+					},
+					rejectedCorrelation
+				),
+				(error: unknown) =>
+					hasCode('23514')(error) ||
+					Boolean(
+						error && typeof error === 'object' && 'cause' in error && hasCode('23514')(error.cause)
+					)
+			);
+			assert.equal(
+				(await client`select user_id from cms_users where user_id = ${rejectedId}`).length,
+				0
+			);
+			assert.equal(
+				(
+					await client`select id from cms_activity_logs where correlation_id = ${rejectedCorrelation}`
+				).length,
+				0
+			);
+		} finally {
+			await client.unsafe(
+				'ALTER TABLE cms_activity_logs DROP CONSTRAINT issue37_test_reject_creation'
+			);
+		}
 	} finally {
 		await db.$client.end();
 	}
