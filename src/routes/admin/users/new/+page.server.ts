@@ -1,3 +1,4 @@
+import { randomUUID } from 'node:crypto';
 import { error, fail, redirect } from '@sveltejs/kit';
 import {
 	assignableCmsRoles,
@@ -5,7 +6,12 @@ import {
 	cmsRoles,
 	type CmsRole
 } from '$lib/server/cms-user-access';
-import { createCmsUserMembership, getCmsUser } from '$lib/server/db/queries';
+import {
+	createCmsUserMembership,
+	getCmsUser,
+	insertCmsActivityLog,
+	type CmsActivityActor
+} from '$lib/server/db/queries';
 import { createSupabaseAdminClient } from '$lib/server/supabase-admin';
 import type { Actions, PageServerLoad } from './$types';
 
@@ -62,6 +68,57 @@ export const actions: Actions = {
 		}
 
 		const admin = createSupabaseAdminClient();
+		const correlationId = randomUUID();
+		let auditActor: CmsActivityActor = null;
+		try {
+			const currentActor = await getCmsUser(actor!.userId);
+			if (
+				!canAccessUserManagement(currentActor) ||
+				currentActor?.deletionStartedAt ||
+				!assignableCmsRoles(currentActor).includes(role)
+			) {
+				return fail(403, {
+					message: 'Hak akses lo berubah. Akun belum dibuat.',
+					values
+				});
+			}
+			auditActor = {
+				userId: currentActor!.userId,
+				name: currentActor!.name,
+				role: currentActor!.role
+			};
+			await insertCmsActivityLog({
+				actor: auditActor,
+				action: 'user.created',
+				outcome: 'pending',
+				entityId: null,
+				correlationId
+			});
+		} catch {
+			return fail(503, {
+				message: 'Pencatatan aktivitas belum tersedia. Akun belum dibuat. Coba lagi nanti.',
+				values
+			});
+		}
+
+		async function recordCreationOutcome(
+			outcome: 'failure' | 'uncertain' | 'denied',
+			entityId: string | null = null
+		) {
+			try {
+				await insertCmsActivityLog({
+					actor: auditActor,
+					action: 'user.created',
+					outcome,
+					entityId,
+					correlationId
+				});
+			} catch {
+				// The original pending event remains; never repeat the Auth operation here.
+				console.error('CMS creation outcome audit unavailable', { correlationId });
+			}
+		}
+
 		let createdUserId: string;
 
 		try {
@@ -77,15 +134,23 @@ export const actions: Actions = {
 					code: createError?.code
 				});
 
+				const definiteRejection =
+					!data.user && [400, 401, 403, 422, 429].includes(createError?.status ?? 0);
+				await recordCreationOutcome(
+					definiteRejection ? 'failure' : 'uncertain',
+					data.user?.id ?? null
+				);
 				return fail(502, {
-					message:
-						'Akun belum berhasil dibuat. Periksa apakah email sudah terdaftar dan password memenuhi kebijakan Supabase.',
+					message: definiteRejection
+						? 'Akun belum berhasil dibuat. Periksa apakah email sudah terdaftar dan password memenuhi kebijakan Supabase.'
+						: 'Hasil pembuatan akun belum bisa dipastikan. Periksa daftar Users sebelum mencoba lagi.',
 					values
 				});
 			}
 
 			createdUserId = data.user.id;
 		} catch {
+			await recordCreationOutcome('uncertain');
 			return fail(503, {
 				message: 'Koneksi terputus saat membuat akun. Periksa daftar Users sebelum mencoba lagi.',
 				values
@@ -96,10 +161,13 @@ export const actions: Actions = {
 		let forbidden = false;
 
 		try {
-			const result = await createCmsUserMembership(actor!.userId, createdUserId, role, {
-				name,
-				position
-			});
+			const result = await createCmsUserMembership(
+				actor!.userId,
+				createdUserId,
+				role,
+				{ name, position },
+				correlationId
+			);
 
 			membershipCreated = result.status === 'ok';
 			forbidden = result.status === 'forbidden';
@@ -117,6 +185,7 @@ export const actions: Actions = {
 					) {
 						membershipCreated = true;
 					} else {
+						await recordCreationOutcome('uncertain', createdUserId);
 						return fail(503, {
 							message:
 								'Status akun berubah selama pembuatan. Periksa daftar Users sebelum mencoba lagi.',
@@ -125,6 +194,7 @@ export const actions: Actions = {
 					}
 				}
 			} catch {
+				await recordCreationOutcome('uncertain', createdUserId);
 				return fail(503, {
 					message:
 						'Status pembuatan akun belum bisa dipastikan. Periksa daftar Users setelah koneksi pulih sebelum mencoba lagi.',
@@ -154,6 +224,7 @@ export const actions: Actions = {
 		}
 
 		if (!rollbackSucceeded) {
+			await recordCreationOutcome('uncertain', createdUserId);
 			return fail(503, {
 				message:
 					'Akses CMS tidak berhasil diberikan dan pembatalan akun Auth belum selesai. Administrator perlu memeriksa akun di Supabase Authentication sebelum mencoba lagi.',
@@ -161,6 +232,7 @@ export const actions: Actions = {
 			});
 		}
 
+		await recordCreationOutcome(forbidden ? 'denied' : 'failure', createdUserId);
 		return fail(forbidden ? 403 : 500, {
 			message: forbidden
 				? 'Hak akses lo berubah. Pembuatan akun telah dibatalkan.'
