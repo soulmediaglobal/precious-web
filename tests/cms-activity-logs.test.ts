@@ -126,8 +126,97 @@ try {
 	assert.equal(preserved.summary, 'Synthetic test activity');
 	assert.equal((await client`select id from cms_activity_logs`).length, 1);
 
+	process.env.DATABASE_URL = url.toString();
+	const { db } = await import('../src/lib/server/db/index');
+	try {
+		const { insertCmsActivityLog } = await import('../src/lib/server/db/queries');
+		const { cmsUsers } = await import('../src/lib/server/db/schema');
+		const valid = {
+			actor: { userId: actorId, name: 'Audit Test Actor', role: 'admin' as const },
+			action: 'user.created' as const,
+			outcome: 'success' as const,
+			entityId: actorId,
+			correlationId
+		};
+		const sensitiveSample = 'DO_NOT_LOG_PASSWORD_OR_TOKEN';
+		const extraFields = {
+			...valid,
+			summary: sensitiveSample,
+			password: sensitiveSample,
+			token: sensitiveSample
+		};
+		const written = await insertCmsActivityLog(extraFields);
+		const [safe] = await client`
+			select * from cms_activity_logs where id = ${written.id}
+		`;
+		assert.equal(safe.summary, 'Pembuatan user — Berhasil');
+		assert.equal(safe.actor_user_id, actorId);
+		assert.equal(JSON.stringify(safe).includes(sensitiveSample), false);
+
+		await assert.rejects(
+			insertCmsActivityLog({ ...valid, correlationId: sensitiveSample }),
+			/Invalid audit correlation ID/
+		);
+		await assert.rejects(
+			insertCmsActivityLog({ ...valid, entityId: 'https://example.test/?token=secret' }),
+			/internal UUID or numeric ID/
+		);
+		await assert.rejects(
+			insertCmsActivityLog({
+				...valid,
+				actor: { ...valid.actor, name: 'x'.repeat(121) }
+			}),
+			/Invalid audit actor name/
+		);
+		assert.equal((await client`select id from cms_activity_logs`).length, 2);
+
+		const anonymous = await insertCmsActivityLog({
+			...valid,
+			actor: null,
+			action: 'auth.login',
+			outcome: 'failure',
+			entityId: null
+		});
+		const [unattributed] = await client`
+			select * from cms_activity_logs where id = ${anonymous.id}
+		`;
+		assert.equal(unattributed.actor_user_id, null);
+		assert.equal(unattributed.actor_name, null);
+		assert.equal(unattributed.actor_role, null);
+
+		const failedUserId = '00000000-0000-4000-8000-000000000039';
+		await assert.rejects(
+			db.transaction(async (tx) => {
+				await tx.insert(cmsUsers).values({ userId: failedUserId, role: 'staff' });
+				await insertCmsActivityLog({ ...valid, entityId: sensitiveSample }, tx);
+			}),
+			/internal UUID or numeric ID/
+		);
+		assert.equal(
+			(await client`select user_id from cms_users where user_id = ${failedUserId}`).length,
+			0
+		);
+
+		const rolledBackCorrelation = '00000000-0000-4000-8000-000000000040';
+		await assert.rejects(
+			db.transaction(async (tx) => {
+				await insertCmsActivityLog({ ...valid, correlationId: rolledBackCorrelation }, tx);
+				throw new Error('Synthetic operation failure');
+			}),
+			/Synthetic operation failure/
+		);
+		assert.equal(
+			(
+				await client`select id from cms_activity_logs where correlation_id = ${rolledBackCorrelation}`
+			).length,
+			0
+		);
+	} finally {
+		await db.$client.end();
+	}
+
 	console.log(
-		'PASS audit database: migrations, insert, immutable logs, browser denial, retained attribution'
+		'PASS audit database and writer: immutable logs, browser denial, attribution, safe fields, transaction rollback'
 	);
 } finally {
 	await client.end();

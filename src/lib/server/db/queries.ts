@@ -1,5 +1,8 @@
 import { createHash } from 'node:crypto';
 import { db } from './index';
+import { cmsActivityLogs } from './schema';
+import { cmsRoles } from '$lib/server/cms-user-access';
+import { getCmsActivityEventDefinition, type CmsActivityAction, type CmsActivityOutcome } from '$lib/server/cms-activity-events';
 import { cmsUsers, companyBankAccounts } from './schema';
 import { approvalPermissions } from '$lib/rab-builder/approval';
 import { canManageCmsRole, type CmsRole } from '$lib/server/cms-user-access';
@@ -931,4 +934,70 @@ export async function getAdminProjectDetail(projectId: number) {
     .from(projects).innerJoin(clients, eq(projects.clientId, clients.id))
     .where(eq(projects.id, projectId));
   return row ?? null;
+}
+
+export type CmsActivityActor = {
+	userId: string;
+	name: string | null;
+	role: CmsRole;
+} | null;
+
+export type CmsActivityLogInput = {
+	actor: CmsActivityActor;
+	action: CmsActivityAction;
+	outcome: CmsActivityOutcome;
+	entityId: string | null;
+	correlationId: string;
+};
+
+// Internal server API: actor comes from verified server identity,
+// never from submitted form fields or client-supplied role/name.
+export async function insertCmsActivityLog(
+	input: CmsActivityLogInput,
+	executor: Pick<typeof db, 'insert'> = db
+) {
+	const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+	const definition = getCmsActivityEventDefinition(input.action, input.outcome);
+
+	if (!uuidPattern.test(input.correlationId)) {
+		throw new Error('Invalid audit correlation ID');
+	}
+	if (
+		input.entityId !== null &&
+		!uuidPattern.test(input.entityId) &&
+		!/^[1-9][0-9]{0,18}$/.test(input.entityId)
+	) {
+		throw new Error('Audit entity reference must be an internal UUID or numeric ID');
+	}
+	if (input.actor) {
+		if (!uuidPattern.test(input.actor.userId) || !cmsRoles.includes(input.actor.role)) {
+			throw new Error('Invalid audit actor identity');
+		}
+		if (
+			input.actor.name !== null &&
+			(typeof input.actor.name !== 'string' ||
+				input.actor.name.length > 120 ||
+				/[\u0000-\u001f\u007f]/.test(input.actor.name))
+		) {
+			throw new Error('Invalid audit actor name');
+		}
+	}
+
+	const [event] = await executor
+		.insert(cmsActivityLogs)
+		.values({
+			actorUserId: input.actor?.userId ?? null,
+			actorName: input.actor?.name ?? null,
+			actorRole: input.actor?.role ?? null,
+			action: definition.action,
+			entityType: definition.entityType,
+			entityId: input.entityId,
+			outcome: definition.outcome,
+			summary: definition.summary,
+			correlationId: input.correlationId
+		})
+		.returning({ id: cmsActivityLogs.id });
+
+	if (!event) throw new Error('Audit event was not persisted');
+	return event;
 }
