@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import {
 	assignableCmsRoles,
+	canAccessLogManagement,
 	canAccessUserManagement,
 	canManageCmsRole
 } from '../src/lib/server/cms-user-access';
@@ -30,4 +31,12 @@ assert.equal(canManageCmsRole(active('director'), 'manager'), true);
 assert.equal(canManageCmsRole(active('director'), 'staff'), true);
 assert.equal(canManageCmsRole(active('manager'), 'staff'), false);
 
-console.log('PASS CMS user access: admin, director, manager, staff');
+assert.equal(canAccessLogManagement(active('admin')), true);
+assert.equal(canAccessLogManagement(active('director')), false);
+assert.equal(canAccessLogManagement(active('manager')), false);
+assert.equal(canAccessLogManagement(active('staff')), false);
+for (const role of ['admin', 'director', 'manager', 'staff'] as const) {
+	assert.equal(canAccessLogManagement({ role, isActive: false }), false);
+}
+assert.equal(canAccessLogManagement(null), false);
+console.log('PASS CMS user access and Admin-only log access');

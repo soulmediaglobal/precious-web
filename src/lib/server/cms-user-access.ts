@@ -28,3 +28,7 @@ export function assignableCmsRoles(actor: Actor): CmsRole[] {
 export function canManageCmsRole(actor: Actor, targetRole: CmsRole) {
 	return canAccessUserManagement(actor) && assignableCmsRoles(actor).includes(targetRole);
 }
+
+export function canAccessLogManagement(actor: Actor) {
+	return Boolean(actor?.isActive && actor.role === 'admin');
+}
