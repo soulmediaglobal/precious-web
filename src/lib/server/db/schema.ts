@@ -412,3 +412,30 @@ export const rabPaymentTerms = pgTable(
 );
 
 // Relations
+
+// Historical actor snapshots intentionally have no cascading user foreign key.
+export const cmsActivityLogs = pgTable(
+	'cms_activity_logs',
+	{
+		id: uuid('id').defaultRandom().primaryKey(),
+		occurredAt: timestamp('occurred_at', { withTimezone: true }).defaultNow().notNull(),
+		actorUserId: uuid('actor_user_id'),
+		actorName: text('actor_name'),
+		actorRole: text('actor_role').$type<'admin' | 'director' | 'manager' | 'staff'>(),
+		action: text('action').notNull(),
+		entityType: text('entity_type').notNull(),
+		entityId: text('entity_id'),
+		outcome: text('outcome').$type<'success' | 'failure' | 'denied' | 'pending' | 'uncertain'>().notNull(),
+		summary: text('summary').notNull(),
+		correlationId: uuid('correlation_id').notNull()
+	},
+	(t) => [
+		index('cms_activity_logs_occurred_at_idx').on(t.occurredAt, t.id),
+		index('cms_activity_logs_actor_time_idx').on(t.actorUserId, t.occurredAt),
+		index('cms_activity_logs_action_time_idx').on(t.action, t.occurredAt),
+		index('cms_activity_logs_correlation_idx').on(t.correlationId),
+		check('cms_activity_logs_role_valid', sql`${t.actorRole} in ('admin', 'director', 'manager', 'staff')`),
+		check('cms_activity_logs_outcome_valid', sql`${t.outcome} in ('success', 'failure', 'denied', 'pending', 'uncertain')`),
+		check('cms_activity_logs_summary_length', sql`char_length(${t.summary}) between 1 and 240`)
+	]
+).enableRLS();
