@@ -1,4 +1,4 @@
-import { createHash } from 'node:crypto';
+import { createHash, randomUUID } from 'node:crypto';
 import { db } from './index';
 import { cmsActivityLogs } from './schema';
 import { cmsRoles } from '$lib/server/cms-user-access';
@@ -566,6 +566,14 @@ export async function updateCmsUserMembership(
 			}
 		}
 
+		const profileChanged = Boolean(
+			profile && (profile.name !== target.name || profile.position !== target.position)
+		);
+		const accessChanged = role !== target.role || isActive !== target.isActive;
+		if (!profileChanged && !accessChanged) {
+			return { status: 'ok' as const, membership: target };
+		}
+
 		const [membership] = await tx
 			.update(cmsUsers)
 			.set({
@@ -576,6 +584,31 @@ export async function updateCmsUserMembership(
 			})
 			.where(eq(cmsUsers.userId, targetUserId))
 			.returning();
+
+		const correlationId = randomUUID();
+		const auditActor = {
+			userId: actor.userId,
+			name: actor.name,
+			role: actor.role
+		};
+		if (profileChanged) {
+			await insertCmsActivityLog({
+				actor: auditActor,
+				action: 'user.profile_updated',
+				outcome: 'success',
+				entityId: targetUserId,
+				correlationId
+			}, tx);
+		}
+		if (accessChanged) {
+			await insertCmsActivityLog({
+				actor: auditActor,
+				action: 'user.access_updated',
+				outcome: 'success',
+				entityId: targetUserId,
+				correlationId
+			}, tx);
+		}
 
 		return { status: 'ok' as const, membership };
 	});

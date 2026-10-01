@@ -211,12 +211,110 @@ try {
 			).length,
 			0
 		);
+
+		const { updateCmsUserMembership } = await import('../src/lib/server/db/queries');
+		const adminId = '00000000-0000-4000-8000-000000000041';
+		const targetId = '00000000-0000-4000-8000-000000000042';
+		await client`
+			insert into cms_users(user_id, name, position, role, is_active) values
+			(${adminId}, 'Synthetic Admin', 'Administrator', 'admin', true),
+			(${targetId}, 'Original Name', 'Original Position', 'manager', true)
+		`;
+		assert.equal(
+			(
+				await updateCmsUserMembership(adminId, targetId, 'staff', false, {
+					name: 'Updated Name',
+					position: 'Updated Position'
+				})
+			).status,
+			'ok'
+		);
+		const combined = await client`
+			select * from cms_activity_logs where entity_id = ${targetId}
+		`;
+		assert.equal(combined.length, 2);
+		assert.deepEqual(combined.map((row) => row.action).sort(), [
+			'user.access_updated',
+			'user.profile_updated'
+		]);
+		assert.equal(combined[0].correlation_id, combined[1].correlation_id);
+		for (const row of combined) {
+			assert.equal(row.actor_user_id, adminId);
+			assert.equal(row.actor_name, 'Synthetic Admin');
+			assert.equal(row.actor_role, 'admin');
+			assert.equal(row.outcome, 'success');
+		}
+
+		// Re-saving unchanged values must not create extra activity records.
+		assert.equal(
+			(
+				await updateCmsUserMembership(adminId, targetId, 'staff', false, {
+					name: 'Updated Name',
+					position: 'Updated Position'
+				})
+			).status,
+			'ok'
+		);
+		assert.equal(
+			(await client`select id from cms_activity_logs where entity_id = ${targetId}`).length,
+			2
+		);
+
+		assert.equal(
+			(
+				await updateCmsUserMembership(adminId, targetId, 'staff', false, {
+					name: 'Profile Only',
+					position: 'Updated Position'
+				})
+			).status,
+			'ok'
+		);
+		assert.equal((await updateCmsUserMembership(adminId, targetId, 'manager', true)).status, 'ok');
+		assert.equal(
+			(await client`select id from cms_activity_logs where entity_id = ${targetId}`).length,
+			4
+		);
+
+		// Failure injection is restricted to this disposable test database.
+		await client.unsafe(`
+			ALTER TABLE cms_activity_logs
+			ADD CONSTRAINT issue37_test_reject_access
+			CHECK (action <> 'user.access_updated') NOT VALID
+		`);
+		try {
+			await assert.rejects(
+				updateCmsUserMembership(adminId, targetId, 'staff', false, {
+					name: 'Must Roll Back',
+					position: 'Must Roll Back'
+				}),
+				(error: unknown) =>
+					hasCode('23514')(error) ||
+					Boolean(
+						error && typeof error === 'object' && 'cause' in error && hasCode('23514')(error.cause)
+					)
+			);
+			const [unchanged] = await client`
+				select * from cms_users where user_id = ${targetId}
+			`;
+			assert.equal(unchanged.name, 'Profile Only');
+			assert.equal(unchanged.position, 'Updated Position');
+			assert.equal(unchanged.role, 'manager');
+			assert.equal(unchanged.is_active, true);
+			assert.equal(
+				(await client`select id from cms_activity_logs where entity_id = ${targetId}`).length,
+				4
+			);
+		} finally {
+			await client.unsafe(
+				'ALTER TABLE cms_activity_logs DROP CONSTRAINT issue37_test_reject_access'
+			);
+		}
 	} finally {
 		await db.$client.end();
 	}
 
 	console.log(
-		'PASS audit database and writer: immutable logs, browser denial, attribution, safe fields, transaction rollback'
+		'PASS audit: database guards, safe writer, user profile/access events, no-op handling, atomic rollback'
 	);
 } finally {
 	await client.end();
