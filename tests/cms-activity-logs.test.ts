@@ -377,12 +377,67 @@ try {
 				'ALTER TABLE cms_activity_logs DROP CONSTRAINT issue37_test_reject_creation'
 			);
 		}
+
+		const { getCmsActivityLogs } = await import('../src/lib/server/db/queries');
+		const directorId = '00000000-0000-4000-8000-000000000055';
+		const inactiveAdminId = '00000000-0000-4000-8000-000000000056';
+		const pendingAdminId = '00000000-0000-4000-8000-000000000057';
+		await client`
+			insert into cms_users(user_id, role, is_active, deletion_started_at) values
+			(${directorId}, 'director', true, null),
+			(${inactiveAdminId}, 'admin', false, null),
+			(${pendingAdminId}, 'admin', true, now())
+		`;
+		for (const deniedId of [
+			directorId,
+			inactiveAdminId,
+			pendingAdminId,
+			targetId,
+			createdId,
+			rejectedId
+		]) {
+			const denied = await getCmsActivityLogs(deniedId);
+			assert.equal(denied.status, 'forbidden');
+			assert.equal('logs' in denied, false);
+		}
+		for (const invalidPage of [0, -1, 1.5, 10001, NaN]) {
+			await assert.rejects(getCmsActivityLogs(adminId, invalidPage), /Invalid audit page/);
+		}
+
+		await client`
+			insert into cms_activity_logs(
+				actor_user_id, actor_name, actor_role, action, entity_type,
+				outcome, summary, correlation_id, occurred_at
+			)
+			select ${adminId}::uuid, 'Synthetic Admin', 'admin',
+				'user.profile_updated', 'user', 'success', 'Synthetic pagination event',
+				${creationCorrelation}::uuid,
+				'2040-01-01T00:00:00Z'::timestamptz + n * interval '1 second'
+			from generate_series(1, 60) as series(n)
+		`;
+		const firstPage = await getCmsActivityLogs(adminId, 1);
+		const secondPage = await getCmsActivityLogs(adminId, 2);
+		assert.equal(firstPage.status, 'ok');
+		assert.equal(secondPage.status, 'ok');
+		if (firstPage.status !== 'ok' || secondPage.status !== 'ok') {
+			throw new Error('Admin reader unexpectedly denied');
+		}
+		assert.equal(firstPage.logs.length, 50);
+		assert.equal(firstPage.hasMore, true);
+		assert.equal(secondPage.hasMore, false);
+		const allRows = [...firstPage.logs, ...secondPage.logs];
+		assert.equal(new Set(allRows.map((row) => row.id)).size, allRows.length);
+		const [{ total }] = await client`select count(*)::int as total from cms_activity_logs`;
+		assert.equal(allRows.length, total);
+		for (let i = 1; i < allRows.length; i++) {
+			assert.ok(allRows[i - 1].occurredAt.getTime() >= allRows[i].occurredAt.getTime());
+		}
 	} finally {
 		await db.$client.end();
 	}
 
 	console.log(
-		'PASS audit: database guards, safe writer, user profile/access events, no-op handling, atomic rollback'
+		'PASS audit: database guards, safe writer, atomic user events, Admin-only reader and pagination'
 	);
 } finally {
 	await client.end();

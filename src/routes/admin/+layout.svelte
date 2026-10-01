@@ -14,8 +14,10 @@
   let isPortfolio = $derived(/^\/admin\/portfolio(?:\/|$)/.test(page.url.pathname));
   let isContact = $derived(/^\/admin\/contact(?:\/|$)/.test(page.url.pathname));
   let isUsers = $derived(/^\/admin\/users(?:\/|$)/.test(page.url.pathname));
+  let isLogs = $derived(/^\/admin\/logs(?:\/|$)/.test(page.url.pathname));
   let canManageUsers = $derived(data.cmsUser?.role === 'admin' || data.cmsUser?.role === 'director');
-  let selected = $derived(isUsers ? 'Users' : isContact ? 'Contact Inbox' : isPortfolio ? 'Portfolio' : isTeam ? 'Team' : isClients ? 'Clients' : isProjects ? 'Projects' : 'Dashboard');
+  let canViewLogs = $derived(data.cmsUser?.role === 'admin');
+  let selected = $derived(isLogs ? 'Log Management' : isUsers ? 'Users' : isContact ? 'Contact Inbox' : isPortfolio ? 'Portfolio' : isTeam ? 'Team' : isClients ? 'Clients' : isProjects ? 'Projects' : 'Dashboard');
   let mobile = $state(false);
   let open = $state(false);
   let collapsed = $state(false);
@@ -42,7 +44,10 @@
     },
     {
       title: 'Administator',
-      items: [{ label: 'Users', icon: 'team', href: '/admin/users' }]
+      items: [
+        { label: 'Users', icon: 'team', href: '/admin/users' },
+        { label: 'Log Management', icon: 'dashboard', href: '/admin/logs' }
+      ]
     }
   ] as const;
 
@@ -135,7 +140,7 @@
             </h2>
             <ul>
               {#each group.items as item}
-                {#if item.href !== '/admin/users' || canManageUsers}
+                {#if (item.href !== '/admin/users' || canManageUsers) && (item.href !== '/admin/logs' || canViewLogs)}
                 <li>
                   <a
                     class="ta-menu-item"

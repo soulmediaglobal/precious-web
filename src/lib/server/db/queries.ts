@@ -1,7 +1,7 @@
 import { createHash, randomUUID } from 'node:crypto';
 import { db } from './index';
 import { cmsActivityLogs } from './schema';
-import { cmsRoles } from '$lib/server/cms-user-access';
+import { cmsRoles, canAccessLogManagement } from '$lib/server/cms-user-access';
 import { getCmsActivityEventDefinition, type CmsActivityAction, type CmsActivityOutcome } from '$lib/server/cms-activity-events';
 import { cmsUsers, companyBankAccounts } from './schema';
 import { approvalPermissions } from '$lib/rab-builder/approval';
@@ -1046,4 +1046,38 @@ export async function insertCmsActivityLog(
 
 	if (!event) throw new Error('Audit event was not persisted');
 	return event;
+}
+
+export async function getCmsActivityLogs(actorUserId: string, page: number = 1) {
+	if (!Number.isSafeInteger(page) || page < 1 || page > 10000) {
+		throw new Error('Invalid audit page');
+	}
+
+	return db.transaction(async (tx) => {
+		const [actor] = await tx
+			.select()
+			.from(cmsUsers)
+			.where(eq(cmsUsers.userId, actorUserId))
+			.for('share');
+
+		if (!canAccessLogManagement(actor ?? null) || actor?.deletionStartedAt) {
+			return { status: 'forbidden' as const };
+		}
+
+		const pageSize = 50;
+		const rows = await tx
+			.select()
+			.from(cmsActivityLogs)
+			.orderBy(desc(cmsActivityLogs.occurredAt), desc(cmsActivityLogs.id))
+			.limit(pageSize + 1)
+			.offset((page - 1) * pageSize);
+
+		return {
+			status: 'ok' as const,
+			logs: rows.slice(0, pageSize),
+			page,
+			pageSize,
+			hasMore: rows.length > pageSize
+		};
+	});
 }
